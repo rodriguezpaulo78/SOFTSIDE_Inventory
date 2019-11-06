@@ -7,11 +7,11 @@ package softside_inventory.net;
 
 /**
  *
- * @author Stephany
+ * @author SOFTSIDE
  */
 public class HostURL {
     
-    private final static String HOST = "http://localhost/softside/";
-    public final static String INICIO_SESION = HOST + "login";
+    private final static String HOST = "http://localhost/softside/modelos/";
+    public final static String INICIO_SESION = HOST + "SesionModel.php";
     
 }

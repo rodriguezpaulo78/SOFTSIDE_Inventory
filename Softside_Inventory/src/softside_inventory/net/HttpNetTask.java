@@ -6,22 +6,19 @@
 package softside_inventory.net;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 
 /**
  *
- * @author Stephany
+ * @author SOFTSIDE
  */
 public class HttpNetTask {
     
     public void sendPost(String url, String json){
         try {
-            //Codificar el json a URL
-            String jsonString = URLEncoder.encode(json, "UTF-8");
             //Creamos un nuevo objeto URL con la url donde queremos enviar el JSON
             URL obj = new URL(url);
             //Creamos un objeto de conexión
@@ -29,29 +26,29 @@ public class HttpNetTask {
             //Añadimos la cabecera
             con.setRequestMethod("POST");
             con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-            //Creamos los parametros para enviar
-            String urlParameters = "json="+jsonString;
             // Enviamos los datos por POST
             con.setDoOutput(true);
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-            wr.writeBytes(urlParameters);
-            wr.flush();
+            con.setDoInput(true);
+            
+            OutputStream wr = con.getOutputStream();
+            wr.write(json.getBytes());
+            //wr.flush();
             wr.close();
+            
             //Capturamos la respuesta del servidor
             int responseCode = con.getResponseCode();
             System.out.println("\nSending 'POST' request to URL : " + url);
-            System.out.println("Post parameters : " + urlParameters);
             System.out.println("Response Code : " + responseCode);
             
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             String inputLine;
-            StringBuffer response = new StringBuffer();
+            StringBuilder response = new StringBuilder();
 
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
             }
             //Mostramos la respuesta del servidor por consola
-            System.out.println(response);
+            System.out.println(response.toString());
             //cerramos la conexión
             in.close();
             con.disconnect();
