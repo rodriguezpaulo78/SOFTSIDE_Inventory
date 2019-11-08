@@ -7,7 +7,9 @@ package softside_inventory.vistas;
 
 import softside_inventory.net.HttpNetTask;
 import org.json.simple.JSONObject;
+import softside_inventory.controladores.CLogin;
 import softside_inventory.net.HostURL;
+import softside_inventory.util.Session;
 
 /**
  *
@@ -240,15 +242,8 @@ public class InicioSesion extends javax.swing.JFrame {
         String usuario = txtUsuario1.getText();
         String password = new String(txtPass1.getPassword());
         
-        //Creamos un objeto JSON
-        JSONObject jsonObj = new JSONObject();
-        jsonObj.put("usuario", usuario);
-        jsonObj.put("password", password);
-        
-        String json = jsonObj.toString();
-        
-        HttpNetTask httpConnect = new HttpNetTask();
-        httpConnect.sendPost(HostURL.INICIO_SESION, json);
+        CLogin login = new CLogin();
+        login.logIn(usuario, password);
     }//GEN-LAST:event_btnIngresar1ActionPerformed
 
     private void btnSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalir1ActionPerformed

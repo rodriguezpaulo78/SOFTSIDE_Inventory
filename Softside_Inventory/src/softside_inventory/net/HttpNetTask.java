@@ -17,7 +17,9 @@ import java.net.URL;
  */
 public class HttpNetTask {
     
-    public void sendPost(String url, String json){
+    public String sendPost(String url, String json){
+        StringBuilder response = new StringBuilder();
+        
         try {
             //Creamos un nuevo objeto URL con la url donde queremos enviar el JSON
             URL obj = new URL(url);
@@ -42,7 +44,6 @@ public class HttpNetTask {
             
             BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
             String inputLine;
-            StringBuilder response = new StringBuilder();
 
             while ((inputLine = in.readLine()) != null) {
                 response.append(inputLine);
@@ -55,6 +56,8 @@ public class HttpNetTask {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        
+        return response.toString();
     }
     
 }
