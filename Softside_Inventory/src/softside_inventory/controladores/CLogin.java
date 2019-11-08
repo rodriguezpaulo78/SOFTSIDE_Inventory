@@ -5,6 +5,7 @@
  */
 package softside_inventory.controladores;
 
+import javax.swing.JOptionPane;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -37,7 +38,12 @@ public class CLogin {
         Object jsonObject = JSONValue.parse(json);
         JSONObject row =(JSONObject) jsonObject;
         Session.MESSAGE = row.get("message").toString();
-        Session.USER_ID = row.get("user_id").toString();
-        Session.USER_TIPO = row.get("user_tipo_user").toString();
+        
+        if (Session.MESSAGE.equals("SUCCESS")){
+            Session.USER_ID = row.get("user_id").toString();
+            Session.USER_TIPO = row.get("user_tipo_user").toString();
+        } else {
+            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }
