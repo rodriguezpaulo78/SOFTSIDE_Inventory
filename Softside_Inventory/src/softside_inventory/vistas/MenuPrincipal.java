@@ -5,6 +5,8 @@
  */
 package softside_inventory.vistas;
 
+import softside_inventory.util.Session;
+
 /**
  *
  * @author LENOVO
@@ -338,6 +340,10 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void itmCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmCerrarActionPerformed
         // TODO add your handling code here:
+        Session.remove();
+        this.setVisible(false);
+        InicioSesion inicioSesion = new InicioSesion();
+        inicioSesion.setVisible(true);
     }//GEN-LAST:event_itmCerrarActionPerformed
 
     private void itmAcercaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmAcercaActionPerformed

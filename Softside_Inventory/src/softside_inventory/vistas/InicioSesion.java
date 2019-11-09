@@ -244,6 +244,10 @@ public class InicioSesion extends javax.swing.JFrame {
         
         CLogin login = new CLogin();
         login.logIn(usuario, password);
+        
+        MenuPrincipal menuPrincipal = new MenuPrincipal();
+        this.setVisible(false);
+        menuPrincipal.setVisible(true);
     }//GEN-LAST:event_btnIngresar1ActionPerformed
 
     private void btnSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalir1ActionPerformed
