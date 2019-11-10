@@ -11,29 +11,41 @@ class SesionController{
 	}
 	
 	public function loginUser($username, $password){
-		$query = "SELECT user_id, user_nombres, user_apellidos, user_dni, user_cargo, user_tipo_user from ".$this->db_table." where user_username='".$username."' and user_password='".$password."'";
-		$result = mysqli_query($this->db->getDb(),$query);
 
-		if(mysqli_num_rows($result) > 0){
-			$json = array();
-			$json['message'] = "SUCCESS";
- 			while($row = mysqli_fetch_assoc($result)){
-				$json['user_id']=$row["user_id"];
-				$json['user_nombres']=$row["user_nombres"];
-				$json['user_apellidos']=$row["user_apellidos"];
-				$json['user_dni']=$row["user_dni"];
-				$json['user_cargo']=$row["user_cargo"];
-				$json['user_tipo_user']=$row["user_tipo_user"];
+    	$query1 = "SELECT user_password from ".$this->db_table." where user_username='".$username."'";
+		$result1 = mysqli_query($this->db->getDb(),$query1);
+		$pass = "";
+
+		if(mysqli_num_rows($result1) > 0){
+			while($row = mysqli_fetch_assoc($result1)){
+				$pass = $row["user_password"];
 			}
-			
- 			mysqli_close($this->db->getDb());
-			return $json;
- 		}else{
- 			$jsonMessage = array();
- 			$jsonMessage['message'] = "FAILED";
-			mysqli_close($this->db->getDb());
-			return $jsonMessage;
 		}
+
+		$json = array();
+
+		if(password_verify($password, $pass)){
+			$query = "SELECT user_id, user_nombres, user_apellidos, user_dni, user_cargo, user_tipo_user from ".$this->db_table." where user_username='".$username."'";
+			$result = mysqli_query($this->db->getDb(),$query);
+
+			if(mysqli_num_rows($result) > 0){
+				$json['message'] = "SUCCESS";
+ 				while($row = mysqli_fetch_assoc($result)){
+					$json['user_id']=$row["user_id"];
+					$json['user_nombres']=$row["user_nombres"];
+					$json['user_apellidos']=$row["user_apellidos"];
+					$json['user_dni']=$row["user_dni"];
+					$json['user_cargo']=$row["user_cargo"];
+					$json['user_tipo_user']=$row["user_tipo_user"];
+				}
+			
+ 				mysqli_close($this->db->getDb());
+ 			}
+		} else {
+ 			$json['message'] = "FAILED";
+		}
+
+		return $json;
 	}
 
 }
