@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import softside_inventory.net.HttpNetTask;
 import org.json.simple.JSONObject;
 import softside_inventory.controladores.CLogin;
+import softside_inventory.controladores.ILogin;
 import softside_inventory.net.HostURL;
 import softside_inventory.util.Session;
 
@@ -19,19 +20,18 @@ import softside_inventory.util.Session;
  */
 public class InicioSesion extends javax.swing.JFrame {
 
+    private ILogin interfaz;
     /**
      * Creates new form NewJFrame
      */
-    public InicioSesion() {  
+    public InicioSesion(ILogin interfaz) {  
         initComponents();
         this.setVisible(true);
         this.setTitle("LOGIN - SOFTSIDE: Sistema de Control de Inventarios");
         setLocationRelativeTo(null);
+        this.interfaz = interfaz;
     }
 
-    public InicioSesion getSesion(){
-        return this;
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -234,7 +234,7 @@ public class InicioSesion extends javax.swing.JFrame {
 
     private void itmSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmSalir1ActionPerformed
         // TODO add your handling code here:
-        dispose();
+        System.exit( 0 );
     }//GEN-LAST:event_itmSalir1ActionPerformed
 
     private void itmAcerca1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmAcerca1ActionPerformed
@@ -248,15 +248,12 @@ public class InicioSesion extends javax.swing.JFrame {
         // TODO add your handling code here:
         String usuario = txtUsuario1.getText();
         String password = new String(txtPass1.getPassword());
-        
-        CLogin login = new CLogin();
+                
         if (txtUsuario1.getText().equals("")||txtPass1.getText().equals("")){
             JOptionPane.showMessageDialog(null, "No pueden estar campos vacios");
         }
         else {
-            dispose();
-            login.logIn(usuario, password);
-            
+            interfaz.logIn(usuario, password);
         }
     }//GEN-LAST:event_btnIngresar1ActionPerformed
 

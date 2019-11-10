@@ -19,9 +19,15 @@ import softside_inventory.vistas.InicioSesion;
  *
  * @author Stephany
  */
-public class CLogin {
+public class CLogin implements ILogin{
     
-   
+    private InicioSesion ventana;
+    public Session session = new Session();
+    
+    public CLogin()
+    {
+        this.ventana = new InicioSesion(this);
+    }
     
     public void logIn(String usuario, String password){
         //Creamos un objeto JSON
@@ -37,21 +43,28 @@ public class CLogin {
         getJsonResponse(response);
     }
     
-    private void getJsonResponse(String json){
+    public void getJsonResponse(String json){
         //Crear un Objeto JSON a partir del string JSON
         Object jsonObject = JSONValue.parse(json);
         JSONObject row =(JSONObject) jsonObject;
-        Session.MESSAGE = row.get("message").toString();
+        session.MESSAGE = row.get("message").toString();
+        session.USER_NAME = row.get("user_nombres").toString();
+        session.USER_DNI = row.get("user_dni").toString();
         
-        if (Session.MESSAGE.equals("SUCCESS")){
-            Session.USER_ID = row.get("user_id").toString();
-            Session.USER_TIPO = row.get("user_tipo_user").toString();
-             
-            MenuPrincipal menuPrincipal = new MenuPrincipal();
-            menuPrincipal.setVisible(true);
+        if (session.MESSAGE.equals("SUCCESS")){
+            session.USER_ID = row.get("user_id").toString();
+            session.USER_TIPO = row.get("user_tipo_user").toString();
+            
+            new CMenu();
+            ventana.dispose();
         } else {
-            new InicioSesion();
+            new CLogin();
             JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
+    }
+    
+    public void salir()
+    {
+        ventana.dispose();
     }
 }

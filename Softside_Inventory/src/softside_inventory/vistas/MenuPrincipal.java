@@ -5,6 +5,10 @@
  */
 package softside_inventory.vistas;
 
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import softside_inventory.controladores.CMenu;
+import softside_inventory.controladores.IMenu;
 import softside_inventory.util.Session;
 
 /**
@@ -13,12 +17,27 @@ import softside_inventory.util.Session;
  */
 public class MenuPrincipal extends javax.swing.JFrame {
 
+    private IMenu interfaz;
+
     /**
      * Creates new form MenuPrincipal
      */
-    public MenuPrincipal() {
-        
+    public MenuPrincipal(IMenu interfaz) {
         initComponents();
+        this.setVisible(true);
+        this.setTitle("Menú - SOFTSIDE Sistema de Control de Inventarios");
+        setLocationRelativeTo(null);
+        
+        this.interfaz = interfaz;
+        interfaz.cargar(
+                        this.txtNombre,
+                        this.txtDni,
+                        this.lblPermisos,
+                        this.btnUsuario,
+                        this.btnExistencia,
+                        this.btnEntrada,
+                        this.btnSalida
+        );
     }
 
     /**
@@ -48,7 +67,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        itmConfig = new javax.swing.JMenuItem();
         itmCerrar = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         itmManual = new javax.swing.JMenuItem();
@@ -233,14 +251,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jMenu1.setText("Archivo");
 
-        itmConfig.setText("Configuración");
-        itmConfig.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itmConfigActionPerformed(evt);
-            }
-        });
-        jMenu1.add(itmConfig);
-
         itmCerrar.setText("Cerrar Sesión");
         itmCerrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -254,6 +264,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenu2.setText("Ayuda");
 
         itmManual.setText("Ver manual");
+        itmManual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itmManualActionPerformed(evt);
+            }
+        });
         jMenu2.add(itmManual);
 
         itmAcerca.setText("Acerca de");
@@ -305,86 +320,70 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void btnProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductoActionPerformed
         // TODO add your handling code here:
+        //interfaz.producto();
+        JOptionPane.showMessageDialog(null, "Mostrar manual");
     }//GEN-LAST:event_btnProductoActionPerformed
 
     private void btnUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarioActionPerformed
         // TODO add your handling code here:
+        //interfaz.usuario();
+        JOptionPane.showMessageDialog(null, "Mostrar manual");
     }//GEN-LAST:event_btnUsuarioActionPerformed
 
     private void btnProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedorActionPerformed
         // TODO add your handling code here:
+        //interfaz.proveedor();
+        JOptionPane.showMessageDialog(null, "Mostrar manual");
     }//GEN-LAST:event_btnProveedorActionPerformed
 
     private void btnUnidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnidadActionPerformed
         // TODO add your handling code here:
+        //interfaz.unidad();
+        JOptionPane.showMessageDialog(null, "Mostrar manual");
     }//GEN-LAST:event_btnUnidadActionPerformed
 
     private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
         // TODO add your handling code here:
+        //interfaz.inventario();
+        JOptionPane.showMessageDialog(null, "Mostrar manual");
     }//GEN-LAST:event_btnInventarioActionPerformed
 
     private void btnEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradaActionPerformed
         // TODO add your handling code here:
+        //interfaz.entrada();
+        JOptionPane.showMessageDialog(null, "Mostrar manual");
     }//GEN-LAST:event_btnEntradaActionPerformed
 
     private void btnSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalidaActionPerformed
         // TODO add your handling code here:
+        //interfaz.salida();
+        JOptionPane.showMessageDialog(null, "Mostrar manual");
     }//GEN-LAST:event_btnSalidaActionPerformed
 
     private void btnExistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExistenciaActionPerformed
         // TODO add your handling code here:
+        //interfaz.existenciaProducto();
+        JOptionPane.showMessageDialog(null, "Mostrar manual");
     }//GEN-LAST:event_btnExistenciaActionPerformed
-
-    private void itmConfigActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmConfigActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_itmConfigActionPerformed
 
     private void itmCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmCerrarActionPerformed
         // TODO add your handling code here:
         Session.remove();
         this.setVisible(false);
-        InicioSesion inicioSesion = new InicioSesion();
-        inicioSesion.setVisible(true);
+        
     }//GEN-LAST:event_itmCerrarActionPerformed
 
     private void itmAcercaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmAcercaActionPerformed
         // TODO add your handling code here:
+        ImageIcon icon = new ImageIcon(getClass().getResource("/softside_inventory/recursos/salir.png"));
+        JOptionPane.showMessageDialog(null, "Sistema de Control de Inventarios\nKARDEX - 2015\nPANALUX S.A.", "Acerca de", JOptionPane.INFORMATION_MESSAGE, icon);
+   
     }//GEN-LAST:event_itmAcercaActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MenuPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MenuPrincipal().setVisible(true);
-            }
-        });
-    }
+    private void itmManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmManualActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(null, "Mostrar manual");
+    }//GEN-LAST:event_itmManualActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEntrada;
@@ -397,7 +396,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton btnUsuario;
     private javax.swing.JMenuItem itmAcerca;
     private javax.swing.JMenuItem itmCerrar;
-    private javax.swing.JMenuItem itmConfig;
     private javax.swing.JMenuItem itmManual;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
