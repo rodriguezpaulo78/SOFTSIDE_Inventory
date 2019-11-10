@@ -2,6 +2,7 @@ package softside_inventory.vistas.usuario;
 
 import java.awt.Color;
 import java.awt.Component;
+import javax.swing.JOptionPane;
 
 import javax.swing.table.TableCellRenderer;
 import softside_inventory.controladores.usuario.IVistaUsuario;
@@ -307,7 +308,12 @@ public class VistaUsuario extends javax.swing.JFrame
      */
     private void jBsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBsearchActionPerformed
         // TODO add your handling code here:
-        interfaz.seleccionarFila(jTextField1, tblRegistros);
+        if (jTextField1.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "No pueden estar campos vacios");
+        }
+        else {
+            interfaz.seleccionarFila(jTextField1, tblRegistros);
+        }
     }//GEN-LAST:event_jBsearchActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

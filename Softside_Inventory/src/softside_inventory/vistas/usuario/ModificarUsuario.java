@@ -2,6 +2,7 @@ package softside_inventory.vistas.usuario;
 
 import softside_inventory.controladores.usuario.IModificarUsuario;
 import java.util.Calendar;
+import javax.swing.JOptionPane;
 /**
  * Vista principal de Modificar Usuario
  * @author SOFTSIDE
@@ -354,7 +355,14 @@ public class ModificarUsuario extends javax.swing.JFrame
      */
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAceptarActionPerformed
     {//GEN-HEADEREND:event_btnAceptarActionPerformed
-        interfaz.aceptar(this.txtUsrCod, this.txtUsrIde, this.txtCon, this.txtRepCon, this.txtDNI, this.txtUsrNom, this.txtUsrApe, this.txtFecNac, this.txtUsrCargo, this.rbAdmin);
+        if (txtUsrIde.getText().equals("")||txtCon.getText().equals("")||txtRepCon.getText().equals("")
+                ||txtDNI.getText().equals("")||txtUsrNom.getText().equals("")||txtUsrApe.getText().equals("")
+                ||txtFecNac.toString().equals("")||txtUsrCargo.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "No pueden estar campos vacios");
+        }
+        else {
+            interfaz.aceptar(this.txtUsrCod, this.txtUsrIde, this.txtCon, this.txtRepCon, this.txtDNI, this.txtUsrNom, this.txtUsrApe, this.txtFecNac, this.txtUsrCargo, this.rbAdmin);
+        }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     /**
