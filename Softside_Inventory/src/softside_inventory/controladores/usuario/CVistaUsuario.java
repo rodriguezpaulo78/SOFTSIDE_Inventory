@@ -91,7 +91,9 @@ public class CVistaUsuario implements IVistaUsuario
     @Override
     public void modificar(JTable tblRegistros)
     {
+        //Solo para probar vista abajo es el controlador con este incluido
         CModificarUsuario modificar = new CModificarUsuario(user,"codigoejemplo");
+        ventana.dispose();
         
         /*
         int i = tblRegistros.getSelectedRow();

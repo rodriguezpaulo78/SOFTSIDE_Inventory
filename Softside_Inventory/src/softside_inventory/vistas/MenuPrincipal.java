@@ -336,7 +336,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void btnUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarioActionPerformed
         // TODO add your handling code here:
         interfaz.usuario();
-        JOptionPane.showMessageDialog(null, "Mostrar manual");
     }//GEN-LAST:event_btnUsuarioActionPerformed
 
     /**
