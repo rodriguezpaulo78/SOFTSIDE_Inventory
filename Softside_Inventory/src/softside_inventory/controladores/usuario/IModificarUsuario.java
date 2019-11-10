@@ -10,9 +10,7 @@ import javax.swing.JTextField;
  * 
  * Metodos disponibles para el controlador de moficacion de usuario
  *  
- * @author Yuliana Apaza
- * @version 2.0
- * @since 2015-10-05
+ * @author SOFTSIDE
  */
 
 public interface IModificarUsuario

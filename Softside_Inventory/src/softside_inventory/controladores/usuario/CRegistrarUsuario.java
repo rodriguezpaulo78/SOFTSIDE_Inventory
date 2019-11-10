@@ -5,7 +5,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-
 import softside_inventory.modelos.Usuario;
 import softside_inventory.util.Session;
 import softside_inventory.vistas.usuario.RegistrarUsuario;
@@ -15,9 +14,7 @@ import softside_inventory.vistas.usuario.RegistrarUsuario;
  * 
  * Recibe y valida datos sobre un nuevo registro de usuario
  *  
- * @author Yuliana Apaza
- * @version 2.0
- * @since 2015-10-05
+ * @author SOFTSIDE
  */
 
 public class CRegistrarUsuario implements IRegistrarUsuario
@@ -25,27 +22,48 @@ public class CRegistrarUsuario implements IRegistrarUsuario
     private RegistrarUsuario ventana;
     private Session user; 
     
+    /**
+     * Constructor de Clase
+     * @param user : sesión de usuario
+     */
     public CRegistrarUsuario(Session user)
     {
         this.user = user;
         ventana = new RegistrarUsuario(this);
     }
     
+    /**
+     * Retorna a la ventana de Vista de Usuarios
+     */
     @Override
     public void cancelar()
-    {
-        
+    { 
         new CVistaUsuario(user);
         ventana.dispose();
         
     }
     
+    /**
+     * Actualiza la interfaz con el codigo del Usuario
+     * @param txtUsrCod
+     */
     @Override
     public void cargar(JTextField txtUsrCod)
     {
         //txtUsrCod.setText(Usuario.sgteCodigo());
     }
     
+    /**
+     * Hace la validación de los campos ingresados en la interfaz
+     * @param txtUsrCod
+     * @param txtUsrIde
+     * @param txtCon
+     * @param txtRepCon
+     * @param txtDNI
+     * @param txtUsrNom
+     * @param txtUsrApe
+     * @param rbAdmin
+     */
     @Override
     public void aceptar(JTextField txtUsrCod, JTextField txtUsrIde, JPasswordField txtCon, JPasswordField txtRepCon, JFormattedTextField txtDNI, JTextField txtUsrNom, JTextField txtUsrApe, JRadioButton rbAdmin)
     {

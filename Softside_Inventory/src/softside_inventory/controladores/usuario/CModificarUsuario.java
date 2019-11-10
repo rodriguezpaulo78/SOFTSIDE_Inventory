@@ -4,7 +4,6 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
-
 import javax.swing.JTextField;
 import softside_inventory.modelos.Usuario;
 import softside_inventory.util.Session;
@@ -15,9 +14,7 @@ import softside_inventory.vistas.usuario.ModificarUsuario;
  * 
  * Carga datos del usuario seleccionado, recibe nuevos valores y los valida
  *  
- * @author Yuliana Apaza
- * @version 2.0
- * @since 2015-10-05
+ * @author SOFTSIDE
  */
 
 public class CModificarUsuario implements IModificarUsuario
@@ -26,6 +23,11 @@ public class CModificarUsuario implements IModificarUsuario
     private Usuario u;
     private Session user; 
     
+    /**
+     * Constructor de clase
+     * @param user
+     * @param codigo 
+     */
     public CModificarUsuario(Session user, String codigo)
     {
         //u = Usuario.buscar(codigo);
@@ -33,6 +35,9 @@ public class CModificarUsuario implements IModificarUsuario
         ventana = new ModificarUsuario(this);
     }
     
+    /**
+     * Retorna a la ventana de Vista de Usuarios
+     */
     @Override
     public void cancelar()
     {
@@ -40,6 +45,16 @@ public class CModificarUsuario implements IModificarUsuario
         ventana.dispose();
     }
     
+    /**
+     * Actualiza la interfaz con los datos del de usuario registrado a modificar
+     * @param txtUsrCod
+     * @param txtUsrIde
+     * @param txtDNI
+     * @param txtUsrNom
+     * @param txtUsrApe
+     * @param rbAdmin
+     * @param rbUsuario
+     */
     @Override
     public void cargar( JTextField txtUsrCod, JTextField txtUsrIde, JFormattedTextField txtDNI,
                         JTextField txtUsrNom, JTextField txtUsrApe, JRadioButton rbAdmin, JRadioButton rbUsuario)
@@ -63,6 +78,17 @@ public class CModificarUsuario implements IModificarUsuario
         */
     }
     
+     /**
+     * Hace la validación de los campos ingresados en la interfaz
+     * @param txtUsrCod
+     * @param txtUsrIde
+     * @param txtCon
+     * @param txtRepCon
+     * @param txtDNI
+     * @param txtUsrNom
+     * @param txtUsrApe
+     * @param rbAdmin
+     */
     @Override
     public void aceptar(JTextField txtUsrCod, JTextField txtUsrIde, JPasswordField txtCon, JPasswordField txtRepCon, JFormattedTextField txtDNI, JTextField txtUsrNom, JTextField txtUsrApe, JRadioButton rbAdmin)
     {

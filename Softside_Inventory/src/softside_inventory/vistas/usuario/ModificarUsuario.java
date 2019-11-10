@@ -10,6 +10,10 @@ public class ModificarUsuario extends javax.swing.JFrame
 {
     private IModificarUsuario interfaz;
     
+    /**
+     * Carga el usuario registrado a modificar
+     * @param interfaz
+     */
     public ModificarUsuario(IModificarUsuario interfaz)
     {
         initComponents();
@@ -305,17 +309,28 @@ public class ModificarUsuario extends javax.swing.JFrame
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
+    /**
+     * Modificar un registro de usuario en la BD previa validación
+     */
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAceptarActionPerformed
     {//GEN-HEADEREND:event_btnAceptarActionPerformed
         interfaz.aceptar(this.txtUsrCod, this.txtUsrIde, this.txtCon, this.txtRepCon, this.txtDNI, this.txtUsrNom, this.txtUsrApe, this.rbAdmin);
     }//GEN-LAST:event_btnAceptarActionPerformed
 
+    /**
+     * Salir de la Interfaz de Modificación de Usuario
+     * Redirige a la interfaz de Gestión de Usuario nuevamente
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCancelarActionPerformed
     {//GEN-HEADEREND:event_btnCancelarActionPerformed
         interfaz.cancelar();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    /**
+     * Salir de la Interfaz de Modificación de Usuario
+     * Redirige a la interfaz de Gestión de Usuario nuevamente
+     */
     private void formWindowClosing(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosing
     {//GEN-HEADEREND:event_formWindowClosing
         interfaz.cancelar();

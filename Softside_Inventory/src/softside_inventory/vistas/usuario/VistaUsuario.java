@@ -257,31 +257,51 @@ public class VistaUsuario extends javax.swing.JFrame
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+     /**
+     * Salir de la Interfaz de Usuario
+     * Redirige a la interfaz del Menu Principal nuevamente
+     */
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnMenuActionPerformed
     {//GEN-HEADEREND:event_btnMenuActionPerformed
         interfaz.menu();
     }//GEN-LAST:event_btnMenuActionPerformed
 
+    /**
+     * Muestra la Interfaz del Registro de Usuario
+     */
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnInsertarActionPerformed
     {//GEN-HEADEREND:event_btnInsertarActionPerformed
         interfaz.registrar();
     }//GEN-LAST:event_btnInsertarActionPerformed
 
+    /**
+     * Muestra la Interfaz de Modificación de Usuario
+     */
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnModificarActionPerformed
     {//GEN-HEADEREND:event_btnModificarActionPerformed
         interfaz.modificar(tblRegistros);
     }//GEN-LAST:event_btnModificarActionPerformed
 
+    /**
+     * Eliminar el usuario seleccionado en la tabla
+     */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEliminarActionPerformed
     {//GEN-HEADEREND:event_btnEliminarActionPerformed
         interfaz.eliminar(tblRegistros);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    /**
+     * Salir de la Interfaz de Usuario
+     * Redirige a la interfaz del Menu Principal nuevamente
+     */
     private void formWindowClosing(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosing
     {//GEN-HEADEREND:event_formWindowClosing
         interfaz.menu();
     }//GEN-LAST:event_formWindowClosing
 
+    /**
+     * Buscar el usuario según el criterio de búsqueda seleccionado
+     */
     private void jBsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBsearchActionPerformed
         // TODO add your handling code here:
         interfaz.seleccionarFila(jTextField1, tblRegistros);

@@ -2,13 +2,11 @@ package softside_inventory.controladores.usuario;
 
 import com.mxrck.autocompleter.TextAutoCompleter;
 import java.util.ArrayList;
-
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-
 import softside_inventory.controladores.CMenu;
 import softside_inventory.modelos.Usuario;
 import softside_inventory.util.Session;
@@ -21,17 +19,18 @@ import softside_inventory.vistas.usuario.VistaUsuario;
  * redireccionamiento hacia las ventanas de insercion o modificacion.
  * La funcion eliminar es realizada aqui.
  *  
- * @author Yuliana Apaza
- * @version 2.0
- * @since 2015-10-05
+ * @author SOFTSIDE
  */
-
 public class CVistaUsuario implements IVistaUsuario
 {
     private VistaUsuario ventana;
     private ArrayList<Usuario> usuarios;
     private Session user; 
     
+    /**
+     * Constructor
+     * @param user : sesión de usuario
+     */
     public CVistaUsuario(Session user)
     {
         //usuarios = Usuario.getLista();
@@ -39,6 +38,9 @@ public class CVistaUsuario implements IVistaUsuario
         this.user = user;
     }
     
+    /**
+     * Retorna a la ventana de Menu Principal.
+     */
     @Override
     public void menu()
     {
@@ -46,6 +48,9 @@ public class CVistaUsuario implements IVistaUsuario
         ventana.dispose();
     }
     
+    /**
+     * Acceso a la ventana de Registro de usuario.
+     */
     @Override
     public void registrar()
     {
@@ -55,6 +60,10 @@ public class CVistaUsuario implements IVistaUsuario
         
     }
     
+     /**
+     * Actualiza la interfaz con la carga de usuarios registrados
+     * @param tblRegistros
+     */
     @Override
     public void cargar(JTable tblRegistros)
     {
@@ -88,6 +97,9 @@ public class CVistaUsuario implements IVistaUsuario
         */
     }
     
+    /**
+     * Acceso a la ventana de Modificación de usuario.
+     */
     @Override
     public void modificar(JTable tblRegistros)
     {
@@ -117,6 +129,10 @@ public class CVistaUsuario implements IVistaUsuario
         */
     }
     
+    /**
+     * Realiza la eliminación del registro de usuario seleccionado en la tabla
+     * @param tblRegistros
+     */
     @Override
     public void eliminar(JTable tblRegistros)
     {
@@ -144,9 +160,13 @@ public class CVistaUsuario implements IVistaUsuario
         */
     }
     
-    /*
-    Realizar búsquedas y los muestra en el JTextField
+    /**
+     * 
+     * Realiza búsquedas de usuario y los muestra en la interfaz
+     * @param buscar
+     * @param tablaProducto
     */
+    @Override
     public void buscarUsuario( JTextField buscar, JTable tablaProducto)
     {
         TextAutoCompleter textAutoAcompleter = new TextAutoCompleter( buscar );
@@ -169,9 +189,14 @@ public class CVistaUsuario implements IVistaUsuario
             textAutoAcompleter.addItem(tableModel.getValueAt(k, i));
         }
     }
-    /*
-    Selecciona la busqueda realizada en la tabla
+    
+    /**
+     * 
+     * Selecciona la búsqueda realizada en la tabla de la interfaz
+     * @param buscar
+     * @param tablaProducto
     */
+    @Override
     public void seleccionarFila(JTextField buscar, JTable tablaProducto)
     {
         TableModel tableModel = tablaProducto.getModel();
