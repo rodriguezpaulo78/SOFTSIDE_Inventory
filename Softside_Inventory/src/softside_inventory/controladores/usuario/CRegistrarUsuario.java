@@ -1,5 +1,6 @@
 package softside_inventory.controladores.usuario;
 
+import com.toedter.calendar.JDateChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
@@ -62,10 +63,13 @@ public class CRegistrarUsuario implements IRegistrarUsuario
      * @param txtDNI
      * @param txtUsrNom
      * @param txtUsrApe
+     * @param txtFecNac
+     * @param txtUsrCargo
      * @param rbAdmin
      */
     @Override
-    public void aceptar(JTextField txtUsrCod, JTextField txtUsrIde, JPasswordField txtCon, JPasswordField txtRepCon, JFormattedTextField txtDNI, JTextField txtUsrNom, JTextField txtUsrApe, JRadioButton rbAdmin)
+    public void aceptar(JTextField txtUsrCod, JTextField txtUsrIde, JPasswordField txtCon, JPasswordField txtRepCon, JFormattedTextField txtDNI, 
+            JTextField txtUsrNom, JTextField txtUsrApe, JDateChooser txtFecNac, JTextField txtUsrCargo, JRadioButton rbAdmin)
     {
         String permiso = "0";
         if(rbAdmin.isSelected())

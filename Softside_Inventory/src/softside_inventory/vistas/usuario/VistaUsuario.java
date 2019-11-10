@@ -91,7 +91,7 @@ public class VistaUsuario extends javax.swing.JFrame
 
         lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("MANTENIMIENTO - USUARIO");
+        lblTitulo.setText("GESTIÓN DE USUARIO - SOFTSIDE");
 
         jTextField1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
@@ -102,14 +102,14 @@ public class VistaUsuario extends javax.swing.JFrame
 
             },
             new String [] {
-                "Codigo", "Identificador", "DNI", "Nombres", "Apellidos", "Permisos", "Estado"
+                "Codigo", "Usuario(Ide)", "DNI", "Nombres", "Apellidos", "Fecha Nac.", "Cargo", "Permisos", "Estado"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, true, true, false, false, true
+                true, false, true, true, false, true, true, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -129,12 +129,15 @@ public class VistaUsuario extends javax.swing.JFrame
             tblRegistros.getColumnModel().getColumn(2).setMinWidth(60);
             tblRegistros.getColumnModel().getColumn(2).setPreferredWidth(60);
             tblRegistros.getColumnModel().getColumn(2).setMaxWidth(60);
-            tblRegistros.getColumnModel().getColumn(5).setMinWidth(80);
-            tblRegistros.getColumnModel().getColumn(5).setPreferredWidth(80);
-            tblRegistros.getColumnModel().getColumn(5).setMaxWidth(80);
-            tblRegistros.getColumnModel().getColumn(6).setMinWidth(50);
-            tblRegistros.getColumnModel().getColumn(6).setPreferredWidth(50);
-            tblRegistros.getColumnModel().getColumn(6).setMaxWidth(50);
+            tblRegistros.getColumnModel().getColumn(5).setMinWidth(60);
+            tblRegistros.getColumnModel().getColumn(5).setPreferredWidth(60);
+            tblRegistros.getColumnModel().getColumn(5).setMaxWidth(60);
+            tblRegistros.getColumnModel().getColumn(7).setMinWidth(80);
+            tblRegistros.getColumnModel().getColumn(7).setPreferredWidth(80);
+            tblRegistros.getColumnModel().getColumn(7).setMaxWidth(80);
+            tblRegistros.getColumnModel().getColumn(8).setMinWidth(50);
+            tblRegistros.getColumnModel().getColumn(8).setPreferredWidth(50);
+            tblRegistros.getColumnModel().getColumn(8).setMaxWidth(50);
         }
 
         jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N

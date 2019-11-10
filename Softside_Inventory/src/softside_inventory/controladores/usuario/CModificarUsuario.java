@@ -1,5 +1,6 @@
 package softside_inventory.controladores.usuario;
 
+import com.toedter.calendar.JDateChooser;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
@@ -52,12 +53,15 @@ public class CModificarUsuario implements IModificarUsuario
      * @param txtDNI
      * @param txtUsrNom
      * @param txtUsrApe
+     * @param txtFecNac
+     * @param txtUsrCargo
      * @param rbAdmin
      * @param rbUsuario
      */
     @Override
     public void cargar( JTextField txtUsrCod, JTextField txtUsrIde, JFormattedTextField txtDNI,
-                        JTextField txtUsrNom, JTextField txtUsrApe, JRadioButton rbAdmin, JRadioButton rbUsuario)
+                        JTextField txtUsrNom, JTextField txtUsrApe, JDateChooser txtFecNac, JTextField txtUsrCargo,
+                        JRadioButton rbAdmin, JRadioButton rbUsuario)
     {
         /*
         txtUsrCod.setText(u.getUsrCod());
@@ -87,10 +91,13 @@ public class CModificarUsuario implements IModificarUsuario
      * @param txtDNI
      * @param txtUsrNom
      * @param txtUsrApe
+     * @param txtFecNac
      * @param rbAdmin
+     * @param txtUsrCargo
      */
     @Override
-    public void aceptar(JTextField txtUsrCod, JTextField txtUsrIde, JPasswordField txtCon, JPasswordField txtRepCon, JFormattedTextField txtDNI, JTextField txtUsrNom, JTextField txtUsrApe, JRadioButton rbAdmin)
+    public void aceptar(JTextField txtUsrCod, JTextField txtUsrIde, JPasswordField txtCon, JPasswordField txtRepCon, JFormattedTextField txtDNI, 
+            JTextField txtUsrNom, JTextField txtUsrApe, JDateChooser txtFecNac, JTextField txtUsrCargo, JRadioButton rbAdmin)
     {
         /*
         String permiso = "0";
