@@ -19,7 +19,7 @@ import softside_inventory.vistas.MenuPrincipal;
 public class CMenu implements IMenu{
     
     private MenuPrincipal ventana;
-    Session user;
+    private Session user;
     
     /**
      * Controlador de MenuPrincipal del Sistema
@@ -29,10 +29,6 @@ public class CMenu implements IMenu{
     {
         this.user = session;
         ventana = new MenuPrincipal(this);
-    }
-    
-    public Session getSession(){
-        return user;
     }
     
     @Override
@@ -96,7 +92,7 @@ public class CMenu implements IMenu{
     public void usuario()
     {
         
-        new CVistaUsuario();
+        new CVistaUsuario(user);
         ventana.dispose();
     }
     

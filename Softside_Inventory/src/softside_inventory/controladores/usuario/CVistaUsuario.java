@@ -30,18 +30,18 @@ public class CVistaUsuario implements IVistaUsuario
 {
     private VistaUsuario ventana;
     private ArrayList<Usuario> usuarios;
-    Session user;
-     
-    public CVistaUsuario()
+    private Session user; 
+    
+    public CVistaUsuario(Session user)
     {
         //usuarios = Usuario.getLista();
         ventana = new VistaUsuario(this);
+        this.user = user;
     }
     
     @Override
     public void menu()
     {
-        
         new CMenu(user);
         ventana.dispose();
     }
@@ -49,14 +49,16 @@ public class CVistaUsuario implements IVistaUsuario
     @Override
     public void registrar()
     {
+       
+        new CRegistrarUsuario(user);
         ventana.dispose();
-        new CRegistrarUsuario();
         
     }
     
     @Override
     public void cargar(JTable tblRegistros)
     {
+        /*
         DefaultTableModel model = (DefaultTableModel) tblRegistros.getModel();
         model.setRowCount(0);
         
@@ -64,7 +66,7 @@ public class CVistaUsuario implements IVistaUsuario
         String estado = "";
         for(int i = 0; i < usuarios.size(); i++)
         {
-            /*
+            
             if(usuarios.get(i).getUsrPer().equals("1"))
                 permiso = "Administrador";
             else
@@ -81,14 +83,17 @@ public class CVistaUsuario implements IVistaUsuario
                                         usuarios.get(i).getUsrApe(),
                                         permiso,
                                         estado});
-            */
+            
         }
+        */
     }
     
     @Override
     public void modificar(JTable tblRegistros)
     {
+        CModificarUsuario modificar = new CModificarUsuario(user,"codigoejemplo");
         
+        /*
         int i = tblRegistros.getSelectedRow();
         if(i != -1)
         {
@@ -98,7 +103,6 @@ public class CVistaUsuario implements IVistaUsuario
             if(true)
             //if(u.getUsrEstReg().equals("1"))
             {
-                modificar = new CModificarUsuario("codigoejemplo");
                 //modificar = new CModificarUsuario(u.getUsrCod());
                 ventana.dispose();
             }
@@ -108,16 +112,18 @@ public class CVistaUsuario implements IVistaUsuario
         }
         else
             JOptionPane.showMessageDialog(null, "Seleccione un registro a modificar", "ERROR", JOptionPane.ERROR_MESSAGE);
+        */
     }
     
     @Override
     public void eliminar(JTable tblRegistros)
     {
+        /*
         int i = tblRegistros.getSelectedRow();
         if(i != -1)
         {
             Usuario u = usuarios.get(i);
-            /*
+            
             if(!u.getUsrEstReg().equals("3"))
             {
                 if(JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
@@ -129,10 +135,11 @@ public class CVistaUsuario implements IVistaUsuario
             }
             else
                 JOptionPane.showMessageDialog(null, "El registro ya está eliminado", "ERROR", JOptionPane.ERROR_MESSAGE);
-            */
+            
         }
         else
             JOptionPane.showMessageDialog(null, "Seleccione un registro a eliminar", "ERROR", JOptionPane.ERROR_MESSAGE);
+        */
     }
     
     /*

@@ -7,6 +7,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import softside_inventory.modelos.Usuario;
+import softside_inventory.util.Session;
 import softside_inventory.vistas.usuario.RegistrarUsuario;
 
 /**
@@ -22,9 +23,11 @@ import softside_inventory.vistas.usuario.RegistrarUsuario;
 public class CRegistrarUsuario implements IRegistrarUsuario
 {
     private RegistrarUsuario ventana;
+    private Session user; 
     
-    public CRegistrarUsuario()
+    public CRegistrarUsuario(Session user)
     {
+        this.user = user;
         ventana = new RegistrarUsuario(this);
     }
     
@@ -32,7 +35,7 @@ public class CRegistrarUsuario implements IRegistrarUsuario
     public void cancelar()
     {
         
-        new CVistaUsuario();
+        new CVistaUsuario(user);
         ventana.dispose();
         
     }

@@ -7,6 +7,7 @@ import javax.swing.JRadioButton;
 
 import javax.swing.JTextField;
 import softside_inventory.modelos.Usuario;
+import softside_inventory.util.Session;
 import softside_inventory.vistas.usuario.ModificarUsuario;
 
 /**
@@ -23,17 +24,19 @@ public class CModificarUsuario implements IModificarUsuario
 {
     private ModificarUsuario ventana;
     private Usuario u;
+    private Session user; 
     
-    public CModificarUsuario(String codigo)
+    public CModificarUsuario(Session user, String codigo)
     {
         //u = Usuario.buscar(codigo);
+        this.user = user;
         ventana = new ModificarUsuario(this);
     }
     
     @Override
     public void cancelar()
     {
-        new CVistaUsuario();
+        new CVistaUsuario(user);
         ventana.dispose();
     }
     
