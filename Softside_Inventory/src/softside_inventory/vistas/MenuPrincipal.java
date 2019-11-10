@@ -7,6 +7,7 @@ package softside_inventory.vistas;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+import softside_inventory.controladores.CLogin;
 import softside_inventory.controladores.CMenu;
 import softside_inventory.controladores.IMenu;
 import softside_inventory.util.Session;
@@ -370,7 +371,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         Session.remove();
         this.setVisible(false);
-        
+        new CLogin();
     }//GEN-LAST:event_itmCerrarActionPerformed
 
     private void itmAcercaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmAcercaActionPerformed

@@ -18,10 +18,11 @@ import softside_inventory.vistas.MenuPrincipal;
 public class CMenu implements IMenu{
     
     private MenuPrincipal ventana;
-    Session user = new Session();
+    Session user;
     
-    public CMenu()
+    public CMenu(Session session)
     {
+        this.user = session;
         ventana = new MenuPrincipal(this);
     }
     

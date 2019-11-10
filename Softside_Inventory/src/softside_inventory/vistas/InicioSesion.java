@@ -259,7 +259,7 @@ public class InicioSesion extends javax.swing.JFrame {
 
     private void btnSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalir1ActionPerformed
         // TODO add your handling code here:
-        dispose();
+        System.exit(0); 
     }//GEN-LAST:event_btnSalir1ActionPerformed
 
     private void itmManual1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmManual1ActionPerformed

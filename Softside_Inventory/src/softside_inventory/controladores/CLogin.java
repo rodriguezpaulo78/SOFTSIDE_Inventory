@@ -22,7 +22,6 @@ import softside_inventory.vistas.InicioSesion;
 public class CLogin implements ILogin{
     
     private InicioSesion ventana;
-    public Session session = new Session();
     
     public CLogin()
     {
@@ -47,18 +46,20 @@ public class CLogin implements ILogin{
         //Crear un Objeto JSON a partir del string JSON
         Object jsonObject = JSONValue.parse(json);
         JSONObject row =(JSONObject) jsonObject;
+        Session session = new Session();
         session.MESSAGE = row.get("message").toString();
-        session.USER_NAME = row.get("user_nombres").toString();
-        session.USER_DNI = row.get("user_dni").toString();
         
         if (session.MESSAGE.equals("SUCCESS")){
+            
             session.USER_ID = row.get("user_id").toString();
             session.USER_TIPO = row.get("user_tipo_user").toString();
+            session.USER_NAME = row.get("user_nombres").toString();
+            session.USER_DNI = row.get("user_dni").toString();
             
-            new CMenu();
+            new CMenu(session);
             ventana.dispose();
         } else {
-            new CLogin();
+            
             JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
