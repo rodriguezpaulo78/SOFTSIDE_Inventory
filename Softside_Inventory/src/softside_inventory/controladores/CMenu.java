@@ -31,13 +31,13 @@ public class CMenu implements IMenu{
         txtNombre.setText(user.getTipo() + " " + user.getName());
         txtDni.setText("DNI Nº " + user.getDni());
         String permiso = "";
-        if(user.getTipo().equals("A")){
+        if(user.getTipo().equals("administrador")){
             permiso = "Administrador";
         }else{
             permiso = "Usuario";
         }
         lblPermisos.setText(permiso);
-        if(user.getTipo().equals("U"))
+        if(user.getTipo().equals("usuario"))
         {
             btnUsuario.setEnabled(false);
             btnExistencia.setEnabled(false);
