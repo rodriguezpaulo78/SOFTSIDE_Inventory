@@ -7,12 +7,7 @@ package softside_inventory.vistas;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import softside_inventory.net.HttpNetTask;
-import org.json.simple.JSONObject;
-import softside_inventory.controladores.CLogin;
 import softside_inventory.controladores.ILogin;
-import softside_inventory.net.HostURL;
-import softside_inventory.util.Session;
 
 /**
  *
@@ -23,6 +18,7 @@ public class InicioSesion extends javax.swing.JFrame {
     private ILogin interfaz;
     /**
      * Creates new form NewJFrame
+     * @param interfaz
      */
     public InicioSesion(ILogin interfaz) {  
         initComponents();
@@ -232,11 +228,17 @@ public class InicioSesion extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Salir del Sistema
+     */
     private void itmSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmSalir1ActionPerformed
         // TODO add your handling code here:
         System.exit( 0 );
     }//GEN-LAST:event_itmSalir1ActionPerformed
 
+    /**
+     * Muestra Información Complementaria SOFTSIDE
+     */
     private void itmAcerca1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmAcerca1ActionPerformed
         // TODO add your handling code here:
         ImageIcon icon = new ImageIcon(getClass().getResource("/softside_inventory/recursos/salir.png"));
@@ -244,6 +246,11 @@ public class InicioSesion extends javax.swing.JFrame {
    
     }//GEN-LAST:event_itmAcerca1ActionPerformed
 
+    /**
+     * Ingresar al Sistema
+     * Se hace una validación por si los campos ingresados están vacíos
+     * Si no es así, llama al método logIn() que validará en la BD
+     */
     private void btnIngresar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresar1ActionPerformed
         // TODO add your handling code here:
         String usuario = txtUsuario1.getText();
@@ -257,11 +264,17 @@ public class InicioSesion extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnIngresar1ActionPerformed
 
+    /**
+     * Salir del Sistema
+     */
     private void btnSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalir1ActionPerformed
         // TODO add your handling code here:
         System.exit(0); 
     }//GEN-LAST:event_btnSalir1ActionPerformed
 
+    /**
+     * Redirige a la documentación y/o Manual de Usuario del Sistema
+     */
     private void itmManual1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmManual1ActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null, "Mostrar manual");

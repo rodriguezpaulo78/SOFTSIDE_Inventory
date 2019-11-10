@@ -5,12 +5,10 @@
  */
 package softside_inventory;
         
-import java.io.IOException;
 import softside_inventory.controladores.CLogin;
-import softside_inventory.vistas.InicioSesion;
 /**
  *
- * @author LENOVO
+ * @author SOFTSIDE
  */
 public class SOFTSIDE_Inventory {
     

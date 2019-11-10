@@ -22,6 +22,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     /**
      * Creates new form MenuPrincipal
+     * Carga los componentes que interactuarán con el usuario
+     * @param interfaz
      */
     public MenuPrincipal(IMenu interfaz) {
         initComponents();
@@ -319,54 +321,82 @@ public class MenuPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Muestra la Interfaz del Módulo de Productos
+     */
     private void btnProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductoActionPerformed
         // TODO add your handling code here:
         //interfaz.producto();
         JOptionPane.showMessageDialog(null, "Mostrar manual");
     }//GEN-LAST:event_btnProductoActionPerformed
 
+    /**
+     * Muestra la Interfaz del Módulo de Usuarios
+     */
     private void btnUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarioActionPerformed
         // TODO add your handling code here:
         //interfaz.usuario();
         JOptionPane.showMessageDialog(null, "Mostrar manual");
     }//GEN-LAST:event_btnUsuarioActionPerformed
 
+    /**
+     * Muestra la Interfaz del Módulo de Proveedores
+     */
     private void btnProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedorActionPerformed
         // TODO add your handling code here:
         //interfaz.proveedor();
         JOptionPane.showMessageDialog(null, "Mostrar manual");
     }//GEN-LAST:event_btnProveedorActionPerformed
 
+    /**
+     * Muestra la Interfaz del Módulo de Unidades
+     */
     private void btnUnidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnidadActionPerformed
         // TODO add your handling code here:
         //interfaz.unidad();
         JOptionPane.showMessageDialog(null, "Mostrar manual");
     }//GEN-LAST:event_btnUnidadActionPerformed
 
+    /**
+     * Muestra la Interfaz del Módulo de Inventarios
+     */
     private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
         // TODO add your handling code here:
         //interfaz.inventario();
         JOptionPane.showMessageDialog(null, "Mostrar manual");
     }//GEN-LAST:event_btnInventarioActionPerformed
 
+    /**
+     * Muestra la Interfaz del Módulo de Reportes: Entrada de Productos
+     */
     private void btnEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradaActionPerformed
         // TODO add your handling code here:
         //interfaz.entrada();
         JOptionPane.showMessageDialog(null, "Mostrar manual");
     }//GEN-LAST:event_btnEntradaActionPerformed
 
+    /**
+     * Muestra la Interfaz del Módulo de Reportes: Salida de Productos
+     */
     private void btnSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalidaActionPerformed
         // TODO add your handling code here:
         //interfaz.salida();
         JOptionPane.showMessageDialog(null, "Mostrar manual");
     }//GEN-LAST:event_btnSalidaActionPerformed
 
+    /**
+     * Muestra la Interfaz del Módulo de Reportes: Existencia de Productos
+     */
     private void btnExistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExistenciaActionPerformed
         // TODO add your handling code here:
         //interfaz.existenciaProducto();
         JOptionPane.showMessageDialog(null, "Mostrar manual");
     }//GEN-LAST:event_btnExistenciaActionPerformed
 
+    /**
+     * Salir de la Sesión actual, reinicia los valores de la sesión.
+     * Llama a CLogin() para mostrar la interfaz de logeo nuevamente.
+     */
     private void itmCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmCerrarActionPerformed
         // TODO add your handling code here:
         Session.remove();
@@ -374,6 +404,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
         new CLogin();
     }//GEN-LAST:event_itmCerrarActionPerformed
 
+    /**
+     * Muestra Información Complementaria SOFTSIDE
+     */
     private void itmAcercaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmAcercaActionPerformed
         // TODO add your handling code here:
         ImageIcon icon = new ImageIcon(getClass().getResource("/softside_inventory/recursos/salir.png"));
@@ -381,6 +414,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
    
     }//GEN-LAST:event_itmAcercaActionPerformed
 
+    /**
+     * Redirige a la documentación y/o Manual de Usuario del Sistema
+     */
     private void itmManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmManualActionPerformed
         // TODO add your handling code here:
         JOptionPane.showMessageDialog(null, "Mostrar manual");
