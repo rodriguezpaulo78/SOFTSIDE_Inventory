@@ -134,6 +134,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
 
         btnUsuario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnUsuario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/softside_inventory/recursos/usuario.png"))); // NOI18N
         btnUsuario.setText("USUARIO");
         btnUsuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -335,8 +336,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
      */
     private void btnUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuarioActionPerformed
         // TODO add your handling code here:
-        //interfaz.usuario();
-        JOptionPane.showMessageDialog(null, "Mostrar manual");
+        interfaz.usuario();
     }//GEN-LAST:event_btnUsuarioActionPerformed
 
     /**

@@ -5,6 +5,7 @@
  */
 package softside_inventory.controladores;
 
+import softside_inventory.controladores.usuario.CVistaUsuario;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -18,7 +19,7 @@ import softside_inventory.vistas.MenuPrincipal;
 public class CMenu implements IMenu{
     
     private MenuPrincipal ventana;
-    Session user;
+    private Session user;
     
     /**
      * Controlador de MenuPrincipal del Sistema
@@ -90,7 +91,8 @@ public class CMenu implements IMenu{
      */
     public void usuario()
     {
-        //new CUsuario();
+        
+        new CVistaUsuario(user);
         ventana.dispose();
     }
     
