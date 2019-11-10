@@ -17,6 +17,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
      * Creates new form MenuPrincipal
      */
     public MenuPrincipal() {
+        
         initComponents();
     }
 
@@ -53,7 +54,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         itmManual = new javax.swing.JMenuItem();
         itmAcerca = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 

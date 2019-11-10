@@ -5,6 +5,7 @@
  */
 package softside_inventory;
 
+import softside_inventory.vistas.InicioSesion;
 /**
  *
  * @author LENOVO
@@ -16,6 +17,7 @@ public class SOFTSIDE_Inventory {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        new InicioSesion();
     }
     
 }

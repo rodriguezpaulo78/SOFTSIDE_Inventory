@@ -5,6 +5,8 @@
  */
 package softside_inventory.vistas;
 
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import softside_inventory.net.HttpNetTask;
 import org.json.simple.JSONObject;
 import softside_inventory.controladores.CLogin;
@@ -20,10 +22,16 @@ public class InicioSesion extends javax.swing.JFrame {
     /**
      * Creates new form NewJFrame
      */
-    public InicioSesion() {
+    public InicioSesion() {  
         initComponents();
+        this.setVisible(true);
+        this.setTitle("LOGIN - SOFTSIDE: Sistema de Control de Inventarios");
+        setLocationRelativeTo(null);
     }
 
+    public InicioSesion getSesion(){
+        return this;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,7 +54,6 @@ public class InicioSesion extends javax.swing.JFrame {
         txtPass1 = new javax.swing.JPasswordField();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
-        itmConfig1 = new javax.swing.JMenuItem();
         itmSalir1 = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
         itmManual1 = new javax.swing.JMenuItem();
@@ -157,15 +164,6 @@ public class InicioSesion extends javax.swing.JFrame {
 
         jMenu3.setText("Archivo");
 
-        itmConfig1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/softside_inventory/recursos/configuracion.png"))); // NOI18N
-        itmConfig1.setText("Configuración");
-        itmConfig1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                itmConfig1ActionPerformed(evt);
-            }
-        });
-        jMenu3.add(itmConfig1);
-
         itmSalir1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/softside_inventory/recursos/salir.png"))); // NOI18N
         itmSalir1.setText("Salir");
         itmSalir1.addActionListener(new java.awt.event.ActionListener() {
@@ -180,6 +178,11 @@ public class InicioSesion extends javax.swing.JFrame {
         jMenu4.setText("Ayuda");
 
         itmManual1.setText("Ver manual");
+        itmManual1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itmManual1ActionPerformed(evt);
+            }
+        });
         jMenu4.add(itmManual1);
 
         itmAcerca1.setText("Acerca de");
@@ -231,10 +234,14 @@ public class InicioSesion extends javax.swing.JFrame {
 
     private void itmSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmSalir1ActionPerformed
         // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_itmSalir1ActionPerformed
 
     private void itmAcerca1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmAcerca1ActionPerformed
         // TODO add your handling code here:
+        ImageIcon icon = new ImageIcon(getClass().getResource("/softside_inventory/recursos/salir.png"));
+        JOptionPane.showMessageDialog(null, "Sistema de Control de Inventarios\nKARDEX - 2015\nPANALUX S.A.", "Acerca de", JOptionPane.INFORMATION_MESSAGE, icon);
+   
     }//GEN-LAST:event_itmAcerca1ActionPerformed
 
     private void btnIngresar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresar1ActionPerformed
@@ -243,62 +250,30 @@ public class InicioSesion extends javax.swing.JFrame {
         String password = new String(txtPass1.getPassword());
         
         CLogin login = new CLogin();
-        login.logIn(usuario, password);
-        
-        MenuPrincipal menuPrincipal = new MenuPrincipal();
-        this.setVisible(false);
-        menuPrincipal.setVisible(true);
+        if (txtUsuario1.getText().equals("")||txtPass1.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "No pueden estar campos vacios");
+        }
+        else {
+            dispose();
+            login.logIn(usuario, password);
+            
+        }
     }//GEN-LAST:event_btnIngresar1ActionPerformed
 
     private void btnSalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalir1ActionPerformed
         // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_btnSalir1ActionPerformed
 
-    private void itmConfig1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmConfig1ActionPerformed
+    private void itmManual1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmManual1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_itmConfig1ActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InicioSesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InicioSesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InicioSesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InicioSesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new InicioSesion().setVisible(true);
-            }
-        });
-    }
+        JOptionPane.showMessageDialog(null, "Mostrar manual");
+    }//GEN-LAST:event_itmManual1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIngresar1;
     private javax.swing.JButton btnSalir1;
     private javax.swing.JMenuItem itmAcerca1;
-    private javax.swing.JMenuItem itmConfig1;
     private javax.swing.JMenuItem itmManual1;
     private javax.swing.JMenuItem itmSalir1;
     private javax.swing.JLabel jLabel5;

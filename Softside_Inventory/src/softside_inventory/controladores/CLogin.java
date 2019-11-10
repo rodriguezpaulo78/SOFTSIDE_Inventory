@@ -12,12 +12,16 @@ import org.json.simple.JSONValue;
 import softside_inventory.net.HostURL;
 import softside_inventory.net.HttpNetTask;
 import softside_inventory.util.Session;
+import softside_inventory.vistas.MenuPrincipal;
+import softside_inventory.vistas.InicioSesion;
 
 /**
  *
  * @author Stephany
  */
 public class CLogin {
+    
+   
     
     public void logIn(String usuario, String password){
         //Creamos un objeto JSON
@@ -42,7 +46,11 @@ public class CLogin {
         if (Session.MESSAGE.equals("SUCCESS")){
             Session.USER_ID = row.get("user_id").toString();
             Session.USER_TIPO = row.get("user_tipo_user").toString();
+             
+            MenuPrincipal menuPrincipal = new MenuPrincipal();
+            menuPrincipal.setVisible(true);
         } else {
+            new InicioSesion();
             JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }
