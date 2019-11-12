@@ -137,8 +137,11 @@ public class CRegistrarUsuario implements IRegistrarUsuario
             permiso = "administrador";
         
         u.setTipo(permiso);
+                       
+        String json = u.toJSON(2);
         
-        String response = u.toJSON();
+        HttpNetTask httpConnect = new HttpNetTask();
+        String response = httpConnect.sendPost(HostURL.USUARIOS, json);
         
         getJsonRespUser(response);
         

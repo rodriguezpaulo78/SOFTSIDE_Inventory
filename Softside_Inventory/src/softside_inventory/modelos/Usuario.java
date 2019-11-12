@@ -106,9 +106,9 @@ public class Usuario {
         this.estado = estado;
     }
     
-    public String toJSON() {
+    public String toJSON(int metodo) {
         JSONObject jsonObj = new JSONObject();
-        jsonObj.put("metodo", 2);
+        jsonObj.put("metodo", metodo);
         jsonObj.put("codigo", getCodigo());
         jsonObj.put("username", getUsername());
         jsonObj.put("password", getPassword());
@@ -121,10 +121,7 @@ public class Usuario {
         
         String json = jsonObj.toString();
         
-        HttpNetTask httpConnect = new HttpNetTask();
-        String response = httpConnect.sendPost(HostURL.USUARIOS, json);
-        
-        return response;
+        return json;
     }
     
 }
