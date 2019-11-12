@@ -39,4 +39,14 @@
  		echo json_encode($json_registrar);
  	}
 
+ 	// Modificar usuario
+ 	if ($metodo == 3) {
+ 	}
+
+ 	// Listar usuario
+ 	if ($metodo == 4) {
+ 		$json_listar = $usuario->listarUsuarios();
+ 		echo json_encode($json_listar);
+ 	}
+
  ?>
