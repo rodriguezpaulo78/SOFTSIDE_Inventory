@@ -82,7 +82,7 @@ public class CVistaUsuario implements IVistaUsuario
         HttpNetTask httpConnect = new HttpNetTask();
         String response = httpConnect.sendPost(HostURL.USUARIOS, json);
         
-        ArrayList<Usuario> usuarios = getUsersJSON(response);
+        usuarios = getUsersJSON(response);
                 
         DefaultTableModel model = (DefaultTableModel) tblRegistros.getModel();
         model.setRowCount(0);
@@ -141,20 +141,16 @@ public class CVistaUsuario implements IVistaUsuario
     public void modificar(JTable tblRegistros)
     {
         //Solo para probar vista abajo es el controlador con este incluido
-        CModificarUsuario modificar = new CModificarUsuario(user,"codigoejemplo");
-        ventana.dispose();
+        //CModificarUsuario modificar = new CModificarUsuario(user,"codigoejemplo");
+        //ventana.dispose();
         
-        /*
         int i = tblRegistros.getSelectedRow();
-        if(i != -1)
-        {
+        if(i != -1) {
             Usuario u = usuarios.get(i);
             CModificarUsuario modificar;
             
-            if(true)
-            //if(u.getUsrEstReg().equals("1"))
-            {
-                //modificar = new CModificarUsuario(u.getUsrCod());
+            if(u.getEstado().equals("A")){
+                modificar = new CModificarUsuario(user, u.getCodigo());
                 ventana.dispose();
             }
             else
@@ -163,7 +159,7 @@ public class CVistaUsuario implements IVistaUsuario
         }
         else
             JOptionPane.showMessageDialog(null, "Seleccione un registro a modificar", "ERROR", JOptionPane.ERROR_MESSAGE);
-        */
+        
     }
     
     /**
@@ -206,6 +202,7 @@ public class CVistaUsuario implements IVistaUsuario
     @Override
     public void buscarUsuario( JTextField buscar, JTable tablaProducto)
     {
+        
         /*TextAutoCompleter textAutoAcompleter = new TextAutoCompleter( buscar );
         textAutoAcompleter.setMode(0); // infijo
         textAutoAcompleter.setCaseSensitive(false); //No sensible a mayúsculas
