@@ -24,6 +24,7 @@ public class Usuario {
     private String fecha_nac;
     private String cargo;
     private String tipo;
+    private String estado;
 
     public String getCodigo() {
         return codigo;
@@ -95,6 +96,14 @@ public class Usuario {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+    
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
     
     public String toJSON() {

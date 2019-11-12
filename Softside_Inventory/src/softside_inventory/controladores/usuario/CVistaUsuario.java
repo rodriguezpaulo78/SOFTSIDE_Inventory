@@ -2,13 +2,20 @@ package softside_inventory.controladores.usuario;
 
 import com.mxrck.autocompleter.TextAutoCompleter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import org.json.simple.JSONArray;
 import softside_inventory.controladores.CMenu;
 import softside_inventory.modelos.Usuario;
+import softside_inventory.net.HostURL;
+import softside_inventory.net.HttpNetTask;
 import softside_inventory.util.Session;
 import softside_inventory.vistas.usuario.VistaUsuario;
 
@@ -33,7 +40,6 @@ public class CVistaUsuario implements IVistaUsuario
      */
     public CVistaUsuario(Session user)
     {
-        //usuarios = Usuario.getLista();
         ventana = new VistaUsuario(this);
         this.user = user;
     }
@@ -67,34 +73,65 @@ public class CVistaUsuario implements IVistaUsuario
     @Override
     public void cargar(JTable tblRegistros)
     {
-        /*
+        // Solicitar lista de Usuarios al servidor
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("metodo", 4);
+        
+        String json = jsonObj.toString();
+        
+        HttpNetTask httpConnect = new HttpNetTask();
+        String response = httpConnect.sendPost(HostURL.USUARIOS, json);
+        
+        ArrayList<Usuario> usuarios = getUsersJSON(response);
+                
         DefaultTableModel model = (DefaultTableModel) tblRegistros.getModel();
         model.setRowCount(0);
         
-        String permiso = "";
-        String estado = "";
-        for(int i = 0; i < usuarios.size(); i++)
-        {
-            
-            if(usuarios.get(i).getUsrPer().equals("1"))
-                permiso = "Administrador";
-            else
-                permiso = "Usuario";
-            
-            if(usuarios.get(i).getUsrEstReg().equals("1"))
-                estado = "A";
-            else
-                estado = "*";
-            model.addRow(new Object[]{  usuarios.get(i).getUsrCod(),
-                                        usuarios.get(i).getUsrIde(),
-                                        usuarios.get(i).getUsrDni(),
-                                        usuarios.get(i).getUsrNom(),
-                                        usuarios.get(i).getUsrApe(),
-                                        permiso,
-                                        estado});
+        for(int i = 0; i < usuarios.size(); i++){
+            model.addRow(new Object[]{  usuarios.get(i).getCodigo(),
+                                        usuarios.get(i).getUsername(),
+                                        usuarios.get(i).getDNI(),
+                                        usuarios.get(i).getNombres(),
+                                        usuarios.get(i).getApellidos(),
+                                        usuarios.get(i).getFecha_nac(),
+                                        usuarios.get(i).getCargo(),
+                                        usuarios.get(i).getTipo(),
+                                        usuarios.get(i).getEstado()});
             
         }
-        */
+    }
+    
+    /**
+     * Recibe y obtiene la lista de datos de respuesta en JSON
+     * @param json
+     * @return ArrayList<Usuario>
+     */
+    private ArrayList<Usuario> getUsersJSON(String json){
+        //Crear un Objeto JSON a partir del string JSON
+        Object jsonObject =JSONValue.parse(json);
+        //Convertir el objeto JSON en un array
+        JSONArray array = (JSONArray)jsonObject;
+        
+        ArrayList<Usuario> users = new ArrayList<Usuario>();
+        Usuario u = null;
+        //Iterar el array y extraer la información
+        for(int i=0;i<array.size();i++){
+            u = new Usuario();
+            JSONObject row =(JSONObject)array.get(i);
+            u.setCodigo(row.get("user_id").toString());
+            u.setNombres(row.get("user_nombres").toString());
+            u.setApellidos(row.get("user_apellidos").toString());
+            u.setDNI(row.get("user_dni").toString());
+            u.setFecha_nac(row.get("user_fec_nac").toString());
+            u.setCargo(row.get("user_cargo").toString());
+            u.setUsername(row.get("user_username").toString());
+            u.setTipo(row.get("user_tipo_user").toString());
+            u.setEstado(row.get("user_est_reg").toString());
+           
+            users.add(u);
+            u = null;
+        }
+        return users;
     }
     
     /**
@@ -169,7 +206,7 @@ public class CVistaUsuario implements IVistaUsuario
     @Override
     public void buscarUsuario( JTextField buscar, JTable tablaProducto)
     {
-        TextAutoCompleter textAutoAcompleter = new TextAutoCompleter( buscar );
+        /*TextAutoCompleter textAutoAcompleter = new TextAutoCompleter( buscar );
         textAutoAcompleter.setMode(0); // infijo
         textAutoAcompleter.setCaseSensitive(false); //No sensible a mayúsculas
         TableModel tableModel = tablaProducto.getModel();
@@ -187,7 +224,7 @@ public class CVistaUsuario implements IVistaUsuario
         for(int k = 0; k < row; k++)
         {
             textAutoAcompleter.addItem(tableModel.getValueAt(k, i));
-        }
+        }*/
     }
     
     /**
