@@ -138,8 +138,7 @@ public class CVistaUsuario implements IVistaUsuario
      * Acceso a la ventana de Modificación de usuario.
      */
     @Override
-    public void modificar(JTable tblRegistros)
-    {        
+    public void modificar(JTable tblRegistros) {        
         int i = tblRegistros.getSelectedRow();
         if(i != -1) {
             Usuario u = usuarios.get(i);
@@ -163,8 +162,7 @@ public class CVistaUsuario implements IVistaUsuario
      * @param tblRegistros
      */
     @Override
-    public void eliminar(JTable tblRegistros)
-    {
+    public void eliminar(JTable tblRegistros) {
         int i = tblRegistros.getSelectedRow();
         if(i != -1)
         {
