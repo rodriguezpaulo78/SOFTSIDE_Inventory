@@ -20,5 +20,5 @@ public interface IVistaUsuario
     public void modificar(JTable tblRegistros);
     public void eliminar(JTable tblRegistros);
     public void buscarUsuario( JTextField buscar, JTable tablaProducto, JComboBox jbcBuscar);
-    public void seleccionarFila(JTextField buscar, JTable tablaProducto);
+    public void seleccionarFila(JTextField buscar, JTable tablaProducto, JComboBox jbcBuscar);
 }

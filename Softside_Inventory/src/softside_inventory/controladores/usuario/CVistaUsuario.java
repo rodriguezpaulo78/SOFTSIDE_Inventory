@@ -237,9 +237,10 @@ public class CVistaUsuario implements IVistaUsuario
         
 	for(i = 0; i < column; i++)
         {
-            if(filtro.compareTo(tableModel.getColumnName(i)) == 0)
+            if(filtro.equals(tableModel.getColumnName(i)))
                 break;
         }
+        
         int row = tableModel.getRowCount();
         for(int k = 0; k < row; k++)
         {
@@ -251,35 +252,73 @@ public class CVistaUsuario implements IVistaUsuario
      * 
      * Selecciona la búsqueda realizada en la tabla de la interfaz
      * @param buscar
-     * @param tablaProducto
+     * @param tblRegistros
+     * @param jbcBuscar
     */
     @Override
-    public void seleccionarFila(JTextField buscar, JTable tablaProducto)
+    public void seleccionarFila(JTextField buscar, JTable tblRegistros, JComboBox jbcBuscar)
     {
-        TableModel tableModel = tablaProducto.getModel();
+        TableModel tableModel = tblRegistros.getModel();
         String dato = buscar.getText();
-        String filtro = "Nombre";
-        int col;
-		int column = tableModel.getColumnCount();
-        for(col = 0; col < column; col++)
-            if(filtro.compareTo(tableModel.getColumnName(col)) == 0)
-                break;
-        int row;
-        try
-        {
-			int rowC = tableModel.getRowCount();
-            for(row = 0; row < rowC; row++)
-                if(dato.compareTo((String) tableModel.getValueAt(row, col)) == 0)
-                    break;
+        String filtro = jbcBuscar.getSelectedItem().toString();
+        
+        // Enviar los datos de búsqueda al servidor
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("metodo", 7);
+        jsonObj.put("dato", dato);
+        jsonObj.put("filtro", filtro);
 
-            if(row == 0)
-                tablaProducto.changeSelection(0,0,false,true);
-            else
-                tablaProducto.getSelectionModel().setSelectionInterval(row - 1, row);
-        }
-        catch(Exception e)
-        {
+        String json = jsonObj.toString();
+
+        HttpNetTask httpConnect = new HttpNetTask();
+        String response = httpConnect.sendPost(HostURL.USUARIOS, json);
+        
+        ArrayList<Usuario> u = getJsonSearchUser(response);
+        
+        int col = 0;
+        
+        int row;
+        try {
+            int rowC = tableModel.getRowCount();
+            
+            for (row = 0; row < rowC; row++) {
+                if (u.get(0).getCodigo().compareTo((String) tableModel.getValueAt(row, col)) == 0) {
+                    break;
+                }
+            }
+
+            if (row == 0) {
+                tblRegistros.changeSelection(0, 0, false, true);
+            } else {
+                tblRegistros.getSelectionModel().setSelectionInterval(row - 1, row);
+            }
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se encontraron los datos buscados", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
+    }
+    
+    /**
+     * Recibe y obtiene la lista de datos de respuesta en JSON
+     * @param json
+     * @return ArrayList<Usuario>
+     */
+    private ArrayList<Usuario> getJsonSearchUser(String json){
+        //Crear un Objeto JSON a partir del string JSON
+        Object jsonObject =JSONValue.parse(json);
+        //Convertir el objeto JSON en un array
+        JSONArray array = (JSONArray)jsonObject;
+        
+        ArrayList<Usuario> users = new ArrayList<Usuario>();
+        Usuario u = null;
+        //Iterar el array y extraer la información
+        for(int i=0;i<array.size();i++){
+            u = new Usuario();
+            JSONObject row =(JSONObject)array.get(i);
+            u.setCodigo(row.get("user_id").toString());
+           
+            users.add(u);
+            u = null;
+        }
+        return users;
     }
 }

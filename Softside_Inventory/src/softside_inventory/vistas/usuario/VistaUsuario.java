@@ -95,11 +95,6 @@ public class VistaUsuario extends javax.swing.JFrame
         lblTitulo.setText("GESTIÓN DE USUARIO - SOFTSIDE");
 
         jTextField1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -322,13 +317,9 @@ public class VistaUsuario extends javax.swing.JFrame
             JOptionPane.showMessageDialog(null, "No pueden estar campos vacios");
         }
         else {
-            interfaz.seleccionarFila(jTextField1, tblRegistros);
+            interfaz.seleccionarFila(jTextField1, tblRegistros, jbcBuscar);
         }
     }//GEN-LAST:event_jBsearchActionPerformed
-
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jbcBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbcBuscarActionPerformed
         // TODO add your handling code here:
