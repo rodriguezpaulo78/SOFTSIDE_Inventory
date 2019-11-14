@@ -39,4 +39,50 @@
  		echo json_encode($json_registrar);
  	}
 
+ 	// Modificar usuario
+ 	if ($metodo == 3) {
+ 		$codigo = $getDatos->codigo;
+ 		$username = $getDatos->username;
+ 		$password = $getDatos->password;
+ 		$dni = $getDatos->dni;
+ 		$nombres = $getDatos->nombres;
+ 		$apellidos = $getDatos->apellidos;
+ 		$fecha_nac = $getDatos->fecha_nac;
+ 		$cargo = $getDatos->cargo;
+ 		$tipo = $getDatos->tipo;
+
+ 		$datos=[$codigo, $nombres, $apellidos, $dni, $fecha_nac, $cargo, $username, $password, $tipo];
+
+ 		$json_modificar = $usuario->modificarUsuario($datos);
+ 		echo json_encode($json_modificar);
+ 	}
+
+ 	// Listar usuarios
+ 	if ($metodo == 4) {
+ 		$json_listar = $usuario->listarUsuarios();
+ 		echo json_encode($json_listar);
+ 	}
+
+ 	// Listar usuario por codigo
+ 	if ($metodo == 5) {
+ 		$codigo = $getDatos->codigo;
+ 		$json_list = $usuario->getUserByCod($codigo);
+ 		echo json_encode($json_list);
+ 	}
+
+ 	// Eliminar usuario
+ 	if ($metodo == 6) {
+ 		$codigo = $getDatos->codigo;
+ 		$json_eliminar = $usuario->eliminarUsuario($codigo);
+ 		echo json_encode($json_eliminar);
+ 	}
+
+ 	// Buscar usuario
+ 	if ($metodo == 7) {
+ 		$dato = $getDatos->dato;
+ 		$filtro = $getDatos->filtro;
+ 		$json_buscar = $usuario->buscarUsuario($dato, $filtro);
+ 		echo json_encode($json_buscar);
+ 	}
+
  ?>

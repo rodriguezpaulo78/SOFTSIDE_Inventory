@@ -17,6 +17,12 @@ import java.net.URL;
  */
 public class HttpNetTask {
     
+    /**
+     * Recibe la direccion url y los datos que enviara
+     * @param url
+     * @param json
+     * @return String response
+     */
     public String sendPost(String url, String json){
         StringBuilder response = new StringBuilder();
         

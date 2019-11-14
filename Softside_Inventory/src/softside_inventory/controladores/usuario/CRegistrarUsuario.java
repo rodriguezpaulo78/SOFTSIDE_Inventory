@@ -75,7 +75,7 @@ public class CRegistrarUsuario implements IRegistrarUsuario
     /**
      * Recibe y obtiene los datos de respuesta en JSON
      * @param json
-     * @return String cod
+     * @return String
      */
     public String getJsonCod(String json){
         //Crear un Objeto JSON a partir del string JSON
@@ -137,13 +137,20 @@ public class CRegistrarUsuario implements IRegistrarUsuario
             permiso = "administrador";
         
         u.setTipo(permiso);
+                       
+        String json = u.toJSON(2);
         
-        String response = u.toJSON();
+        HttpNetTask httpConnect = new HttpNetTask();
+        String response = httpConnect.sendPost(HostURL.USUARIOS, json);
         
         getJsonRespUser(response);
         
     }
     
+    /**
+     * Recibe y obtiene los datos de respuesta en JSON
+     * @param json
+     */
     public void getJsonRespUser(String json){
         //Crear un Objeto JSON a partir del string JSON
         Object jsonObject = JSONValue.parse(json);

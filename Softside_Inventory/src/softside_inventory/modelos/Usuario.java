@@ -24,6 +24,7 @@ public class Usuario {
     private String fecha_nac;
     private String cargo;
     private String tipo;
+    private String estado;
 
     public String getCodigo() {
         return codigo;
@@ -97,9 +98,17 @@ public class Usuario {
         this.tipo = tipo;
     }
     
-    public String toJSON() {
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+    
+    public String toJSON(int metodo) {
         JSONObject jsonObj = new JSONObject();
-        jsonObj.put("metodo", 2);
+        jsonObj.put("metodo", metodo);
         jsonObj.put("codigo", getCodigo());
         jsonObj.put("username", getUsername());
         jsonObj.put("password", getPassword());
@@ -112,10 +121,7 @@ public class Usuario {
         
         String json = jsonObj.toString();
         
-        HttpNetTask httpConnect = new HttpNetTask();
-        String response = httpConnect.sendPost(HostURL.USUARIOS, json);
-        
-        return response;
+        return json;
     }
     
 }

@@ -28,7 +28,7 @@ public class VistaUsuario extends javax.swing.JFrame
         
         this.interfaz = interfaz;
         interfaz.cargar(this.tblRegistros);
-        interfaz.buscarUsuario(jTextField1, tblRegistros);
+        interfaz.buscarUsuario(jTextField1, tblRegistros, jbcBuscar);
     }
 
     @SuppressWarnings("unchecked")
@@ -58,7 +58,7 @@ public class VistaUsuario extends javax.swing.JFrame
             }
         }
         ;
-        jComboBox1 = new javax.swing.JComboBox();
+        jbcBuscar = new javax.swing.JComboBox();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
         btnInsertar = new javax.swing.JButton();
@@ -141,8 +141,13 @@ public class VistaUsuario extends javax.swing.JFrame
             tblRegistros.getColumnModel().getColumn(8).setMaxWidth(50);
         }
 
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Identificador", "DNI", "Nombres", "Apellidos" }));
+        jbcBuscar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jbcBuscar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Usuario(Ide)", "DNI", "Nombres", "Apellidos" }));
+        jbcBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jbcBuscarActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -224,7 +229,7 @@ public class VistaUsuario extends javax.swing.JFrame
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jbcBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jBsearch, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(12, 12, 12)
@@ -251,7 +256,7 @@ public class VistaUsuario extends javax.swing.JFrame
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jbcBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jBsearch, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -312,9 +317,14 @@ public class VistaUsuario extends javax.swing.JFrame
             JOptionPane.showMessageDialog(null, "No pueden estar campos vacios");
         }
         else {
-            interfaz.seleccionarFila(jTextField1, tblRegistros);
+            interfaz.seleccionarFila(jTextField1, tblRegistros, jbcBuscar);
         }
     }//GEN-LAST:event_jBsearchActionPerformed
+
+    private void jbcBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbcBuscarActionPerformed
+        // TODO add your handling code here:
+        interfaz.buscarUsuario(jTextField1, tblRegistros, jbcBuscar);
+    }//GEN-LAST:event_jbcBuscarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEliminar;
@@ -322,12 +332,12 @@ public class VistaUsuario extends javax.swing.JFrame
     private javax.swing.JButton btnMenu;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton jBsearch;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JComboBox jbcBuscar;
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTable tblRegistros;
     // End of variables declaration//GEN-END:variables

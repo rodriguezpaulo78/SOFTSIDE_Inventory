@@ -2,13 +2,21 @@ package softside_inventory.controladores.usuario;
 
 import com.mxrck.autocompleter.TextAutoCompleter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import org.json.simple.JSONArray;
 import softside_inventory.controladores.CMenu;
 import softside_inventory.modelos.Usuario;
+import softside_inventory.net.HostURL;
+import softside_inventory.net.HttpNetTask;
 import softside_inventory.util.Session;
 import softside_inventory.vistas.usuario.VistaUsuario;
 
@@ -33,7 +41,6 @@ public class CVistaUsuario implements IVistaUsuario
      */
     public CVistaUsuario(Session user)
     {
-        //usuarios = Usuario.getLista();
         ventana = new VistaUsuario(this);
         this.user = user;
     }
@@ -67,57 +74,79 @@ public class CVistaUsuario implements IVistaUsuario
     @Override
     public void cargar(JTable tblRegistros)
     {
-        /*
+        // Solicitar lista de Usuarios al servidor
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("metodo", 4);
+        
+        String json = jsonObj.toString();
+        
+        HttpNetTask httpConnect = new HttpNetTask();
+        String response = httpConnect.sendPost(HostURL.USUARIOS, json);
+        
+        usuarios = getUsersJSON(response);
+                
         DefaultTableModel model = (DefaultTableModel) tblRegistros.getModel();
         model.setRowCount(0);
         
-        String permiso = "";
-        String estado = "";
-        for(int i = 0; i < usuarios.size(); i++)
-        {
-            
-            if(usuarios.get(i).getUsrPer().equals("1"))
-                permiso = "Administrador";
-            else
-                permiso = "Usuario";
-            
-            if(usuarios.get(i).getUsrEstReg().equals("1"))
-                estado = "A";
-            else
-                estado = "*";
-            model.addRow(new Object[]{  usuarios.get(i).getUsrCod(),
-                                        usuarios.get(i).getUsrIde(),
-                                        usuarios.get(i).getUsrDni(),
-                                        usuarios.get(i).getUsrNom(),
-                                        usuarios.get(i).getUsrApe(),
-                                        permiso,
-                                        estado});
+        for(int i = 0; i < usuarios.size(); i++){
+            model.addRow(new Object[]{  usuarios.get(i).getCodigo(),
+                                        usuarios.get(i).getUsername(),
+                                        usuarios.get(i).getDNI(),
+                                        usuarios.get(i).getNombres(),
+                                        usuarios.get(i).getApellidos(),
+                                        usuarios.get(i).getFecha_nac(),
+                                        usuarios.get(i).getCargo(),
+                                        usuarios.get(i).getTipo(),
+                                        usuarios.get(i).getEstado()});
             
         }
-        */
+    }
+    
+    /**
+     * Recibe y obtiene la lista de datos de respuesta en JSON
+     * @param json
+     * @return ArrayList<Usuario>
+     */
+    private ArrayList<Usuario> getUsersJSON(String json){
+        //Crear un Objeto JSON a partir del string JSON
+        Object jsonObject =JSONValue.parse(json);
+        //Convertir el objeto JSON en un array
+        JSONArray array = (JSONArray)jsonObject;
+        
+        ArrayList<Usuario> users = new ArrayList<Usuario>();
+        Usuario u = null;
+        //Iterar el array y extraer la información
+        for(int i=0;i<array.size();i++){
+            u = new Usuario();
+            JSONObject row =(JSONObject)array.get(i);
+            u.setCodigo(row.get("user_id").toString());
+            u.setNombres(row.get("user_nombres").toString());
+            u.setApellidos(row.get("user_apellidos").toString());
+            u.setDNI(row.get("user_dni").toString());
+            u.setFecha_nac(row.get("user_fec_nac").toString());
+            u.setCargo(row.get("user_cargo").toString());
+            u.setUsername(row.get("user_username").toString());
+            u.setTipo(row.get("user_tipo_user").toString());
+            u.setEstado(row.get("user_est_reg").toString());
+           
+            users.add(u);
+            u = null;
+        }
+        return users;
     }
     
     /**
      * Acceso a la ventana de Modificación de usuario.
      */
     @Override
-    public void modificar(JTable tblRegistros)
-    {
-        //Solo para probar vista abajo es el controlador con este incluido
-        CModificarUsuario modificar = new CModificarUsuario(user,"codigoejemplo");
-        ventana.dispose();
-        
-        /*
+    public void modificar(JTable tblRegistros) {        
         int i = tblRegistros.getSelectedRow();
-        if(i != -1)
-        {
+        if(i != -1) {
             Usuario u = usuarios.get(i);
             CModificarUsuario modificar;
             
-            if(true)
-            //if(u.getUsrEstReg().equals("1"))
-            {
-                //modificar = new CModificarUsuario(u.getUsrCod());
+            if(u.getEstado().equals("A")){
+                modificar = new CModificarUsuario(user, u.getCodigo());
                 ventana.dispose();
             }
             else
@@ -126,7 +155,7 @@ public class CVistaUsuario implements IVistaUsuario
         }
         else
             JOptionPane.showMessageDialog(null, "Seleccione un registro a modificar", "ERROR", JOptionPane.ERROR_MESSAGE);
-        */
+        
     }
     
     /**
@@ -134,55 +163,84 @@ public class CVistaUsuario implements IVistaUsuario
      * @param tblRegistros
      */
     @Override
-    public void eliminar(JTable tblRegistros)
-    {
-        /*
+    public void eliminar(JTable tblRegistros) {
         int i = tblRegistros.getSelectedRow();
         if(i != -1)
         {
             Usuario u = usuarios.get(i);
             
-            if(!u.getUsrEstReg().equals("3"))
+            if(u.getEstado().equals("A"))
             {
                 if(JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
                 {
                     DefaultTableModel model = (DefaultTableModel) tblRegistros.getModel();
-                    u.eliminar();
-                    model.setValueAt("*", i, 6);
+                    
+                    // Enviar codigo del usuario al servidor
+                    JSONObject jsonObj = new JSONObject();
+                    jsonObj.put("metodo", 6);
+                    jsonObj.put("codigo", u.getCodigo());
+                    
+                    String json = jsonObj.toString();
+                    
+                    HttpNetTask httpConnect = new HttpNetTask();
+                    String response = httpConnect.sendPost(HostURL.USUARIOS, json);
+                    getJsonDeleteUser(response);
+                    u.setEstado("I");
+                    
+                    model.setValueAt("I", i, 8);
                 }
             }
             else
-                JOptionPane.showMessageDialog(null, "El registro ya está eliminado", "ERROR", JOptionPane.ERROR_MESSAGE);
-            
+                JOptionPane.showMessageDialog(null, "El usuario ya está eliminado", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         else
-            JOptionPane.showMessageDialog(null, "Seleccione un registro a eliminar", "ERROR", JOptionPane.ERROR_MESSAGE);
-        */
+            JOptionPane.showMessageDialog(null, "Seleccione un usuario a eliminar", "ERROR", JOptionPane.ERROR_MESSAGE);
+        
+    }
+    
+    /**
+     * Recibe y obtiene los datos de respuesta en JSON
+     * @param json
+     */
+    public void getJsonDeleteUser(String json){
+        //Crear un Objeto JSON a partir del string JSON
+        Object jsonObject = JSONValue.parse(json);
+        JSONObject row =(JSONObject) jsonObject;
+        
+        String mensaje = row.get("message").toString();
+        
+        if (mensaje.equals("SUCCESS")) {
+            JOptionPane.showMessageDialog(null, "Usuario eliminado.", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al eliminar.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     /**
      * 
      * Realiza búsquedas de usuario y los muestra en la interfaz
      * @param buscar
-     * @param tablaProducto
+     * @param tblRegistros
+     * @param jbcBuscar
     */
     @Override
-    public void buscarUsuario( JTextField buscar, JTable tablaProducto)
-    {
+    public void buscarUsuario( JTextField buscar, JTable tblRegistros, JComboBox jbcBuscar)
+    {       
         TextAutoCompleter textAutoAcompleter = new TextAutoCompleter( buscar );
         textAutoAcompleter.setMode(0); // infijo
         textAutoAcompleter.setCaseSensitive(false); //No sensible a mayúsculas
-        TableModel tableModel = tablaProducto.getModel();
-        String filtro = "Nombre";
+        TableModel tableModel = tblRegistros.getModel();
+        String filtro = jbcBuscar.getSelectedItem().toString();
         
         int i;
         int column = tableModel.getColumnCount();
         
 	for(i = 0; i < column; i++)
         {
-            if(filtro.compareTo(tableModel.getColumnName(i)) == 0)
+            if(filtro.equals(tableModel.getColumnName(i)))
                 break;
         }
+        
         int row = tableModel.getRowCount();
         for(int k = 0; k < row; k++)
         {
@@ -194,35 +252,73 @@ public class CVistaUsuario implements IVistaUsuario
      * 
      * Selecciona la búsqueda realizada en la tabla de la interfaz
      * @param buscar
-     * @param tablaProducto
+     * @param tblRegistros
+     * @param jbcBuscar
     */
     @Override
-    public void seleccionarFila(JTextField buscar, JTable tablaProducto)
+    public void seleccionarFila(JTextField buscar, JTable tblRegistros, JComboBox jbcBuscar)
     {
-        TableModel tableModel = tablaProducto.getModel();
+        TableModel tableModel = tblRegistros.getModel();
         String dato = buscar.getText();
-        String filtro = "Nombre";
-        int col;
-		int column = tableModel.getColumnCount();
-        for(col = 0; col < column; col++)
-            if(filtro.compareTo(tableModel.getColumnName(col)) == 0)
-                break;
-        int row;
-        try
-        {
-			int rowC = tableModel.getRowCount();
-            for(row = 0; row < rowC; row++)
-                if(dato.compareTo((String) tableModel.getValueAt(row, col)) == 0)
-                    break;
+        String filtro = jbcBuscar.getSelectedItem().toString();
+        
+        // Enviar los datos de búsqueda al servidor
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("metodo", 7);
+        jsonObj.put("dato", dato);
+        jsonObj.put("filtro", filtro);
 
-            if(row == 0)
-                tablaProducto.changeSelection(0,0,false,true);
-            else
-                tablaProducto.getSelectionModel().setSelectionInterval(row - 1, row);
-        }
-        catch(Exception e)
-        {
+        String json = jsonObj.toString();
+
+        HttpNetTask httpConnect = new HttpNetTask();
+        String response = httpConnect.sendPost(HostURL.USUARIOS, json);
+        
+        ArrayList<Usuario> u = getJsonSearchUser(response);
+        
+        int col = 0;
+        
+        int row;
+        try {
+            int rowC = tableModel.getRowCount();
+            
+            for (row = 0; row < rowC; row++) {
+                if (u.get(0).getCodigo().compareTo((String) tableModel.getValueAt(row, col)) == 0) {
+                    break;
+                }
+            }
+
+            if (row == 0) {
+                tblRegistros.changeSelection(0, 0, false, true);
+            } else {
+                tblRegistros.getSelectionModel().setSelectionInterval(row - 1, row);
+            }
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "No se encontraron los datos buscados", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
+    }
+    
+    /**
+     * Recibe y obtiene la lista de datos de respuesta en JSON
+     * @param json
+     * @return ArrayList<Usuario>
+     */
+    private ArrayList<Usuario> getJsonSearchUser(String json){
+        //Crear un Objeto JSON a partir del string JSON
+        Object jsonObject =JSONValue.parse(json);
+        //Convertir el objeto JSON en un array
+        JSONArray array = (JSONArray)jsonObject;
+        
+        ArrayList<Usuario> users = new ArrayList<Usuario>();
+        Usuario u = null;
+        //Iterar el array y extraer la información
+        for(int i=0;i<array.size();i++){
+            u = new Usuario();
+            JSONObject row =(JSONObject)array.get(i);
+            u.setCodigo(row.get("user_id").toString());
+           
+            users.add(u);
+            u = null;
+        }
+        return users;
     }
 }
