@@ -139,11 +139,7 @@ public class CVistaUsuario implements IVistaUsuario
      */
     @Override
     public void modificar(JTable tblRegistros)
-    {
-        //Solo para probar vista abajo es el controlador con este incluido
-        //CModificarUsuario modificar = new CModificarUsuario(user,"codigoejemplo");
-        //ventana.dispose();
-        
+    {        
         int i = tblRegistros.getSelectedRow();
         if(i != -1) {
             Usuario u = usuarios.get(i);
@@ -169,28 +165,56 @@ public class CVistaUsuario implements IVistaUsuario
     @Override
     public void eliminar(JTable tblRegistros)
     {
-        /*
         int i = tblRegistros.getSelectedRow();
         if(i != -1)
         {
             Usuario u = usuarios.get(i);
             
-            if(!u.getUsrEstReg().equals("3"))
+            if(u.getEstado().equals("A"))
             {
                 if(JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
                 {
                     DefaultTableModel model = (DefaultTableModel) tblRegistros.getModel();
-                    u.eliminar();
-                    model.setValueAt("*", i, 6);
+                    
+                    // Enviar codigo del usuario al servidor
+                    JSONObject jsonObj = new JSONObject();
+                    jsonObj.put("metodo", 6);
+                    jsonObj.put("codigo", u.getCodigo());
+                    
+                    String json = jsonObj.toString();
+                    
+                    HttpNetTask httpConnect = new HttpNetTask();
+                    String response = httpConnect.sendPost(HostURL.USUARIOS, json);
+                    getJsonDeleteUser(response);
+                    u.setEstado("I");
+                    
+                    model.setValueAt("I", i, 8);
                 }
             }
             else
-                JOptionPane.showMessageDialog(null, "El registro ya está eliminado", "ERROR", JOptionPane.ERROR_MESSAGE);
-            
+                JOptionPane.showMessageDialog(null, "El usuario ya está eliminado", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         else
-            JOptionPane.showMessageDialog(null, "Seleccione un registro a eliminar", "ERROR", JOptionPane.ERROR_MESSAGE);
-        */
+            JOptionPane.showMessageDialog(null, "Seleccione un usuario a eliminar", "ERROR", JOptionPane.ERROR_MESSAGE);
+        
+    }
+    
+    /**
+     * Recibe y obtiene los datos de respuesta en JSON
+     * @param json
+     */
+    public void getJsonDeleteUser(String json){
+        //Crear un Objeto JSON a partir del string JSON
+        Object jsonObject = JSONValue.parse(json);
+        JSONObject row =(JSONObject) jsonObject;
+        
+        String mensaje = row.get("message").toString();
+        
+        if (mensaje.equals("SUCCESS")) {
+            JOptionPane.showMessageDialog(null, "Usuario eliminado.", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al eliminar.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     /**
