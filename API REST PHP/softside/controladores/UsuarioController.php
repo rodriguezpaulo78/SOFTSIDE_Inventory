@@ -128,5 +128,37 @@ class UsuarioController{
 		
 		return $json;
 	}
+
+	public function buscarUsuario($dato, $filtro){
+		$query = "";
+
+		if ($filtro == "Usuario(Ide)")
+			$query = "SELECT user_id FROM ".$this->db_table." WHERE user_username='".$dato."'";
+		elseif ($filtro == "DNI")
+			$query = "SELECT user_id FROM ".$this->db_table." WHERE user_dni='".$dato."'";
+		elseif ($filtro == "Nombres")
+			$query = "SELECT user_id FROM ".$this->db_table." WHERE user_nombres='".$dato."'";
+		elseif ($filtro == "Apellidos")
+			$query = "SELECT user_id FROM ".$this->db_table." WHERE user_apellidos='".$dato."'";
+
+		$result = mysqli_query($this->db->getDb(),$query);
+
+		if(mysqli_num_rows($result) > 0){
+			$json = array();
+			$i = 0;
+ 			while($row = mysqli_fetch_assoc($result)){
+				$json[$i]=$row;
+				$i++;
+			 }
+			
+ 			mysqli_close($this->db->getDb());
+			return $json;
+ 		}else{
+ 			mysqli_close($this->db->getDb());
+ 			$json_message = array();
+ 			$json_message['message'] = "NOT EXISTS";
+			return $json_message;
+		}
+	}
 }
 ?>

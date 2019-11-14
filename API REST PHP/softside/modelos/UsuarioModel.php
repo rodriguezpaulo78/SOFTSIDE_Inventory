@@ -77,4 +77,12 @@
  		echo json_encode($json_eliminar);
  	}
 
+ 	// Buscar usuario
+ 	if ($metodo == 7) {
+ 		$dato = $getDatos->dato;
+ 		$filtro = $getDatos->filtro;
+ 		$json_buscar = $usuario->buscarUsuario($dato, $filtro);
+ 		echo json_encode($json_buscar);
+ 	}
+
  ?>
