@@ -4,6 +4,7 @@ import com.mxrck.autocompleter.TextAutoCompleter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -219,17 +220,17 @@ public class CVistaUsuario implements IVistaUsuario
      * 
      * Realiza búsquedas de usuario y los muestra en la interfaz
      * @param buscar
-     * @param tablaProducto
+     * @param tblRegistros
+     * @param jbcBuscar
     */
     @Override
-    public void buscarUsuario( JTextField buscar, JTable tablaProducto)
-    {
-        
-        /*TextAutoCompleter textAutoAcompleter = new TextAutoCompleter( buscar );
+    public void buscarUsuario( JTextField buscar, JTable tblRegistros, JComboBox jbcBuscar)
+    {       
+        TextAutoCompleter textAutoAcompleter = new TextAutoCompleter( buscar );
         textAutoAcompleter.setMode(0); // infijo
         textAutoAcompleter.setCaseSensitive(false); //No sensible a mayúsculas
-        TableModel tableModel = tablaProducto.getModel();
-        String filtro = "Nombre";
+        TableModel tableModel = tblRegistros.getModel();
+        String filtro = jbcBuscar.getSelectedItem().toString();
         
         int i;
         int column = tableModel.getColumnCount();
@@ -243,7 +244,7 @@ public class CVistaUsuario implements IVistaUsuario
         for(int k = 0; k < row; k++)
         {
             textAutoAcompleter.addItem(tableModel.getValueAt(k, i));
-        }*/
+        }
     }
     
     /**
