@@ -57,7 +57,7 @@
  		echo json_encode($json_modificar);
  	}
 
- 	// Listar usuario
+ 	// Listar usuarios
  	if ($metodo == 4) {
  		$json_listar = $usuario->listarUsuarios();
  		echo json_encode($json_listar);
@@ -68,6 +68,13 @@
  		$codigo = $getDatos->codigo;
  		$json_list = $usuario->getUserByCod($codigo);
  		echo json_encode($json_list);
+ 	}
+
+ 	// Eliminar usuario
+ 	if ($metodo == 6) {
+ 		$codigo = $getDatos->codigo;
+ 		$json_eliminar = $usuario->eliminarUsuario($codigo);
+ 		echo json_encode($json_eliminar);
  	}
 
  ?>

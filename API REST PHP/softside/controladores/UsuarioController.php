@@ -107,9 +107,26 @@ class UsuarioController{
  		}else{
  			mysqli_close($this->db->getDb());
  			$json_message = array();
- 			$json_message['message'] = $codigo;//"NOT EXISTS";
+ 			$json_message['message'] = "NOT EXISTS";
 			return $json_message;
 		}
+	}
+
+	public function eliminarUsuario($codigo){	
+		$json = array();
+
+		$query = "UPDATE ".$this->db_table." SET user_est_reg='I' WHERE user_id='".$codigo."'";
+
+		$deleted = mysqli_query($this->db->getDb(), $query);
+
+		if($deleted == 1){
+			$json['message'] = "SUCCESS";
+		}else{
+			$json['message'] = "FAILED";
+		}
+		mysqli_close($this->db->getDb());
+		
+		return $json;
 	}
 }
 ?>
