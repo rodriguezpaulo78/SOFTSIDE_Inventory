@@ -3,6 +3,7 @@ package softside_inventory.vistas.usuario;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
 
 import javax.swing.table.TableCellRenderer;
 import softside_inventory.controladores.usuario.IVistaUsuario;
@@ -14,6 +15,7 @@ import softside_inventory.controladores.usuario.IVistaUsuario;
 public class VistaUsuario extends javax.swing.JFrame
 {
     private IVistaUsuario interfaz;
+    private ListSelectionModel cellSelectionModel;
     
     /**
      * Carga los los usuarios registrados en el sistema
@@ -28,6 +30,10 @@ public class VistaUsuario extends javax.swing.JFrame
         
         this.interfaz = interfaz;
         interfaz.cargar(this.tblRegistros);
+        
+        cellSelectionModel = tblRegistros.getSelectionModel();
+        cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        
         interfaz.buscarUsuario(jTextField1, tblRegistros, jbcBuscar);
     }
 

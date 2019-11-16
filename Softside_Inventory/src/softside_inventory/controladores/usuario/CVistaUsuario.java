@@ -275,26 +275,31 @@ public class CVistaUsuario implements IVistaUsuario
         
         ArrayList<Usuario> u = getJsonSearchUser(response);
         
-        int col = 0;
-        
-        int row;
-        try {
-            int rowC = tableModel.getRowCount();
-            
-            for (row = 0; row < rowC; row++) {
-                if (u.get(0).getCodigo().compareTo((String) tableModel.getValueAt(row, col)) == 0) {
-                    break;
-                }
-            }
+        if (u.size() > 0) {
+            int col = 0;
 
-            if (row == 0) {
-                tblRegistros.changeSelection(0, 0, false, true);
-            } else {
-                tblRegistros.getSelectionModel().setSelectionInterval(row - 1, row);
+            int row;
+            try {
+                int rowC = tableModel.getRowCount();
+
+                for (row = 0; row < rowC; row++) {
+                    if (u.get(0).getCodigo().compareTo((String) tableModel.getValueAt(row, col)) == 0) {
+                        break;
+                    }
+                }
+
+                if (row == 0) {
+                    tblRegistros.changeSelection(0, 0, false, true);
+                } else {
+                    tblRegistros.getSelectionModel().setSelectionInterval(row - 1, row);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
+        } else {
             JOptionPane.showMessageDialog(null, "No se encontraron los datos buscados", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
+        
     }
     
     /**
@@ -312,8 +317,8 @@ public class CVistaUsuario implements IVistaUsuario
         Usuario u = null;
         //Iterar el array y extraer la información
         for(int i=0;i<array.size();i++){
+            JSONObject row =(JSONObject)array.get(i);            
             u = new Usuario();
-            JSONObject row =(JSONObject)array.get(i);
             u.setCodigo(row.get("user_id").toString());
            
             users.add(u);
