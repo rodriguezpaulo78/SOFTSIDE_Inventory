@@ -87,7 +87,7 @@ class ProveedorController{
 	}
 
 	public function getProveedorByCod($codigo){
-		$query = "SELECT prov_id, prov_raz_soc, prov_nombre_rep, prov_ruc, prov_rubro, prov_telefono, user_est_reg FROM ".$this->db_table." WHERE prov_id='".$codigo."'";
+		$query = "SELECT prov_id, prov_raz_soc, prov_nombre_rep, prov_ruc, prov_rubro, prov_telefono, prov_est_reg FROM ".$this->db_table." WHERE prov_id='".$codigo."'";
 		$result = mysqli_query($this->db->getDb(),$query);
 
 		if(mysqli_num_rows($result) > 0){
