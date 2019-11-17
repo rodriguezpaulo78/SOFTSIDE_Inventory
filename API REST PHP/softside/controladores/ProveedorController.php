@@ -68,44 +68,35 @@ class ProveedorController{
 		$query = "SELECT prov_id, prov_raz_soc, prov_nombre_rep, prov_ruc, prov_rubro, prov_telefono, prov_est_reg FROM ".$this->db_table;
 		$result = mysqli_query($this->db->getDb(),$query);
 
+		$json = array();
 		if(mysqli_num_rows($result) > 0){
-			$json = array();
 			$i = 0;
  			while($row = mysqli_fetch_assoc($result)){
 				$json[$i]=$row;
 				$i++;
 			 }
-			
- 			mysqli_close($this->db->getDb());
-			return $json;
- 		}else{
- 			mysqli_close($this->db->getDb());
- 			$json_message = array();
- 			$json_message['message'] = "EMPTY";
-			return $json_message;
 		}
+			
+ 		mysqli_close($this->db->getDb());
+		return $json;
+ 		
 	}
 
 	public function getProveedorByCod($codigo){
 		$query = "SELECT prov_id, prov_raz_soc, prov_nombre_rep, prov_ruc, prov_rubro, prov_telefono, prov_est_reg FROM ".$this->db_table." WHERE prov_id='".$codigo."'";
 		$result = mysqli_query($this->db->getDb(),$query);
 
+		$json = array();
 		if(mysqli_num_rows($result) > 0){
-			$json = array();
 			$i = 0;
  			while($row = mysqli_fetch_assoc($result)){
 				$json[$i]=$row;
 				$i++;
 			 }
-			
- 			mysqli_close($this->db->getDb());
-			return $json;
- 		}else{
- 			mysqli_close($this->db->getDb());
- 			$json_message = array();
- 			$json_message['message'] = "NOT EXISTS";
-			return $json_message;
-		}
+ 		}
+		
+		mysqli_close($this->db->getDb());
+		return $json;
 	}
 
 	public function eliminarProveedor($codigo){	
@@ -137,22 +128,16 @@ class ProveedorController{
 
 		$result = mysqli_query($this->db->getDb(),$query);
 
+		$json = array();
 		if(mysqli_num_rows($result) > 0){
-			$json = array();
 			$i = 0;
  			while($row = mysqli_fetch_assoc($result)){
 				$json[$i]=$row;
 				$i++;
 			 }
-			
- 			mysqli_close($this->db->getDb());
-			return $json;
- 		}else{
- 			mysqli_close($this->db->getDb());
- 			$json_message = array();
- 			$json_message['message'] = "NOT EXISTS";
-			return $json_message;
-		}
+ 		}
+		mysqli_close($this->db->getDb());
+		return $json;
 	}
 }
 ?>
