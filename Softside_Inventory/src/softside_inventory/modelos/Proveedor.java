@@ -84,6 +84,7 @@ public class Proveedor {
         jsonObj.put("raz_soc", getRaz_soc());
         jsonObj.put("nombre_rep", getNombre_rep());
         jsonObj.put("ruc", getRuc());
+        jsonObj.put("rubro", getRubro());
         jsonObj.put("telefono", getTelefono());
         
         String json = jsonObj.toString();

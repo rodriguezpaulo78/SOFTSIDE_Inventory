@@ -74,7 +74,7 @@ public class CModificarProveedor implements IModificarProveedor
         HttpNetTask httpConnect = new HttpNetTask();
         String response = httpConnect.sendPost(HostURL.PROVEEDORES, json);
         
-        ArrayList<Proveedor> proveedor = getUsersJSON(response);
+        ArrayList<Proveedor> proveedor = getProveedoresJSON(response);
         
         txtProvCod.setText(proveedor.get(0).getCodigo());
         txtProvRazSoc.setText(proveedor.get(0).getRaz_soc());
@@ -91,7 +91,7 @@ public class CModificarProveedor implements IModificarProveedor
      * @param json
      * @return ArrayList<Proveedor>
      */
-    private ArrayList<Proveedor> getUsersJSON(String json){
+    private ArrayList<Proveedor> getProveedoresJSON(String json){
         Object jsonObject =JSONValue.parse(json);
         JSONArray array = (JSONArray)jsonObject;
         

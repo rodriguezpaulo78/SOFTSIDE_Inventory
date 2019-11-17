@@ -186,7 +186,7 @@ public class CVistaProveedor implements IVistaProveedor
                     getJsonDeleteProveedor(response);
                     u.setEstado("I");
                     
-                    model.setValueAt("I", i, 8);
+                    model.setValueAt("I", i, 6);
                 }
             }
             else

@@ -10,7 +10,7 @@ class ProveedorController{
 
 	}
 	
-	public function getUserCod(){
+	public function getProveedorCod(){
 
 		$query = "SELECT LPAD((SELECT COUNT(*) + 1 FROM ".$this->db_table."), 5, '0') AS nextCod";
 		$result = mysqli_query($this->db->getDb(),$query);
@@ -49,8 +49,6 @@ class ProveedorController{
 
 	public function modificarProveedor($datos){	
 		$json = array();
-
-		$pass = password_hash($datos[7], PASSWORD_BCRYPT);
 
 		$query = "UPDATE ".$this->db_table." SET prov_raz_soc='$datos[1]', prov_nombre_rep='$datos[2]', prov_ruc='$datos[3]', prov_rubro='$datos[4]', prov_telefono='$datos[5]' WHERE prov_id='$datos[0]'";
 
