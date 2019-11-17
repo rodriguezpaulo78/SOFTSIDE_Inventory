@@ -83,9 +83,9 @@ public class Producto {
         jsonObj.put("codigo", getCodigo());
         jsonObj.put("nombre", getNombre());
         jsonObj.put("descripcion", getDescripcion());
-        jsonObj.put("unidad_id", getCodigo_uni());
+        jsonObj.put("codigo_uni", getCodigo_uni());
         jsonObj.put("fec_venc", getFec_venc());
-        jsonObj.put("proveedor_id", getCodigo_prov());
+        jsonObj.put("codigo_prov", getCodigo_prov());
         
         String json = jsonObj.toString();
         

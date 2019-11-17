@@ -3,7 +3,6 @@ package softside_inventory.controladores.producto;
 import com.toedter.calendar.JDateChooser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import softside_inventory.controladores.proveedor.*;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -12,12 +11,10 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import softside_inventory.modelos.Producto;
-import softside_inventory.modelos.Proveedor;
 import softside_inventory.net.HostURL;
 import softside_inventory.net.HttpNetTask;
 import softside_inventory.util.Session;
 import softside_inventory.vistas.producto.ModificarProducto;
-import softside_inventory.vistas.proveedor.ModificarProveedor;
 
 /**
  * Controlador de la modificacion de proveedor
@@ -30,7 +27,7 @@ import softside_inventory.vistas.proveedor.ModificarProveedor;
 public class CModificarProducto implements IModificarProducto
 {
     private ModificarProducto ventana;
-    private Proveedor u;
+    private Producto u;
     private Session user; 
     private String codigo;
     

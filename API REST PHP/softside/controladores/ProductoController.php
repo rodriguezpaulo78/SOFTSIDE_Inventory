@@ -65,7 +65,7 @@ class ProductoController{
 	}
 
 	public function listarProductos(){
-		$query = "SELECT prod_id, prod_nombre, prod_descripcion, unidad_id, prod_fec_venc, proveedor_id, user_est_reg FROM ".$this->db_table;
+		$query = "SELECT prod_id, prod_nombre, prod_descripcion, unidad_id, prod_fec_venc, proveedor_id, prod_est_reg FROM ".$this->db_table;
 		$result = mysqli_query($this->db->getDb(),$query);
 
 		$json = array();
@@ -82,7 +82,7 @@ class ProductoController{
 	}
 
 	public function getProductoByCod($codigo){
-		$query = "SELECT prod_id, prod_nombre, prod_descripcion, unidad_id, prod_fec_venc, proveedor_id, user_est_reg FROM ".$this->db_table." WHERE prod_id='".$codigo."'";
+		$query = "SELECT prod_id, prod_nombre, prod_descripcion, unidad_id, prod_fec_venc, proveedor_id, prod_est_reg FROM ".$this->db_table." WHERE prod_id='".$codigo."'";
 		$result = mysqli_query($this->db->getDb(),$query);
 
 		$json = array();
