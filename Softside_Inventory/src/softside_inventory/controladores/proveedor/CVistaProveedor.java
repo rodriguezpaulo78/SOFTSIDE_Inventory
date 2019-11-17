@@ -1,10 +1,7 @@
 package softside_inventory.controladores.proveedor;
 
-import softside_inventory.controladores.usuario.*;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -16,12 +13,10 @@ import org.json.simple.JSONValue;
 import org.json.simple.JSONArray;
 import softside_inventory.controladores.CMenu;
 import softside_inventory.modelos.Proveedor;
-import softside_inventory.modelos.Usuario;
 import softside_inventory.net.HostURL;
 import softside_inventory.net.HttpNetTask;
 import softside_inventory.util.Session;
 import softside_inventory.vistas.proveedor.VistaProveedor;
-import softside_inventory.vistas.usuario.VistaUsuario;
 
 /**
  * Controlador de la gestion de Proveedor
@@ -40,7 +35,7 @@ public class CVistaProveedor implements IVistaProveedor
     
     /**
      * Constructor
-     * @param user : sesión de Proveedor
+     * @param user : sesión de Usuario logeado
      */
     public CVistaProveedor(Session user)
     {
@@ -77,7 +72,7 @@ public class CVistaProveedor implements IVistaProveedor
     @Override
     public void cargar(JTable tblRegistros)
     {
-        // Solicitar lista de Usuarios al servidor
+        // Solicitar lista de Proveedores al servidor
         JSONObject jsonObj = new JSONObject();
         jsonObj.put("metodo", 4);
         
@@ -174,7 +169,7 @@ public class CVistaProveedor implements IVistaProveedor
                 {
                     DefaultTableModel model = (DefaultTableModel) tblRegistros.getModel();
                     
-                    // Enviar codigo del usuario al servidor
+                    // Enviar codigo del proveedor al servidor
                     JSONObject jsonObj = new JSONObject();
                     jsonObj.put("metodo", 6);
                     jsonObj.put("codigo", u.getCodigo());
@@ -217,7 +212,7 @@ public class CVistaProveedor implements IVistaProveedor
     
     /**
      * 
-     * Realiza búsquedas de usuario y los muestra en la interfaz
+     * Realiza búsquedas de proveedores  y los muestra en la interfaz
      * @param buscar
      * @param tblRegistros
      * @param jbcBuscar

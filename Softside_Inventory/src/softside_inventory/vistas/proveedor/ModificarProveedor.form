@@ -168,11 +168,9 @@
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="txtProvRuc" pref="284" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="txtProvNomRep" pref="284" max="32767" attributes="0"/>
-                          <Component id="txtProvRazSoc" max="32767" attributes="0"/>
-                          <Component id="txtProvCod" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="txtProvNomRep" pref="284" max="32767" attributes="0"/>
+                      <Component id="txtProvRazSoc" max="32767" attributes="0"/>
+                      <Component id="txtProvCod" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>

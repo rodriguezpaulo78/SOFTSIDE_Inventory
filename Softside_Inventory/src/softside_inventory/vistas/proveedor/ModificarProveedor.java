@@ -3,7 +3,7 @@ package softside_inventory.vistas.proveedor;
 import javax.swing.JOptionPane;
 import softside_inventory.controladores.proveedor.IModificarProveedor;
 /**
- * Vista principal de Insertar Usuario
+ * Vista principal de Modificacion de  Proveedor
  * @author SOFTSIDE
  */
 public class ModificarProveedor extends javax.swing.JFrame
@@ -291,8 +291,8 @@ public class ModificarProveedor extends javax.swing.JFrame
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
-     * Salir de la Interfaz de Registro de Usuario
-     * Redirige a la interfaz de Gestión de Usuario nuevamente
+     * Salir de la Interfaz de Registro de Proveedor
+     * Redirige a la interfaz de Gestión de Proveedor nuevamente
      */
     private void formWindowClosing(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosing
     {//GEN-HEADEREND:event_formWindowClosing

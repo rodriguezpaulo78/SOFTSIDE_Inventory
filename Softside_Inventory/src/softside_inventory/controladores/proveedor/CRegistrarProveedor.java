@@ -25,7 +25,7 @@ public class CRegistrarProveedor implements IRegistrarProveedor
     
     /**
      * Constructor de Clase
-     * @param user : sesión de usuario
+     * @param user : sesión de usuario logeado
      */
     public CRegistrarProveedor(Session user)
     {

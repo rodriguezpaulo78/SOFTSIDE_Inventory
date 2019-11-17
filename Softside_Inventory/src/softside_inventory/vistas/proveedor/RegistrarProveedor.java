@@ -3,7 +3,7 @@ package softside_inventory.vistas.proveedor;
 import softside_inventory.controladores.proveedor.IRegistrarProveedor;
 import javax.swing.JOptionPane;
 /**
- * Vista principal de Insertar Usuario
+ * Vista principal de Insertar Proveedor
  * @author SOFTSIDE
  */
 public class RegistrarProveedor extends javax.swing.JFrame
@@ -11,7 +11,7 @@ public class RegistrarProveedor extends javax.swing.JFrame
     private IRegistrarProveedor interfaz;
     
     /**
-     * Carga el codigo correspondiente al nuevo usuario
+     * Carga el codigo correspondiente al nuevo Proveedor
      * @param interfaz
      */
     public RegistrarProveedor(IRegistrarProveedor interfaz)
@@ -260,7 +260,7 @@ public class RegistrarProveedor extends javax.swing.JFrame
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Registrar un nuevo usuario en la BD previa validación
+     * Registrar un nuevo Proveedor en la BD previa validación
      */
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAceptarActionPerformed
     {//GEN-HEADEREND:event_btnAceptarActionPerformed
@@ -277,8 +277,8 @@ public class RegistrarProveedor extends javax.swing.JFrame
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     /**
-     * Salir de la Interfaz de Registro de Usuario
-     * Redirige a la interfaz de Gestión de Usuario nuevamente
+     * Salir de la Interfaz de Registro de Proveedor
+     * Redirige a la interfaz de Gestión de Proveedor nuevamente
      */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCancelarActionPerformed
     {//GEN-HEADEREND:event_btnCancelarActionPerformed
@@ -286,8 +286,8 @@ public class RegistrarProveedor extends javax.swing.JFrame
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
-     * Salir de la Interfaz de Registro de Usuario
-     * Redirige a la interfaz de Gestión de Usuario nuevamente
+     * Salir de la Interfaz de Registro de Proveedor
+     * Redirige a la interfaz de Gestión de Proveedor nuevamente
      */
     private void formWindowClosing(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosing
     {//GEN-HEADEREND:event_formWindowClosing
