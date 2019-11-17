@@ -9,6 +9,7 @@ import softside_inventory.controladores.usuario.CVistaUsuario;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import softside_inventory.controladores.proveedor.CVistaProveedor;
 import softside_inventory.util.Session;
 import softside_inventory.vistas.MenuPrincipal;
 
@@ -71,7 +72,7 @@ public class CMenu implements IMenu{
      */
     public void proveedor()
     {
-        //new CProveedor();
+        new CVistaProveedor(user);
         ventana.dispose();
     }
     

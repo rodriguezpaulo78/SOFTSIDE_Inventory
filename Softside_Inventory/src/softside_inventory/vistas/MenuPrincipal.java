@@ -143,6 +143,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
 
         btnProveedor.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnProveedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/softside_inventory/recursos/usuario.png"))); // NOI18N
         btnProveedor.setText("PROVEEDOR");
         btnProveedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -344,8 +345,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
      */
     private void btnProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedorActionPerformed
         // TODO add your handling code here:
-        //interfaz.proveedor();
-        JOptionPane.showMessageDialog(null, "Mostrar manual");
+        interfaz.proveedor();
     }//GEN-LAST:event_btnProveedorActionPerformed
 
     /**

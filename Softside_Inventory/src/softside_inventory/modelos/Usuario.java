@@ -6,8 +6,6 @@
 package softside_inventory.modelos;
 
 import org.json.simple.JSONObject;
-import softside_inventory.net.HostURL;
-import softside_inventory.net.HttpNetTask;
 
 /**
  *
