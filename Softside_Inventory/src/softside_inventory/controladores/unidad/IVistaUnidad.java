@@ -19,7 +19,7 @@ public interface IVistaUnidad {
     
     public void menu();
     public void registrar();
-    public void cargar(JTable tblRegistros);    
+    public void cargar(JTable tablaUnidad);    
     public void modificar(JTable tblRegistros);
     public void eliminar(JTable tblRegistros);
     public void buscarUnidad( JTextField buscar, JTable tablaUnidad);

@@ -8,10 +8,19 @@ package softside_inventory.controladores.unidad;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import softside_inventory.controladores.CMenu;
 import softside_inventory.modelos.Unidad;
+import softside_inventory.net.HostURL;
+import softside_inventory.net.HttpNetTask;
 import softside_inventory.util.Session;
 import softside_inventory.vistas.unidad.VistaUnidad;
+import com.mxrck.autocompleter.TextAutoCompleter;
+import javax.swing.JOptionPane;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -20,7 +29,7 @@ import softside_inventory.vistas.unidad.VistaUnidad;
 public class CVistaUnidad implements IVistaUnidad{
     
     private VistaUnidad ventana;
-    private ArrayList<Unidad> proveedores;
+    private ArrayList<Unidad> unidades;
     private Session user;
     
     /**
@@ -29,8 +38,8 @@ public class CVistaUnidad implements IVistaUnidad{
      */
     public CVistaUnidad(Session user)
     {
-        ventana = new VistaUnidad(this);
         this.user = user;
+        ventana = new VistaUnidad(this);
     }
 
     @Override
@@ -46,33 +55,56 @@ public class CVistaUnidad implements IVistaUnidad{
     }
 
     @Override
-    public void cargar(JTable tblRegistros) {
-        /*
-        // Solicitar lista de Proveedores al servidor
+    public void cargar(JTable tablaUnidad) {
+        
+        // Solicitar lista de Unidades al servidor
         JSONObject jsonObj = new JSONObject();
         jsonObj.put("metodo", 4);
         
         String json = jsonObj.toString();
         
         HttpNetTask httpConnect = new HttpNetTask();
-        String response = httpConnect.sendPost(HostURL.PROVEEDORES, json);
+        String response = httpConnect.sendPost(HostURL.UNIDADES, json);
         
-        proveedores = getProveedoresJSON(response);
+        unidades = getUnidadesJSON(response);
                 
-        DefaultTableModel model = (DefaultTableModel) tblRegistros.getModel();
+        DefaultTableModel model = (DefaultTableModel) tablaUnidad.getModel();
         model.setRowCount(0);
         
-        for(int i = 0; i < proveedores.size(); i++){
-            model.addRow(new Object[]{  proveedores.get(i).getCodigo(),
-                                        proveedores.get(i).getRaz_soc(),
-                                        proveedores.get(i).getNombre_rep(),
-                                        proveedores.get(i).getRuc(),
-                                        proveedores.get(i).getRubro(),
-                                        proveedores.get(i).getTelefono(),
-                                        proveedores.get(i).getEstado()});
+        for(int i = 0; i < unidades.size(); i++){
+            model.addRow(new Object[]{  unidades.get(i).getCodigo(),
+                                        unidades.get(i).getDescripcion(),
+                                        unidades.get(i).getEstado()});
             
         }
-        */
+        
+    }
+    
+    /**
+     * Recibe y obtiene la lista de datos de respuesta en JSON
+     * @param json
+     * @return ArrayList<Proveedor>
+     */
+    private ArrayList<Unidad> getUnidadesJSON(String json){
+        //Crear un Objeto JSON a partir del string JSON
+        Object jsonObject =JSONValue.parse(json);
+        //Convertir el objeto JSON en un array
+        JSONArray array = (JSONArray)jsonObject;
+        
+        ArrayList<Unidad> unidades = new ArrayList<Unidad>();
+        Unidad u = null;
+        //Iterar el array y extraer la información
+        for(int i=0;i<array.size();i++){
+            u = new Unidad();
+            JSONObject row =(JSONObject)array.get(i);
+            u.setCodigo(row.get("uni_id").toString());
+            u.setDescripcion(row.get("uni_descripcion").toString());
+            u.setEstado(row.get("uni_est_reg").toString());
+           
+            unidades.add(u);
+            u = null;
+        }
+        return unidades;
     }
 
     @Override

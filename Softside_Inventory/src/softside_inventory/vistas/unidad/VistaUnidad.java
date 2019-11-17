@@ -29,12 +29,12 @@ public class VistaUnidad extends javax.swing.JFrame
         setLocationRelativeTo(null);
         
         this.interfaz = interfaz;
-        interfaz.cargar(this.tblRegistros);
+        interfaz.cargar(this.tblUnidades);
         
-        cellSelectionModel = tblRegistros.getSelectionModel();
+        cellSelectionModel = tblUnidades.getSelectionModel();
         cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
-        interfaz.buscarUnidad(txtBuscar, tblRegistros);
+        interfaz.buscarUnidad(txtBuscar, tblUnidades);
     }
 
     @SuppressWarnings("unchecked")
@@ -46,7 +46,7 @@ public class VistaUnidad extends javax.swing.JFrame
         lblTitulo = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblRegistros = new javax.swing.JTable()
+        tblUnidades = new javax.swing.JTable()
         {
             public Component prepareRenderer(TableCellRenderer r, int row, int column)
             {
@@ -104,7 +104,7 @@ public class VistaUnidad extends javax.swing.JFrame
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
-        tblRegistros.setModel(new javax.swing.table.DefaultTableModel(
+        tblUnidades.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -115,29 +115,22 @@ public class VistaUnidad extends javax.swing.JFrame
             Class[] types = new Class [] {
                 java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
-            boolean[] canEdit = new boolean [] {
-                false, false, false
-            };
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
             }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
         });
-        tblRegistros.setMinimumSize(new java.awt.Dimension(255, 0));
-        tblRegistros.setPreferredSize(new java.awt.Dimension(315, 0));
-        tblRegistros.setSelectionBackground(new java.awt.Color(0, 102, 204));
-        jScrollPane1.setViewportView(tblRegistros);
-        if (tblRegistros.getColumnModel().getColumnCount() > 0) {
-            tblRegistros.getColumnModel().getColumn(0).setMinWidth(50);
-            tblRegistros.getColumnModel().getColumn(0).setPreferredWidth(50);
-            tblRegistros.getColumnModel().getColumn(0).setMaxWidth(50);
-            tblRegistros.getColumnModel().getColumn(2).setMinWidth(60);
-            tblRegistros.getColumnModel().getColumn(2).setPreferredWidth(60);
-            tblRegistros.getColumnModel().getColumn(2).setMaxWidth(60);
+        tblUnidades.setMinimumSize(new java.awt.Dimension(360, 0));
+        tblUnidades.setPreferredSize(new java.awt.Dimension(600, 0));
+        tblUnidades.setSelectionBackground(new java.awt.Color(0, 102, 204));
+        jScrollPane1.setViewportView(tblUnidades);
+        if (tblUnidades.getColumnModel().getColumnCount() > 0) {
+            tblUnidades.getColumnModel().getColumn(0).setMinWidth(50);
+            tblUnidades.getColumnModel().getColumn(0).setPreferredWidth(50);
+            tblUnidades.getColumnModel().getColumn(0).setMaxWidth(50);
+            tblUnidades.getColumnModel().getColumn(2).setMinWidth(60);
+            tblUnidades.getColumnModel().getColumn(2).setPreferredWidth(60);
+            tblUnidades.getColumnModel().getColumn(2).setMaxWidth(60);
         }
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
@@ -276,7 +269,7 @@ public class VistaUnidad extends javax.swing.JFrame
      */
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnModificarActionPerformed
     {//GEN-HEADEREND:event_btnModificarActionPerformed
-        interfaz.modificar(tblRegistros);
+        interfaz.modificar(tblUnidades);
     }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
@@ -284,7 +277,7 @@ public class VistaUnidad extends javax.swing.JFrame
      */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEliminarActionPerformed
     {//GEN-HEADEREND:event_btnEliminarActionPerformed
-        interfaz.eliminar(tblRegistros);
+        interfaz.eliminar(tblUnidades);
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
@@ -305,7 +298,7 @@ public class VistaUnidad extends javax.swing.JFrame
             JOptionPane.showMessageDialog(null, "No pueden estar el campo vacio");
         }
         else {
-            interfaz.seleccionarFila(txtBuscar, tblRegistros);
+            interfaz.seleccionarFila(txtBuscar, tblUnidades);
         }
     }//GEN-LAST:event_jBsearchActionPerformed
 
@@ -320,7 +313,7 @@ public class VistaUnidad extends javax.swing.JFrame
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblTitulo;
-    private javax.swing.JTable tblRegistros;
+    private javax.swing.JTable tblUnidades;
     private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }
