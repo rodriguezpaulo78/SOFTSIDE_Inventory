@@ -15,16 +15,18 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.json.simple.JSONArray;
 import softside_inventory.controladores.CMenu;
+import softside_inventory.modelos.Proveedor;
 import softside_inventory.modelos.Usuario;
 import softside_inventory.net.HostURL;
 import softside_inventory.net.HttpNetTask;
 import softside_inventory.util.Session;
+import softside_inventory.vistas.proveedor.VistaProveedor;
 import softside_inventory.vistas.usuario.VistaUsuario;
 
 /**
- * Controlador de la gestion de usuario
+ * Controlador de la gestion de Proveedor
  * 
- * Carga los usuarios existentes con sus datos, además de controlar el
+ * Carga los Proveedores existentes con sus datos, además de controlar el
  * redireccionamiento hacia las ventanas de insercion o modificacion.
  * La funcion eliminar es realizada aqui.
  *  
@@ -32,17 +34,17 @@ import softside_inventory.vistas.usuario.VistaUsuario;
  */
 public class CVistaProveedor implements IVistaProveedor
 {
-    private VistaUsuario ventana;
-    private ArrayList<Usuario> usuarios;
+    private VistaProveedor ventana;
+    private ArrayList<Proveedor> proveedores;
     private Session user; 
     
     /**
      * Constructor
-     * @param user : sesión de usuario
+     * @param user : sesión de Proveedor
      */
     public CVistaProveedor(Session user)
     {
-        ventana = new VistaUsuario(this);
+        ventana = new VistaProveedor(this);
         this.user = user;
     }
     
@@ -57,7 +59,7 @@ public class CVistaProveedor implements IVistaProveedor
     }
     
     /**
-     * Acceso a la ventana de Registro de usuario.
+     * Acceso a la ventana de Registro de Proveedor.
      */
     @Override
     public void registrar()
@@ -69,7 +71,7 @@ public class CVistaProveedor implements IVistaProveedor
     }
     
      /**
-     * Actualiza la interfaz con la carga de usuarios registrados
+     * Actualiza la interfaz con la carga de Proveedor registrados
      * @param tblRegistros
      */
     @Override
@@ -82,23 +84,21 @@ public class CVistaProveedor implements IVistaProveedor
         String json = jsonObj.toString();
         
         HttpNetTask httpConnect = new HttpNetTask();
-        String response = httpConnect.sendPost(HostURL.USUARIOS, json);
+        String response = httpConnect.sendPost(HostURL.PROVEEDORES, json);
         
-        usuarios = getUsersJSON(response);
+        proveedores = getProveedoresJSON(response);
                 
         DefaultTableModel model = (DefaultTableModel) tblRegistros.getModel();
         model.setRowCount(0);
         
-        for(int i = 0; i < usuarios.size(); i++){
-            model.addRow(new Object[]{  usuarios.get(i).getCodigo(),
-                                        usuarios.get(i).getUsername(),
-                                        usuarios.get(i).getDNI(),
-                                        usuarios.get(i).getNombres(),
-                                        usuarios.get(i).getApellidos(),
-                                        usuarios.get(i).getFecha_nac(),
-                                        usuarios.get(i).getCargo(),
-                                        usuarios.get(i).getTipo(),
-                                        usuarios.get(i).getEstado()});
+        for(int i = 0; i < proveedores.size(); i++){
+            model.addRow(new Object[]{  proveedores.get(i).getCodigo(),
+                                        proveedores.get(i).getRaz_soc(),
+                                        proveedores.get(i).getNombre_rep(),
+                                        proveedores.get(i).getRuc(),
+                                        proveedores.get(i).getRubro(),
+                                        proveedores.get(i).getTelefono(),
+                                        proveedores.get(i).getEstado()});
             
         }
     }
@@ -106,44 +106,42 @@ public class CVistaProveedor implements IVistaProveedor
     /**
      * Recibe y obtiene la lista de datos de respuesta en JSON
      * @param json
-     * @return ArrayList<Usuario>
+     * @return ArrayList<Proveedor>
      */
-    private ArrayList<Usuario> getUsersJSON(String json){
+    private ArrayList<Proveedor> getProveedoresJSON(String json){
         //Crear un Objeto JSON a partir del string JSON
         Object jsonObject =JSONValue.parse(json);
         //Convertir el objeto JSON en un array
         JSONArray array = (JSONArray)jsonObject;
         
-        ArrayList<Usuario> users = new ArrayList<Usuario>();
-        Usuario u = null;
+        ArrayList<Proveedor> proveedores = new ArrayList<Proveedor>();
+        Proveedor u = null;
         //Iterar el array y extraer la información
         for(int i=0;i<array.size();i++){
-            u = new Usuario();
+            u = new Proveedor();
             JSONObject row =(JSONObject)array.get(i);
-            u.setCodigo(row.get("user_id").toString());
-            u.setNombres(row.get("user_nombres").toString());
-            u.setApellidos(row.get("user_apellidos").toString());
-            u.setDNI(row.get("user_dni").toString());
-            u.setFecha_nac(row.get("user_fec_nac").toString());
-            u.setCargo(row.get("user_cargo").toString());
-            u.setUsername(row.get("user_username").toString());
-            u.setTipo(row.get("user_tipo_user").toString());
-            u.setEstado(row.get("user_est_reg").toString());
+            u.setCodigo(row.get("prov_id").toString());
+            u.setRaz_soc(row.get("prov_raz_soc").toString());
+            u.setNombre_rep(row.get("prov_nombre_rep").toString());
+            u.setRuc(row.get("prov_ruc").toString());
+            u.setRubro(row.get("prov_rubro").toString());
+            u.setTelefono(row.get("prov_telefono").toString());
+            u.setEstado(row.get("prov_est_reg").toString());
            
-            users.add(u);
+            proveedores.add(u);
             u = null;
         }
-        return users;
+        return proveedores;
     }
     
     /**
-     * Acceso a la ventana de Modificación de usuario.
+     * Acceso a la ventana de Modificación de Proveedor.
      */
     @Override
     public void modificar(JTable tblRegistros) {        
         int i = tblRegistros.getSelectedRow();
         if(i != -1) {
-            Usuario u = usuarios.get(i);
+            Proveedor u = proveedores.get(i);
             CModificarProveedor modificar;
             
             if(u.getEstado().equals("A")){
@@ -160,7 +158,7 @@ public class CVistaProveedor implements IVistaProveedor
     }
     
     /**
-     * Realiza la eliminación del registro de usuario seleccionado en la tabla
+     * Realiza la eliminación del registro de Proveedor seleccionado en la tabla
      * @param tblRegistros
      */
     @Override
@@ -168,7 +166,7 @@ public class CVistaProveedor implements IVistaProveedor
         int i = tblRegistros.getSelectedRow();
         if(i != -1)
         {
-            Usuario u = usuarios.get(i);
+            Proveedor u = proveedores.get(i);
             
             if(u.getEstado().equals("A"))
             {
@@ -184,18 +182,18 @@ public class CVistaProveedor implements IVistaProveedor
                     String json = jsonObj.toString();
                     
                     HttpNetTask httpConnect = new HttpNetTask();
-                    String response = httpConnect.sendPost(HostURL.USUARIOS, json);
-                    getJsonDeleteUser(response);
+                    String response = httpConnect.sendPost(HostURL.PROVEEDORES, json);
+                    getJsonDeleteProveedor(response);
                     u.setEstado("I");
                     
                     model.setValueAt("I", i, 8);
                 }
             }
             else
-                JOptionPane.showMessageDialog(null, "El usuario ya está eliminado", "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "El Proveedor ya está eliminado", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         else
-            JOptionPane.showMessageDialog(null, "Seleccione un usuario a eliminar", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Seleccione un Proveedor a eliminar", "ERROR", JOptionPane.ERROR_MESSAGE);
         
     }
     
@@ -203,7 +201,7 @@ public class CVistaProveedor implements IVistaProveedor
      * Recibe y obtiene los datos de respuesta en JSON
      * @param json
      */
-    public void getJsonDeleteUser(String json){
+    public void getJsonDeleteProveedor(String json){
         //Crear un Objeto JSON a partir del string JSON
         Object jsonObject = JSONValue.parse(json);
         JSONObject row =(JSONObject) jsonObject;
@@ -211,7 +209,7 @@ public class CVistaProveedor implements IVistaProveedor
         String mensaje = row.get("message").toString();
         
         if (mensaje.equals("SUCCESS")) {
-            JOptionPane.showMessageDialog(null, "Usuario eliminado.", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Proveedor eliminado.", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "Error al eliminar.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
@@ -225,7 +223,7 @@ public class CVistaProveedor implements IVistaProveedor
      * @param jbcBuscar
     */
     @Override
-    public void buscarUsuario( JTextField buscar, JTable tblRegistros, JComboBox jbcBuscar)
+    public void buscarProveedor( JTextField buscar, JTable tblRegistros, JComboBox jbcBuscar)
     {       
         TextAutoCompleter textAutoAcompleter = new TextAutoCompleter( buscar );
         textAutoAcompleter.setMode(0); // infijo
@@ -272,9 +270,9 @@ public class CVistaProveedor implements IVistaProveedor
         String json = jsonObj.toString();
 
         HttpNetTask httpConnect = new HttpNetTask();
-        String response = httpConnect.sendPost(HostURL.USUARIOS, json);
+        String response = httpConnect.sendPost(HostURL.PROVEEDORES, json);
         
-        ArrayList<Usuario> u = getJsonSearchUser(response);
+        ArrayList<Proveedor> u = getJsonSearchUser(response);
         
         if (u.size() > 0) {
             int col = 0;
@@ -306,25 +304,25 @@ public class CVistaProveedor implements IVistaProveedor
     /**
      * Recibe y obtiene la lista de datos de respuesta en JSON
      * @param json
-     * @return ArrayList<Usuario>
+     * @return ArrayList<Proveedor>
      */
-    private ArrayList<Usuario> getJsonSearchUser(String json){
+    private ArrayList<Proveedor> getJsonSearchUser(String json){
         //Crear un Objeto JSON a partir del string JSON
         Object jsonObject =JSONValue.parse(json);
         //Convertir el objeto JSON en un array
         JSONArray array = (JSONArray)jsonObject;
         
-        ArrayList<Usuario> users = new ArrayList<Usuario>();
-        Usuario u = null;
+        ArrayList<Proveedor> proveedores = new ArrayList<Proveedor>();
+        Proveedor u = null;
         //Iterar el array y extraer la información
         for(int i=0;i<array.size();i++){
             JSONObject row =(JSONObject)array.get(i);            
-            u = new Usuario();
-            u.setCodigo(row.get("user_id").toString());
+            u = new Proveedor();
+            u.setCodigo(row.get("prov_id").toString());
            
-            users.add(u);
+            proveedores.add(u);
             u = null;
         }
-        return users;
+        return proveedores;
     }
 }

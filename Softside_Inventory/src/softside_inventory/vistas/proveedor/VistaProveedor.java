@@ -10,23 +10,23 @@ import javax.swing.table.TableCellRenderer;
 import softside_inventory.controladores.proveedor.IVistaProveedor;
 
 /**
- * Vista principal de Gestion de Usuario
+ * Vista principal de Gestion de Proveedor
  * @author SOFTSIDE
  */
 public class VistaProveedor extends javax.swing.JFrame
 {
-    private IVistaUsuario interfaz;
+    private IVistaProveedor interfaz;
     private ListSelectionModel cellSelectionModel;
     
     /**
-     * Carga los los usuarios registrados en el sistema
+     * Carga los los proveedores registrados en el sistema
      * @param interfaz
      */
-    public VistaProveedor(IVistaUsuario interfaz)
+    public VistaProveedor(IVistaProveedor interfaz)
     {
         initComponents();
         this.setVisible(true);
-        this.setTitle("GESTION DE USUARIO");
+        this.setTitle("GESTION DE PROVEEDOR");
         setLocationRelativeTo(null);
         
         this.interfaz = interfaz;
@@ -35,7 +35,7 @@ public class VistaProveedor extends javax.swing.JFrame
         cellSelectionModel = tblRegistros.getSelectionModel();
         cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
-        interfaz.buscarUsuario(jTextField1, tblRegistros, jbcBuscar);
+        interfaz.buscarProveedor(jTextField1, tblRegistros, jbcBuscar);
     }
 
     @SuppressWarnings("unchecked")
@@ -99,7 +99,7 @@ public class VistaProveedor extends javax.swing.JFrame
 
         lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("GESTIÓN DE USUARIO - SOFTSIDE");
+        lblTitulo.setText("GESTIÓN DE PROVEEDOR - SOFTSIDE");
 
         jTextField1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
@@ -110,14 +110,14 @@ public class VistaProveedor extends javax.swing.JFrame
 
             },
             new String [] {
-                "Codigo", "Usuario(Ide)", "DNI", "Nombres", "Apellidos", "Fecha Nac.", "Cargo", "Permisos", "Estado"
+                "Codigo", "Razon Social", "Representante", "RUC", "Rubro", "Telefono", "Estado"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, true, true, false, true, true, false, true
+                true, false, true, true, false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -140,16 +140,13 @@ public class VistaProveedor extends javax.swing.JFrame
             tblRegistros.getColumnModel().getColumn(5).setMinWidth(60);
             tblRegistros.getColumnModel().getColumn(5).setPreferredWidth(60);
             tblRegistros.getColumnModel().getColumn(5).setMaxWidth(60);
-            tblRegistros.getColumnModel().getColumn(7).setMinWidth(80);
-            tblRegistros.getColumnModel().getColumn(7).setPreferredWidth(80);
-            tblRegistros.getColumnModel().getColumn(7).setMaxWidth(80);
-            tblRegistros.getColumnModel().getColumn(8).setMinWidth(50);
-            tblRegistros.getColumnModel().getColumn(8).setPreferredWidth(50);
-            tblRegistros.getColumnModel().getColumn(8).setMaxWidth(50);
+            tblRegistros.getColumnModel().getColumn(6).setMinWidth(50);
+            tblRegistros.getColumnModel().getColumn(6).setPreferredWidth(50);
+            tblRegistros.getColumnModel().getColumn(6).setMaxWidth(50);
         }
 
         jbcBuscar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jbcBuscar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Usuario(Ide)", "DNI", "Nombres", "Apellidos" }));
+        jbcBuscar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Razon Social", "Representante", "Rubro" }));
         jbcBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbcBuscarActionPerformed(evt);
@@ -274,7 +271,7 @@ public class VistaProveedor extends javax.swing.JFrame
     }// </editor-fold>//GEN-END:initComponents
 
      /**
-     * Salir de la Interfaz de Usuario
+     * Salir de la Interfaz de Proveedor
      * Redirige a la interfaz del Menu Principal nuevamente
      */
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnMenuActionPerformed
@@ -283,7 +280,7 @@ public class VistaProveedor extends javax.swing.JFrame
     }//GEN-LAST:event_btnMenuActionPerformed
 
     /**
-     * Muestra la Interfaz del Registro de Usuario
+     * Muestra la Interfaz del Registro de Proveedor
      */
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnInsertarActionPerformed
     {//GEN-HEADEREND:event_btnInsertarActionPerformed
@@ -291,7 +288,7 @@ public class VistaProveedor extends javax.swing.JFrame
     }//GEN-LAST:event_btnInsertarActionPerformed
 
     /**
-     * Muestra la Interfaz de Modificación de Usuario
+     * Muestra la Interfaz de Modificación de Proveedor
      */
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnModificarActionPerformed
     {//GEN-HEADEREND:event_btnModificarActionPerformed
@@ -299,7 +296,7 @@ public class VistaProveedor extends javax.swing.JFrame
     }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
-     * Eliminar el usuario seleccionado en la tabla
+     * Eliminar el Proveedor seleccionado en la tabla
      */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEliminarActionPerformed
     {//GEN-HEADEREND:event_btnEliminarActionPerformed
@@ -307,7 +304,7 @@ public class VistaProveedor extends javax.swing.JFrame
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
-     * Salir de la Interfaz de Usuario
+     * Salir de la Interfaz de Proveedor
      * Redirige a la interfaz del Menu Principal nuevamente
      */
     private void formWindowClosing(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosing
@@ -316,7 +313,7 @@ public class VistaProveedor extends javax.swing.JFrame
     }//GEN-LAST:event_formWindowClosing
 
     /**
-     * Buscar el usuario según el criterio de búsqueda seleccionado
+     * Buscar el Proveedor según el criterio de búsqueda seleccionado
      */
     private void jBsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBsearchActionPerformed
         // TODO add your handling code here:
@@ -330,7 +327,7 @@ public class VistaProveedor extends javax.swing.JFrame
 
     private void jbcBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbcBuscarActionPerformed
         // TODO add your handling code here:
-        interfaz.buscarUsuario(jTextField1, tblRegistros, jbcBuscar);
+        interfaz.buscarProveedor(jTextField1, tblRegistros, jbcBuscar);
     }//GEN-LAST:event_jbcBuscarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
