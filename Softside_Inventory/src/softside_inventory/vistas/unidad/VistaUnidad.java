@@ -255,7 +255,7 @@ public class VistaUnidad extends javax.swing.JFrame
     }// </editor-fold>//GEN-END:initComponents
 
      /**
-     * Salir de la Interfaz de Proveedor
+     * Salir de la Interfaz de Unidad
      * Redirige a la interfaz del Menu Principal nuevamente
      */
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnMenuActionPerformed
@@ -264,7 +264,7 @@ public class VistaUnidad extends javax.swing.JFrame
     }//GEN-LAST:event_btnMenuActionPerformed
 
     /**
-     * Muestra la Interfaz del Registro de Proveedor
+     * Muestra la Interfaz del Registro de Unidad
      */
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnInsertarActionPerformed
     {//GEN-HEADEREND:event_btnInsertarActionPerformed
@@ -272,7 +272,7 @@ public class VistaUnidad extends javax.swing.JFrame
     }//GEN-LAST:event_btnInsertarActionPerformed
 
     /**
-     * Muestra la Interfaz de Modificación de Proveedor
+     * Muestra la Interfaz de Modificación de Unidad
      */
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnModificarActionPerformed
     {//GEN-HEADEREND:event_btnModificarActionPerformed
@@ -280,7 +280,7 @@ public class VistaUnidad extends javax.swing.JFrame
     }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
-     * Eliminar el Proveedor seleccionado en la tabla
+     * Eliminar la Unidad seleccionada en la tabla
      */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEliminarActionPerformed
     {//GEN-HEADEREND:event_btnEliminarActionPerformed
@@ -288,7 +288,7 @@ public class VistaUnidad extends javax.swing.JFrame
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
-     * Salir de la Interfaz de Proveedor
+     * Salir de la Interfaz de Unidad
      * Redirige a la interfaz del Menu Principal nuevamente
      */
     private void formWindowClosing(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosing
@@ -297,12 +297,12 @@ public class VistaUnidad extends javax.swing.JFrame
     }//GEN-LAST:event_formWindowClosing
 
     /**
-     * Buscar el Proveedor según el criterio de búsqueda seleccionado
+     * Buscar la Unidad según su descripcion
      */
     private void jBsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBsearchActionPerformed
         // TODO add your handling code here:
         if (txtBuscar.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "No pueden estar campos vacios");
+            JOptionPane.showMessageDialog(null, "No pueden estar el campo vacio");
         }
         else {
             interfaz.seleccionarFila(txtBuscar, tblRegistros);

@@ -5,17 +5,17 @@ import softside_inventory.controladores.unidad.IModificarUnidad;
 
 
 /**
- * Vista principal de Modificar Unidad
- * <p/>
- * <img src="screenshot/UIUnidadMod.png"/>
- * @author Yuliana Apaza
- * @version 2.0
- * @since 2015-10-05
+ * Vista principal de Modificacion de  Unidad
+ * @author SOFTSIDE
  */
 public class ModificarUnidad extends javax.swing.JFrame
 {
     private IModificarUnidad interfaz;
 
+    /**
+     * Carga la unidad registrada a modificar
+     * @param interfaz
+     */
     public ModificarUnidad(IModificarUnidad interfaz)
     {
         initComponents();
@@ -173,6 +173,9 @@ public class ModificarUnidad extends javax.swing.JFrame
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Modificar un registro de unidad en la BD previa validación
+     */
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         if (txtUniDes.getText().equals("")){
             JOptionPane.showMessageDialog(null, "No pueden estar el campo vacio");
@@ -182,10 +185,18 @@ public class ModificarUnidad extends javax.swing.JFrame
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
+    /**
+     * Salir de la Interfaz de Modificación de Unidad
+     * Redirige a la interfaz de Gestión de Unidad nuevamente
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         interfaz.cancelar();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    /**
+     * Salir de la Interfaz de Modificación de Unidad
+     * Redirige a la interfaz de Gestión de Unidad nuevamente
+     */
     private void formWindowClosing(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosing
     {//GEN-HEADEREND:event_formWindowClosing
         interfaz.cancelar();

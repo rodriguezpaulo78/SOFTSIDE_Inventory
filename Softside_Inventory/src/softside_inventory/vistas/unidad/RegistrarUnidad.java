@@ -6,16 +6,16 @@ import softside_inventory.controladores.unidad.IRegistrarUnidad;
 
 /**
  * Vista principal de Insertar Unidad
- * <p/>
- * <img src="screenshot/UIUnidadIns.png"/>
- * @author Yuliana Apaza
- * @version 2.0
- * @since 2015-10-05
+ * @author SOFTSIDE
  */
 public class RegistrarUnidad extends javax.swing.JFrame
 {
     private IRegistrarUnidad interfaz;
 
+    /**
+     * Carga el codigo correspondiente a la nueva Unidad
+     * @param interfaz
+     */
     public RegistrarUnidad(IRegistrarUnidad interfaz)
     {
         initComponents();
@@ -173,6 +173,9 @@ public class RegistrarUnidad extends javax.swing.JFrame
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Registrar una nueva Unidad en la BD previa validación
+     */
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
               
         if (txtUniDes.getText().equals("")){
@@ -183,10 +186,18 @@ public class RegistrarUnidad extends javax.swing.JFrame
         }
     }//GEN-LAST:event_btnAceptarActionPerformed
 
+    /**
+     * Salir de la Interfaz de Registro de Unidad
+     * Redirige a la interfaz de Gestión de Unidad nuevamente
+     */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         interfaz.cancelar();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    /**
+     * Salir de la Interfaz de Registro de Unidad
+     * Redirige a la interfaz de Gestión de Unidad nuevamente
+     */
     private void formWindowClosing(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosing
     {//GEN-HEADEREND:event_formWindowClosing
         interfaz.cancelar();
