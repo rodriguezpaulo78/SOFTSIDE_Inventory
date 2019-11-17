@@ -47,12 +47,10 @@ class UnidadController{
 		return $json;
 	}
 
-	public function modificarUsuario($datos){	
+	public function modificarUnidad($datos){	
 		$json = array();
 
-		$pass = password_hash($datos[7], PASSWORD_BCRYPT);
-
-		$query = "UPDATE ".$this->db_table." SET user_nombres='$datos[1]', user_apellidos='$datos[2]', user_dni='$datos[3]', user_fec_nac='$datos[4]', user_cargo='$datos[5]', user_username='$datos[6]', user_password='$pass', user_tipo_user='$datos[8]' WHERE user_id='$datos[0]'";
+		$query = "UPDATE ".$this->db_table." SET uni_descripcion='$datos[1]' WHERE uni_id='$datos[0]'";
 
 		$updated = mysqli_query($this->db->getDb(), $query);
 

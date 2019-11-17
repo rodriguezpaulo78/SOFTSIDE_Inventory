@@ -31,25 +31,18 @@
  		$json_registrar = $unidad->agregarUnidad($datos);
  		echo json_encode($json_registrar);
  	}
-/*
- 	// Modificar usuario
+
+ 	// Modificar unidad
  	if ($metodo == 3) {
  		$codigo = $getDatos->codigo;
- 		$username = $getDatos->username;
- 		$password = $getDatos->password;
- 		$dni = $getDatos->dni;
- 		$nombres = $getDatos->nombres;
- 		$apellidos = $getDatos->apellidos;
- 		$fecha_nac = $getDatos->fecha_nac;
- 		$cargo = $getDatos->cargo;
- 		$tipo = $getDatos->tipo;
+ 		$descripcion = $getDatos->descripcion;
 
- 		$datos=[$codigo, $nombres, $apellidos, $dni, $fecha_nac, $cargo, $username, $password, $tipo];
+ 		$datos=[$codigo, $descripcion];
 
- 		$json_modificar = $usuario->modificarUsuario($datos);
+ 		$json_modificar = $usuario->modificarUnidad($datos);
  		echo json_encode($json_modificar);
  	}
-*/
+
  	// Listar unidades
  	if ($metodo == 4) {
  		$json_listar = $unidad->listarUnidades();
