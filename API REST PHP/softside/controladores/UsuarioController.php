@@ -72,44 +72,34 @@ class UsuarioController{
 		$query = "SELECT user_id, user_nombres, user_apellidos, user_dni, user_fec_nac, user_cargo, user_username, user_tipo_user, user_est_reg FROM ".$this->db_table;
 		$result = mysqli_query($this->db->getDb(),$query);
 
+		$json = array();
 		if(mysqli_num_rows($result) > 0){
-			$json = array();
 			$i = 0;
  			while($row = mysqli_fetch_assoc($result)){
 				$json[$i]=$row;
 				$i++;
 			 }
-			
- 			mysqli_close($this->db->getDb());
-			return $json;
- 		}else{
- 			mysqli_close($this->db->getDb());
- 			$json_message = array();
- 			$json_message['message'] = "EMPTY";
-			return $json_message;
-		}
+ 		}
+
+ 		mysqli_close($this->db->getDb());
+		return $json;
 	}
 
 	public function getUserByCod($codigo){
 		$query = "SELECT user_id, user_nombres, user_apellidos, user_dni, user_fec_nac, user_cargo, user_username, user_tipo_user, user_est_reg FROM ".$this->db_table." WHERE user_id='".$codigo."'";
 		$result = mysqli_query($this->db->getDb(),$query);
 
+		$json = array();
 		if(mysqli_num_rows($result) > 0){
-			$json = array();
 			$i = 0;
  			while($row = mysqli_fetch_assoc($result)){
 				$json[$i]=$row;
 				$i++;
 			 }
-			
- 			mysqli_close($this->db->getDb());
-			return $json;
- 		}else{
- 			mysqli_close($this->db->getDb());
- 			$json_message = array();
- 			$json_message['message'] = "NOT EXISTS";
-			return $json_message;
-		}
+ 		}
+
+ 		mysqli_close($this->db->getDb());
+		return $json;
 	}
 
 	public function eliminarUsuario($codigo){	
@@ -143,22 +133,17 @@ class UsuarioController{
 
 		$result = mysqli_query($this->db->getDb(),$query);
 
+		$json = array();
 		if(mysqli_num_rows($result) > 0){
-			$json = array();
 			$i = 0;
  			while($row = mysqli_fetch_assoc($result)){
 				$json[$i]=$row;
 				$i++;
 			 }
-			
- 			mysqli_close($this->db->getDb());
-			return $json;
- 		}else{
- 			mysqli_close($this->db->getDb());
- 			$json_message = array();
- 			$json_message['message'] = "NOT EXISTS";
-			return $json_message;
-		}
+ 		}
+
+ 		mysqli_close($this->db->getDb());
+		return $json;
 	}
 }
 ?>
