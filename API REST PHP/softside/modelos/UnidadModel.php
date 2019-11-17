@@ -49,13 +49,13 @@
  		$json_modificar = $usuario->modificarUsuario($datos);
  		echo json_encode($json_modificar);
  	}
-
- 	// Listar usuarios
+*/
+ 	// Listar unidades
  	if ($metodo == 4) {
- 		$json_listar = $usuario->listarUsuarios();
+ 		$json_listar = $unidad->listarUnidades();
  		echo json_encode($json_listar);
  	}
-
+/*
  	// Listar usuario por codigo
  	if ($metodo == 5) {
  		$codigo = $getDatos->codigo;

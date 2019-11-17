@@ -66,8 +66,8 @@ class UnidadController{
 		return $json;
 	}
 
-	public function listarUsuarios(){
-		$query = "SELECT user_id, user_nombres, user_apellidos, user_dni, user_fec_nac, user_cargo, user_username, user_tipo_user, user_est_reg FROM ".$this->db_table;
+	public function listarUnidades(){
+		$query = "SELECT uni_id, uni_descripcion, uni_est_reg FROM ".$this->db_table;
 		$result = mysqli_query($this->db->getDb(),$query);
 
 		$json = array();
