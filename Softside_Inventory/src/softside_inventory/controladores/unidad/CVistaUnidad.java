@@ -108,15 +108,15 @@ public class CVistaUnidad implements IVistaUnidad{
     }
 
     @Override
-    public void modificar(JTable tblRegistros) {
-        /*
-        int i = tblRegistros.getSelectedRow();
+    public void modificar(JTable tablaUnidad) {
+        
+        int i = tablaUnidad.getSelectedRow();
         if(i != -1) {
-            Proveedor u = proveedores.get(i);
-            CModificarProveedor modificar;
+            Unidad u = unidades.get(i);
+            CModificarUnidad modificar;
             
             if(u.getEstado().equals("A")){
-                modificar = new CModificarProveedor(user, u.getCodigo());
+                modificar = new CModificarUnidad(user, u.getCodigo());
                 ventana.dispose();
             }
             else
@@ -125,7 +125,7 @@ public class CVistaUnidad implements IVistaUnidad{
         }
         else
             JOptionPane.showMessageDialog(null, "Seleccione un registro a modificar", "ERROR", JOptionPane.ERROR_MESSAGE);
-        */
+        
     }
 
     @Override
