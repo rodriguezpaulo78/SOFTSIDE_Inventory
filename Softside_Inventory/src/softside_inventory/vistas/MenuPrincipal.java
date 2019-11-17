@@ -152,6 +152,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
 
         btnUnidad.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnUnidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/softside_inventory/recursos/unidad.png"))); // NOI18N
         btnUnidad.setText("UNIDAD");
         btnUnidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -353,8 +354,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
      */
     private void btnUnidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUnidadActionPerformed
         // TODO add your handling code here:
-        //interfaz.unidad();
-        JOptionPane.showMessageDialog(null, "Mostrar manual");
+        interfaz.unidad();
     }//GEN-LAST:event_btnUnidadActionPerformed
 
     /**
