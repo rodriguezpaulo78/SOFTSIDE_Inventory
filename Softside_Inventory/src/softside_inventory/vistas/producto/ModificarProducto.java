@@ -5,7 +5,7 @@ import softside_inventory.vistas.proveedor.*;
 import softside_inventory.controladores.producto.IModificarProducto;
 import javax.swing.JOptionPane;
 /**
- * Vista principal de Insertar Proveedor
+ * Vista principal de Modificar Producto
  * @author SOFTSIDE
  */
 public class ModificarProducto extends javax.swing.JFrame
@@ -13,7 +13,7 @@ public class ModificarProducto extends javax.swing.JFrame
     private IModificarProducto interfaz;
     
     /**
-     * Carga el codigo correspondiente al nuevo Proveedor
+     * Carga el codigo correspondiente al Producto registrado
      * @param interfaz
      */
     public ModificarProducto(IModificarProducto interfaz)
@@ -109,7 +109,7 @@ public class ModificarProducto extends javax.swing.JFrame
 
         lblTitulo2.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         lblTitulo2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo2.setText("INSERTAR");
+        lblTitulo2.setText("MODIFICAR");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -267,7 +267,7 @@ public class ModificarProducto extends javax.swing.JFrame
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Registrar un nuevo Proveedor en la BD previa validación
+     * Registrar un nuevo Producto en la BD previa validación
      */
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAceptarActionPerformed
     {//GEN-HEADEREND:event_btnAceptarActionPerformed
@@ -284,8 +284,8 @@ public class ModificarProducto extends javax.swing.JFrame
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     /**
-     * Salir de la Interfaz de Registro de Proveedor
-     * Redirige a la interfaz de Gestión de Proveedor nuevamente
+     * Salir de la Interfaz de Registro de Producto
+     * Redirige a la interfaz de Gestión de Producto nuevamente
      */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCancelarActionPerformed
     {//GEN-HEADEREND:event_btnCancelarActionPerformed
@@ -293,8 +293,8 @@ public class ModificarProducto extends javax.swing.JFrame
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
-     * Salir de la Interfaz de Registro de Proveedor
-     * Redirige a la interfaz de Gestión de Proveedor nuevamente
+     * Salir de la Interfaz de Registro de Producto
+     * Redirige a la interfaz de Gestión de Producto nuevamente
      */
     private void formWindowClosing(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosing
     {//GEN-HEADEREND:event_formWindowClosing

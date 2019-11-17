@@ -1,6 +1,5 @@
 package softside_inventory.controladores.producto;
 
-import softside_inventory.controladores.proveedor.*;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
@@ -14,17 +13,15 @@ import org.json.simple.JSONValue;
 import org.json.simple.JSONArray;
 import softside_inventory.controladores.CMenu;
 import softside_inventory.modelos.Producto;
-import softside_inventory.modelos.Proveedor;
 import softside_inventory.net.HostURL;
 import softside_inventory.net.HttpNetTask;
 import softside_inventory.util.Session;
 import softside_inventory.vistas.producto.VistaProducto;
-import softside_inventory.vistas.proveedor.VistaProveedor;
 
 /**
- * Controlador de la gestion de Proveedor
+ * Controlador de la gestion de Producto
  * 
- * Carga los Proveedores existentes con sus datos, además de controlar el
+ * Carga los Productos existentes con sus datos, además de controlar el
  * redireccionamiento hacia las ventanas de insercion o modificacion.
  * La funcion eliminar es realizada aqui.
  *  
@@ -57,7 +54,7 @@ public class CVistaProducto implements IVistaProducto
     }
     
     /**
-     * Acceso a la ventana de Registro de Proveedor.
+     * Acceso a la ventana de Registro de Producto.
      */
     @Override
     public void registrar()
@@ -69,13 +66,13 @@ public class CVistaProducto implements IVistaProducto
     }
     
      /**
-     * Actualiza la interfaz con la carga de Proveedor registrados
+     * Actualiza la interfaz con la carga de Productos registrados
      * @param tblRegistros
      */
     @Override
     public void cargar(JTable tblRegistros)
     {
-        // Solicitar lista de Proveedores al servidor
+        // Solicitar lista de Productos al servidor
         JSONObject jsonObj = new JSONObject();
         jsonObj.put("metodo", 4);
         
@@ -133,7 +130,7 @@ public class CVistaProducto implements IVistaProducto
     }
     
     /**
-     * Acceso a la ventana de Modificación de Proveedor.
+     * Acceso a la ventana de Modificación de Producto.
      */
     @Override
     public void modificar(JTable tblRegistros) {        
@@ -156,7 +153,7 @@ public class CVistaProducto implements IVistaProducto
     }
     
     /**
-     * Realiza la eliminación del registro de Proveedor seleccionado en la tabla
+     * Realiza la eliminación del registro de Producto seleccionado en la tabla
      * @param tblRegistros
      */
     @Override
@@ -172,7 +169,7 @@ public class CVistaProducto implements IVistaProducto
                 {
                     DefaultTableModel model = (DefaultTableModel) tblRegistros.getModel();
                     
-                    // Enviar codigo del proveedor al servidor
+                    // Enviar codigo del Producto al servidor
                     JSONObject jsonObj = new JSONObject();
                     jsonObj.put("metodo", 6);
                     jsonObj.put("codigo", u.getCodigo());
@@ -215,7 +212,7 @@ public class CVistaProducto implements IVistaProducto
     
     /**
      * 
-     * Realiza búsquedas de proveedores  y los muestra en la interfaz
+     * Realiza búsquedas de Productos  y los muestra en la interfaz
      * @param buscar
      * @param tblRegistros
      * @param jbcBuscar

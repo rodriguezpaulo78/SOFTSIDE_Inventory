@@ -4,7 +4,7 @@ import java.util.Calendar;
 import javax.swing.JOptionPane;
 import softside_inventory.controladores.producto.IRegistrarProducto;
 /**
- * Vista principal de Insertar Proveedor
+ * Vista principal de Insertar Producto
  * @author SOFTSIDE
  */
 public class RegistrarProducto extends javax.swing.JFrame
@@ -12,7 +12,7 @@ public class RegistrarProducto extends javax.swing.JFrame
     private IRegistrarProducto interfaz;
     
     /**
-     * Carga el codigo correspondiente al nuevo Proveedor
+     * Carga el codigo correspondiente al nuevo Producto
      * @param interfaz
      */
     public RegistrarProducto(IRegistrarProducto interfaz)
@@ -261,7 +261,7 @@ public class RegistrarProducto extends javax.swing.JFrame
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Registrar un nuevo Proveedor en la BD previa validación
+     * Registrar un nuevo Producto en la BD previa validación
      */
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAceptarActionPerformed
     {//GEN-HEADEREND:event_btnAceptarActionPerformed
@@ -278,8 +278,8 @@ public class RegistrarProducto extends javax.swing.JFrame
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     /**
-     * Salir de la Interfaz de Registro de Proveedor
-     * Redirige a la interfaz de Gestión de Proveedor nuevamente
+     * Salir de la Interfaz de Registro de Producto
+     * Redirige a la interfaz de Gestión de Producto nuevamente
      */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCancelarActionPerformed
     {//GEN-HEADEREND:event_btnCancelarActionPerformed
@@ -287,8 +287,8 @@ public class RegistrarProducto extends javax.swing.JFrame
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
-     * Salir de la Interfaz de Registro de Proveedor
-     * Redirige a la interfaz de Gestión de Proveedor nuevamente
+     * Salir de la Interfaz de Registro de Producto
+     * Redirige a la interfaz de Gestión de Producto nuevamente
      */
     private void formWindowClosing(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosing
     {//GEN-HEADEREND:event_formWindowClosing

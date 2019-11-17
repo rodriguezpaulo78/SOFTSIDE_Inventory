@@ -4,9 +4,9 @@ import com.toedter.calendar.JDateChooser;
 import javax.swing.JTextField;
 
 /**
- * Interfaz de la modificacion de proveedor
+ * Interfaz de la modificacion de Producto
  * 
- * Metodos disponibles para el controlador de moficacion de proveedor
+ * Metodos disponibles para el controlador de moficacion de Producto
  *  
  * @author SOFTSIDE
  */

@@ -18,7 +18,7 @@ public class VistaProducto extends javax.swing.JFrame
     private ListSelectionModel cellSelectionModel;
     
     /**
-     * Carga los los proveedores registrados en el sistema
+     * Carga los los Productos registrados en el sistema
      * @param interfaz
      */
     public VistaProducto(IVistaProducto interfaz)
@@ -270,7 +270,7 @@ public class VistaProducto extends javax.swing.JFrame
     }// </editor-fold>//GEN-END:initComponents
 
      /**
-     * Salir de la Interfaz de Proveedor
+     * Salir de la Interfaz de Producto
      * Redirige a la interfaz del Menu Principal nuevamente
      */
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnMenuActionPerformed
@@ -279,7 +279,7 @@ public class VistaProducto extends javax.swing.JFrame
     }//GEN-LAST:event_btnMenuActionPerformed
 
     /**
-     * Muestra la Interfaz del Registro de Proveedor
+     * Muestra la Interfaz del Registro de Producto
      */
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnInsertarActionPerformed
     {//GEN-HEADEREND:event_btnInsertarActionPerformed
@@ -287,7 +287,7 @@ public class VistaProducto extends javax.swing.JFrame
     }//GEN-LAST:event_btnInsertarActionPerformed
 
     /**
-     * Muestra la Interfaz de Modificación de Proveedor
+     * Muestra la Interfaz de Modificación de Producto
      */
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnModificarActionPerformed
     {//GEN-HEADEREND:event_btnModificarActionPerformed
@@ -295,7 +295,7 @@ public class VistaProducto extends javax.swing.JFrame
     }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
-     * Eliminar el Proveedor seleccionado en la tabla
+     * Eliminar el Producto seleccionado en la tabla
      */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEliminarActionPerformed
     {//GEN-HEADEREND:event_btnEliminarActionPerformed
@@ -303,7 +303,7 @@ public class VistaProducto extends javax.swing.JFrame
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
-     * Salir de la Interfaz de Proveedor
+     * Salir de la Interfaz de Producto
      * Redirige a la interfaz del Menu Principal nuevamente
      */
     private void formWindowClosing(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosing
@@ -312,7 +312,7 @@ public class VistaProducto extends javax.swing.JFrame
     }//GEN-LAST:event_formWindowClosing
 
     /**
-     * Buscar el Proveedor según el criterio de búsqueda seleccionado
+     * Buscar el Producto según el criterio de búsqueda seleccionado
      */
     private void jBsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBsearchActionPerformed
         // TODO add your handling code here:

@@ -5,9 +5,9 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 /**
- * Interfaz de la gestion de usuario
+ * Interfaz de la gestion de Producto
  * 
- * Metodos disponibles para el controlador de gestion de usuario
+ * Metodos disponibles para el controlador de gestion de Producto
  *  
  * @author SOFTSIDE
  */

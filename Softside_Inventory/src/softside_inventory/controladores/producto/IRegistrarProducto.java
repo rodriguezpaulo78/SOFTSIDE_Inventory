@@ -4,9 +4,9 @@ import com.toedter.calendar.JDateChooser;
 import javax.swing.JTextField;
 
 /**
- * Interfaz de la insercion de usuario
+ * Interfaz de la insercion de Producto
  * 
- * Metodos disponibles para el controlador de insercion de usuario
+ * Metodos disponibles para el controlador de insercion de Producto
  *  
  * @author SOFTSIDE
  */

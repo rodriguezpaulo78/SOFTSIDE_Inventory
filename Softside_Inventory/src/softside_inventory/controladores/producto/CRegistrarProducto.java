@@ -4,23 +4,20 @@ import com.toedter.calendar.JDateChooser;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import softside_inventory.controladores.producto.*;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import softside_inventory.modelos.Producto;
-import softside_inventory.modelos.Proveedor;
 import softside_inventory.net.HostURL;
 import softside_inventory.net.HttpNetTask;
 import softside_inventory.util.Session;
 import softside_inventory.vistas.producto.RegistrarProducto;
-import softside_inventory.vistas.proveedor.RegistrarProveedor;
 
 /**
- * Controlador de la insercion de proveedor
+ * Controlador de la insercion de Producto
  * 
- * Recibe y valida datos sobre un nuevo registro de proveedor
+ * Recibe y valida datos sobre un nuevo registro de Producto
  *  
  * @author SOFTSIDE
  */
@@ -41,7 +38,7 @@ public class CRegistrarProducto implements IRegistrarProducto
     }
     
     /**
-     * Retorna a la ventana de Vista de Proveedores
+     * Retorna a la ventana de Vista de Productos
      */
     @Override
     public void cancelar()
@@ -52,7 +49,7 @@ public class CRegistrarProducto implements IRegistrarProducto
     }
     
     /**
-     * Actualiza la interfaz con el codigo del Proveedor
+     * Actualiza la interfaz con el codigo del Producto
      * @param txtProdCod
      */
     @Override

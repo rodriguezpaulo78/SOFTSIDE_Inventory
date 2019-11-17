@@ -17,9 +17,9 @@ import softside_inventory.util.Session;
 import softside_inventory.vistas.producto.ModificarProducto;
 
 /**
- * Controlador de la modificacion de proveedor
+ * Controlador de la modificacion de Producto
  * 
- * Carga datos del proveedor seleccionado, recibe nuevos valores y los valida
+ * Carga datos del Producto seleccionado, recibe nuevos valores y los valida
  *  
  * @author SOFTSIDE
  */
@@ -38,7 +38,7 @@ public class CModificarProducto implements IModificarProducto
      */
     public CModificarProducto(Session user, String codigo)
     {
-        //u = Proveedor.buscar(codigo);
+        //u = Producto.buscar(codigo);
         this.user = user;
         this.codigo = codigo;
         ventana = new ModificarProducto(this);
@@ -46,7 +46,7 @@ public class CModificarProducto implements IModificarProducto
     }
     
     /**
-     * Retorna a la ventana de Vista de Proveedor
+     * Retorna a la ventana de Vista de Producto
      */
     @Override
     public void cancelar()
@@ -56,8 +56,8 @@ public class CModificarProducto implements IModificarProducto
     }
     
     /**
-     * Actualiza la interfaz con los datos del de proveedor registrado a modificar
-        * @param txtProdCod
+     * Actualiza la interfaz con los datos del del Producto registrado a modificar
+     * @param txtProdCod
      * @param txtProdNom
      * @param txtProdDes
      * @param txtFecVenc
@@ -68,7 +68,7 @@ public class CModificarProducto implements IModificarProducto
     public void cargar(JTextField txtProdCod, JTextField txtProdNom, JTextField txtProdDes, 
             JDateChooser txtFecVenc, JTextField txtProdUni, JTextField txtProdProv)
     {
-        // Solicita el proveedor al servidor
+        // Solicita el Producto al servidor
         JSONObject jsonObj = new JSONObject();
         jsonObj.put("metodo", 5);
         jsonObj.put("codigo", codigo);
@@ -124,7 +124,7 @@ public class CModificarProducto implements IModificarProducto
     
      /**
      * Hace la validación de los campos ingresados en la interfaz
-        * @param txtProdCod
+     * @param txtProdCod
      * @param txtProdNom
      * @param txtProdDes
      * @param txtFecVenc
