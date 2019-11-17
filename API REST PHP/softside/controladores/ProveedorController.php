@@ -2,9 +2,9 @@
 
 include_once '../conexion/db-connect.php';
 
-class UsuarioController{
+class ProveedorController{
 	private $db;
-	private $db_table = "usuario";
+	private $db_table = "proveedor";
 	public function __construct(){
 		$this->db = new DbConnect();
 
@@ -29,12 +29,10 @@ class UsuarioController{
 		return $json;
 	}
 
-	public function agregarUsuario($datos){	
+	public function agregarProveedor($datos){	
 		$json = array();
 
-		$pass = password_hash($datos[7], PASSWORD_BCRYPT);
-
-		$query = "INSERT INTO ".$this->db_table."(user_id, user_nombres, user_apellidos, user_dni, user_fec_nac, user_cargo, user_username, user_password, user_tipo_user) VALUES ('$datos[0]', '$datos[1]', '$datos[2]', '$datos[3]', '$datos[4]', '$datos[5]', '$datos[6]', '$pass', '$datos[8]')";
+		$query = "INSERT INTO ".$this->db_table."(prov_id, prov_raz_soc, prov_nombre_rep, prov_ruc, prov_rubro, prov_telefono) VALUES ('$datos[0]', '$datos[1]', '$datos[2]', '$datos[3]', '$datos[4]', '$datos[5]')";
 
 		$inserted = mysqli_query($this->db->getDb(), $query);
 
@@ -49,12 +47,12 @@ class UsuarioController{
 		return $json;
 	}
 
-	public function modificarUsuario($datos){	
+	public function modificarProveedor($datos){	
 		$json = array();
 
 		$pass = password_hash($datos[7], PASSWORD_BCRYPT);
 
-		$query = "UPDATE ".$this->db_table." SET user_nombres='$datos[1]', user_apellidos='$datos[2]', user_dni='$datos[3]', user_fec_nac='$datos[4]', user_cargo='$datos[5]', user_username='$datos[6]', user_password='$pass', user_tipo_user='$datos[8]' WHERE user_id='$datos[0]'";
+		$query = "UPDATE ".$this->db_table." SET prov_raz_soc='$datos[1]', prov_nombre_rep='$datos[2]', prov_ruc='$datos[3]', prov_rubro='$datos[4]', prov_telefono='$datos[5]' WHERE prov_id='$datos[0]'";
 
 		$updated = mysqli_query($this->db->getDb(), $query);
 
@@ -68,8 +66,8 @@ class UsuarioController{
 		return $json;
 	}
 
-	public function listarUsuarios(){
-		$query = "SELECT user_id, user_nombres, user_apellidos, user_dni, user_fec_nac, user_cargo, user_username, user_tipo_user, user_est_reg FROM ".$this->db_table;
+	public function listarProveedores(){
+		$query = "SELECT prov_id, prov_raz_soc, prov_nombre_rep, prov_ruc, prov_rubro, prov_telefono, prov_est_reg FROM ".$this->db_table;
 		$result = mysqli_query($this->db->getDb(),$query);
 
 		if(mysqli_num_rows($result) > 0){
@@ -90,8 +88,8 @@ class UsuarioController{
 		}
 	}
 
-	public function getUserByCod($codigo){
-		$query = "SELECT user_id, user_nombres, user_apellidos, user_dni, user_fec_nac, user_cargo, user_username, user_tipo_user, user_est_reg FROM ".$this->db_table." WHERE user_id='".$codigo."'";
+	public function getProveedorByCod($codigo){
+		$query = "SELECT prov_id, prov_raz_soc, prov_nombre_rep, prov_ruc, prov_rubro, prov_telefono, user_est_reg FROM ".$this->db_table." WHERE prov_id='".$codigo."'";
 		$result = mysqli_query($this->db->getDb(),$query);
 
 		if(mysqli_num_rows($result) > 0){
@@ -112,10 +110,10 @@ class UsuarioController{
 		}
 	}
 
-	public function eliminarUsuario($codigo){	
+	public function eliminarProveedor($codigo){	
 		$json = array();
 
-		$query = "UPDATE ".$this->db_table." SET user_est_reg='I' WHERE user_id='".$codigo."'";
+		$query = "UPDATE ".$this->db_table." SET prov_est_reg='I' WHERE prov_id='".$codigo."'";
 
 		$deleted = mysqli_query($this->db->getDb(), $query);
 
@@ -129,17 +127,15 @@ class UsuarioController{
 		return $json;
 	}
 
-	public function buscarUsuario($dato, $filtro){
+	public function buscarProveedor($dato, $filtro){
 		$query = "";
 
-		if ($filtro == "Usuario(Ide)")
-			$query = "SELECT user_id FROM ".$this->db_table." WHERE user_username='".$dato."'";
-		elseif ($filtro == "DNI")
-			$query = "SELECT user_id FROM ".$this->db_table." WHERE user_dni='".$dato."'";
-		elseif ($filtro == "Nombres")
-			$query = "SELECT user_id FROM ".$this->db_table." WHERE user_nombres='".$dato."'";
-		elseif ($filtro == "Apellidos")
-			$query = "SELECT user_id FROM ".$this->db_table." WHERE user_apellidos='".$dato."'";
+		if ($filtro == "Razon Social")
+			$query = "SELECT prov_id FROM ".$this->db_table." WHERE prov_raz_soc='".$dato."'";
+		elseif ($filtro == "Representante")
+			$query = "SELECT prov_id FROM ".$this->db_table." WHERE prov_nombre_rep='".$dato."'";
+		elseif ($filtro == "Rubro")
+			$query = "SELECT prov_id FROM ".$this->db_table." WHERE prov_rubro='".$dato."'";
 
 		$result = mysqli_query($this->db->getDb(),$query);
 
