@@ -14,5 +14,6 @@ public class HostURL {
     private final static String HOST = "http://localhost/softside/modelos/";
     public final static String INICIO_SESION = HOST + "SesionModel.php";
     public final static String USUARIOS = HOST + "UsuarioModel.php";
+    public final static String PROVEEDORES = HOST + "ProveedorModel.php";
     
 }
