@@ -130,11 +130,11 @@ public class CVistaUnidad implements IVistaUnidad{
 
     @Override
     public void eliminar(JTable tblRegistros) {
-        /*
+        
         int i = tblRegistros.getSelectedRow();
         if(i != -1)
         {
-            Proveedor u = proveedores.get(i);
+            Unidad u = unidades.get(i);
             
             if(u.getEstado().equals("A"))
             {
@@ -150,29 +150,47 @@ public class CVistaUnidad implements IVistaUnidad{
                     String json = jsonObj.toString();
                     
                     HttpNetTask httpConnect = new HttpNetTask();
-                    String response = httpConnect.sendPost(HostURL.PROVEEDORES, json);
-                    getJsonDeleteProveedor(response);
+                    String response = httpConnect.sendPost(HostURL.UNIDADES, json);
+                    getJsonDeleteUnidad(response);
                     u.setEstado("I");
                     
                     model.setValueAt("I", i, 6);
                 }
             }
             else
-                JOptionPane.showMessageDialog(null, "El Proveedor ya está eliminado", "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "La Unidad ya está eliminada", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         else
-            JOptionPane.showMessageDialog(null, "Seleccione un Proveedor a eliminar", "ERROR", JOptionPane.ERROR_MESSAGE);
-        */
+            JOptionPane.showMessageDialog(null, "Seleccione una Unidad a eliminar", "ERROR", JOptionPane.ERROR_MESSAGE);
+        
+    }
+    
+    /**
+     * Recibe y obtiene los datos de respuesta en JSON
+     * @param json
+     */
+    public void getJsonDeleteUnidad(String json){
+        //Crear un Objeto JSON a partir del string JSON
+        Object jsonObject = JSONValue.parse(json);
+        JSONObject row =(JSONObject) jsonObject;
+        
+        String mensaje = row.get("message").toString();
+        
+        if (mensaje.equals("SUCCESS")) {
+            JOptionPane.showMessageDialog(null, "Unidad eliminada.", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al eliminar.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     @Override
     public void buscarUnidad(JTextField buscar, JTable tablaUnidad) {
-        /*
+        
         TextAutoCompleter textAutoAcompleter = new TextAutoCompleter( buscar );
         textAutoAcompleter.setMode(0); // infijo
         textAutoAcompleter.setCaseSensitive(false); //No sensible a mayúsculas
-        TableModel tableModel = tblRegistros.getModel();
-        String filtro = jbcBuscar.getSelectedItem().toString();
+        TableModel tableModel = tablaUnidad.getModel();
+        String filtro = "Descripción";
         
         int i;
         int column = tableModel.getColumnCount();
@@ -188,15 +206,15 @@ public class CVistaUnidad implements IVistaUnidad{
         {
             textAutoAcompleter.addItem(tableModel.getValueAt(k, i));
         }
-        */
+        
     }
 
     @Override
     public void seleccionarFila(JTextField buscar, JTable tablaUnidad) {
-        /*
-        TableModel tableModel = tblRegistros.getModel();
+        
+        TableModel tableModel = tablaUnidad.getModel();
         String dato = buscar.getText();
-        String filtro = jbcBuscar.getSelectedItem().toString();
+        String filtro = "Descripción";
         
         // Enviar los datos de búsqueda al servidor
         JSONObject jsonObj = new JSONObject();
@@ -207,9 +225,9 @@ public class CVistaUnidad implements IVistaUnidad{
         String json = jsonObj.toString();
 
         HttpNetTask httpConnect = new HttpNetTask();
-        String response = httpConnect.sendPost(HostURL.PROVEEDORES, json);
+        String response = httpConnect.sendPost(HostURL.UNIDADES, json);
         
-        ArrayList<Proveedor> u = getJsonSearchUser(response);
+        ArrayList<Unidad> u = getJsonSearchUnid(response);
         
         if (u.size() > 0) {
             int col = 0;
@@ -225,9 +243,9 @@ public class CVistaUnidad implements IVistaUnidad{
                 }
 
                 if (row == 0) {
-                    tblRegistros.changeSelection(0, 0, false, true);
+                    tablaUnidad.changeSelection(0, 0, false, true);
                 } else {
-                    tblRegistros.getSelectionModel().setSelectionInterval(row - 1, row);
+                    tablaUnidad.getSelectionModel().setSelectionInterval(row - 1, row);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -235,6 +253,31 @@ public class CVistaUnidad implements IVistaUnidad{
         } else {
             JOptionPane.showMessageDialog(null, "No se encontraron los datos buscados", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-        */
+        
+    }
+    
+    /**
+     * Recibe y obtiene la lista de datos de respuesta en JSON
+     * @param json
+     * @return ArrayList<Proveedor>
+     */
+    private ArrayList<Unidad> getJsonSearchUnid(String json){
+        //Crear un Objeto JSON a partir del string JSON
+        Object jsonObject =JSONValue.parse(json);
+        //Convertir el objeto JSON en un array
+        JSONArray array = (JSONArray)jsonObject;
+        
+        ArrayList<Unidad> unidades = new ArrayList<Unidad>();
+        Unidad u = null;
+        //Iterar el array y extraer la información
+        for(int i=0;i<array.size();i++){
+            JSONObject row =(JSONObject)array.get(i);            
+            u = new Unidad();
+            u.setCodigo(row.get("uni_id").toString());
+           
+            unidades.add(u);
+            u = null;
+        }
+        return unidades;
     }
 }

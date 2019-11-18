@@ -35,7 +35,6 @@ public class CModificarUnidad implements IModificarUnidad{
      */
     public CModificarUnidad(Session user, String codigo)
     {
-        //u = Proveedor.buscar(codigo);
         this.user = user;
         this.codigo = codigo;
         ventana = new ModificarUnidad(this);
