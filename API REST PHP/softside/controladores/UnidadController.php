@@ -81,8 +81,8 @@ class UnidadController{
 		return $json;
 	}
 
-	public function getUserByCod($codigo){
-		$query = "SELECT user_id, user_nombres, user_apellidos, user_dni, user_fec_nac, user_cargo, user_username, user_tipo_user, user_est_reg FROM ".$this->db_table." WHERE user_id='".$codigo."'";
+	public function getUnidByCod($codigo){
+		$query = "SELECT uni_id, uni_descripcion, uni_est_reg FROM ".$this->db_table." WHERE uni_id='".$codigo."'";
 		$result = mysqli_query($this->db->getDb(),$query);
 
 		$json = array();
@@ -98,10 +98,10 @@ class UnidadController{
 		return $json;
 	}
 
-	public function eliminarUsuario($codigo){	
+	public function eliminarUnidad($codigo){	
 		$json = array();
 
-		$query = "UPDATE ".$this->db_table." SET user_est_reg='I' WHERE user_id='".$codigo."'";
+		$query = "UPDATE ".$this->db_table." SET uni_est_reg='I' WHERE uni_id='".$codigo."'";
 
 		$deleted = mysqli_query($this->db->getDb(), $query);
 
@@ -115,17 +115,8 @@ class UnidadController{
 		return $json;
 	}
 
-	public function buscarUsuario($dato, $filtro){
-		$query = "";
-
-		if ($filtro == "Usuario(Ide)")
-			$query = "SELECT user_id FROM ".$this->db_table." WHERE user_username='".$dato."'";
-		elseif ($filtro == "DNI")
-			$query = "SELECT user_id FROM ".$this->db_table." WHERE user_dni='".$dato."'";
-		elseif ($filtro == "Nombres")
-			$query = "SELECT user_id FROM ".$this->db_table." WHERE user_nombres='".$dato."'";
-		elseif ($filtro == "Apellidos")
-			$query = "SELECT user_id FROM ".$this->db_table." WHERE user_apellidos='".$dato."'";
+	public function buscarUnidad($dato, $filtro){
+		$query = "SELECT uni_id FROM ".$this->db_table." WHERE uni_descripcion='".$dato."'";
 
 		$result = mysqli_query($this->db->getDb(),$query);
 

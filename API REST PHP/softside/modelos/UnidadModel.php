@@ -39,7 +39,7 @@
 
  		$datos=[$codigo, $descripcion];
 
- 		$json_modificar = $usuario->modificarUnidad($datos);
+ 		$json_modificar = $unidad->modificarUnidad($datos);
  		echo json_encode($json_modificar);
  	}
 
@@ -48,27 +48,27 @@
  		$json_listar = $unidad->listarUnidades();
  		echo json_encode($json_listar);
  	}
-/*
- 	// Listar usuario por codigo
+
+ 	// Listar unidad por codigo
  	if ($metodo == 5) {
  		$codigo = $getDatos->codigo;
- 		$json_list = $usuario->getUserByCod($codigo);
+ 		$json_list = $unidad->getUnidByCod($codigo);
  		echo json_encode($json_list);
  	}
 
- 	// Eliminar usuario
+ 	// Eliminar unidad
  	if ($metodo == 6) {
  		$codigo = $getDatos->codigo;
- 		$json_eliminar = $usuario->eliminarUsuario($codigo);
+ 		$json_eliminar = $unidad->eliminarUnidad($codigo);
  		echo json_encode($json_eliminar);
  	}
 
- 	// Buscar usuario
+ 	// Buscar unidad
  	if ($metodo == 7) {
  		$dato = $getDatos->dato;
  		$filtro = $getDatos->filtro;
- 		$json_buscar = $usuario->buscarUsuario($dato, $filtro);
+ 		$json_buscar = $unidad->buscarUnidad($dato, $filtro);
  		echo json_encode($json_buscar);
  	}
-*/
+
  ?>
