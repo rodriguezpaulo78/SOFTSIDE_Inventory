@@ -1,32 +1,31 @@
-package softside_inventory.vistas.unidad;
+package softside_inventory.vistas.producto;
 
-import softside_inventory.vistas.unidad.*;
 import java.awt.Color;
 import java.awt.Component;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 
 import javax.swing.table.TableCellRenderer;
-import softside_inventory.controladores.unidad.IVistaUnidad;
+import softside_inventory.controladores.producto.IVistaProducto;
 
 /**
- * Vista principal de Gestion de Unidad
+ * Vista principal de Gestion de Producto
  * @author SOFTSIDE
  */
-public class VistaUnidad extends javax.swing.JFrame
+public class VistaProducto extends javax.swing.JFrame
 {
-    private IVistaUnidad interfaz;
+    private IVistaProducto interfaz;
     private ListSelectionModel cellSelectionModel;
     
     /**
-     * Carga las Unidades registrados en el sistema
+     * Carga los los Productos registrados en el sistema
      * @param interfaz
      */
-    public VistaUnidad(IVistaUnidad interfaz)
+    public VistaProducto(IVistaProducto interfaz)
     {
         initComponents();
         this.setVisible(true);
-        this.setTitle("GESTION DE UNIDAD");
+        this.setTitle("GESTION DE PRODUCTO");
         setLocationRelativeTo(null);
         
         this.interfaz = interfaz;
@@ -35,7 +34,7 @@ public class VistaUnidad extends javax.swing.JFrame
         cellSelectionModel = tblRegistros.getSelectionModel();
         cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
-        interfaz.buscarUnidad(jTextField1, tblRegistros, jbcBuscar);
+        interfaz.buscarProducto(jTextField1, tblRegistros, jbcBuscar);
     }
 
     @SuppressWarnings("unchecked")
@@ -99,7 +98,7 @@ public class VistaUnidad extends javax.swing.JFrame
 
         lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo.setText("GESTIÓN DE UNIDAD - SOFTSIDE");
+        lblTitulo.setText("GESTIÓN DE PRODUCTO - SOFTSIDE");
 
         jTextField1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
@@ -110,14 +109,14 @@ public class VistaUnidad extends javax.swing.JFrame
 
             },
             new String [] {
-                "Codigo", "Descripcion", "Estado"
+                "Codigo", "Nombre", "Descripcion", "Unidad", "Fec. Venc.", "Proveedor", "Estado"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, true
+                true, false, true, true, false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -134,13 +133,19 @@ public class VistaUnidad extends javax.swing.JFrame
             tblRegistros.getColumnModel().getColumn(0).setMinWidth(50);
             tblRegistros.getColumnModel().getColumn(0).setPreferredWidth(50);
             tblRegistros.getColumnModel().getColumn(0).setMaxWidth(50);
-            tblRegistros.getColumnModel().getColumn(2).setMinWidth(50);
-            tblRegistros.getColumnModel().getColumn(2).setPreferredWidth(50);
-            tblRegistros.getColumnModel().getColumn(2).setMaxWidth(50);
+            tblRegistros.getColumnModel().getColumn(2).setMinWidth(60);
+            tblRegistros.getColumnModel().getColumn(2).setPreferredWidth(60);
+            tblRegistros.getColumnModel().getColumn(2).setMaxWidth(60);
+            tblRegistros.getColumnModel().getColumn(5).setMinWidth(60);
+            tblRegistros.getColumnModel().getColumn(5).setPreferredWidth(60);
+            tblRegistros.getColumnModel().getColumn(5).setMaxWidth(60);
+            tblRegistros.getColumnModel().getColumn(6).setMinWidth(50);
+            tblRegistros.getColumnModel().getColumn(6).setPreferredWidth(50);
+            tblRegistros.getColumnModel().getColumn(6).setMaxWidth(50);
         }
 
         jbcBuscar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jbcBuscar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Descripcion" }));
+        jbcBuscar.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Nombre", "Unidad", "Proveedor" }));
         jbcBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbcBuscarActionPerformed(evt);
@@ -220,17 +225,17 @@ public class VistaUnidad extends javax.swing.JFrame
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jSeparator1)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 396, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 608, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel1)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 201, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jbcBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jbcBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jBsearch, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jBsearch, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(12, 12, 12)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(btnMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
@@ -246,9 +251,9 @@ public class VistaUnidad extends javax.swing.JFrame
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnMenu))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -256,7 +261,7 @@ public class VistaUnidad extends javax.swing.JFrame
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jbcBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 291, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jBsearch, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -265,7 +270,7 @@ public class VistaUnidad extends javax.swing.JFrame
     }// </editor-fold>//GEN-END:initComponents
 
      /**
-     * Salir de la Interfaz de Unidad
+     * Salir de la Interfaz de Producto
      * Redirige a la interfaz del Menu Principal nuevamente
      */
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnMenuActionPerformed
@@ -274,7 +279,7 @@ public class VistaUnidad extends javax.swing.JFrame
     }//GEN-LAST:event_btnMenuActionPerformed
 
     /**
-     * Muestra la Interfaz del Registro de Unidad
+     * Muestra la Interfaz del Registro de Producto
      */
     private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnInsertarActionPerformed
     {//GEN-HEADEREND:event_btnInsertarActionPerformed
@@ -282,7 +287,7 @@ public class VistaUnidad extends javax.swing.JFrame
     }//GEN-LAST:event_btnInsertarActionPerformed
 
     /**
-     * Muestra la Interfaz de Modificación de Unidad
+     * Muestra la Interfaz de Modificación de Producto
      */
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnModificarActionPerformed
     {//GEN-HEADEREND:event_btnModificarActionPerformed
@@ -290,7 +295,7 @@ public class VistaUnidad extends javax.swing.JFrame
     }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
-     * Eliminar la Unidad seleccionado en la tabla
+     * Eliminar el Producto seleccionado en la tabla
      */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEliminarActionPerformed
     {//GEN-HEADEREND:event_btnEliminarActionPerformed
@@ -298,7 +303,7 @@ public class VistaUnidad extends javax.swing.JFrame
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
-     * Salir de la Interfaz de Unidad
+     * Salir de la Interfaz de Producto
      * Redirige a la interfaz del Menu Principal nuevamente
      */
     private void formWindowClosing(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosing
@@ -307,7 +312,7 @@ public class VistaUnidad extends javax.swing.JFrame
     }//GEN-LAST:event_formWindowClosing
 
     /**
-     * Buscar una Unidad según el criterio de búsqueda seleccionado
+     * Buscar el Producto según el criterio de búsqueda seleccionado
      */
     private void jBsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBsearchActionPerformed
         // TODO add your handling code here:
@@ -321,7 +326,7 @@ public class VistaUnidad extends javax.swing.JFrame
 
     private void jbcBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbcBuscarActionPerformed
         // TODO add your handling code here:
-        interfaz.buscarUnidad(jTextField1, tblRegistros, jbcBuscar);
+        interfaz.buscarProducto(jTextField1, tblRegistros, jbcBuscar);
     }//GEN-LAST:event_jbcBuscarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

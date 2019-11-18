@@ -126,6 +126,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         btnProducto.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/softside_inventory/recursos/producto.png"))); // NOI18N
         btnProducto.setText("PRODUCTO");
         btnProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -329,8 +330,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
      */
     private void btnProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductoActionPerformed
         // TODO add your handling code here:
-        //interfaz.producto();
-        JOptionPane.showMessageDialog(null, "Mostrar manual");
+        interfaz.producto();
     }//GEN-LAST:event_btnProductoActionPerformed
 
     /**

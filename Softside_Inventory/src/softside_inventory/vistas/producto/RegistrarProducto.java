@@ -1,28 +1,29 @@
-package softside_inventory.vistas.unidad;
+package softside_inventory.vistas.producto;
 
+import java.util.Calendar;
 import javax.swing.JOptionPane;
-import softside_inventory.controladores.unidad.IRegistrarUnidad;
+import softside_inventory.controladores.producto.IRegistrarProducto;
 /**
- * Vista principal de Insertar Unidad
+ * Vista principal de Insertar Producto
  * @author SOFTSIDE
  */
-public class RegistrarUnidad extends javax.swing.JFrame
+public class RegistrarProducto extends javax.swing.JFrame
 {
-    private IRegistrarUnidad interfaz;
+    private IRegistrarProducto interfaz;
     
     /**
-     * Carga el codigo correspondiente ala nueva Unidad
+     * Carga el codigo correspondiente al nuevo Producto
      * @param interfaz
      */
-    public RegistrarUnidad(IRegistrarUnidad interfaz)
+    public RegistrarProducto(IRegistrarProducto interfaz)
     {
         initComponents();
         this.setVisible(true);
-        this.setTitle("Registrar Unidad");
+        this.setTitle("Registrar Producto");
         setLocationRelativeTo(null);
         
         this.interfaz = interfaz;
-        interfaz.cargar(this.txtUniCod);
+        interfaz.cargar(this.txtProdCod);
     }
 
     @SuppressWarnings("unchecked")
@@ -36,10 +37,19 @@ public class RegistrarUnidad extends javax.swing.JFrame
         lblTitulo2 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jPanel1 = new javax.swing.JPanel();
-        txtUniCod = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        txtProdNom = new javax.swing.JTextField();
+        txtProdCod = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        txtUniDes = new javax.swing.JTextField();
+        txtProdDes = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        txtFecVenc = new com.toedter.calendar.JDateChooser();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        txtProdUni = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        txtProdProv = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/softside_inventory/recursos/icono.png")).getImage());
@@ -52,7 +62,7 @@ public class RegistrarUnidad extends javax.swing.JFrame
 
         lblTitulo1.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         lblTitulo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo1.setText("GESTIÓN DE UNIDAD SOFTSIDE");
+        lblTitulo1.setText("GESTIÓN DE PRODUCTO - SOFTSIDE");
 
         btnAceptar.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnAceptar.setText("ACEPTAR");
@@ -97,9 +107,16 @@ public class RegistrarUnidad extends javax.swing.JFrame
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        txtUniCod.setEditable(false);
-        txtUniCod.setColumns(12);
-        txtUniCod.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setText("Nombre");
+        jLabel3.setToolTipText("");
+
+        txtProdNom.setColumns(12);
+        txtProdNom.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        txtProdCod.setEditable(false);
+        txtProdCod.setColumns(12);
+        txtProdCod.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("Codigo:");
@@ -108,8 +125,15 @@ public class RegistrarUnidad extends javax.swing.JFrame
         jLabel12.setText("Descripción");
         jLabel12.setToolTipText("");
 
-        txtUniDes.setColumns(12);
-        txtUniDes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtProdDes.setColumns(12);
+        txtProdDes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel13.setText("Fecha Venc.");
+        jLabel13.setToolTipText("");
+
+        txtFecVenc.setCalendar(Calendar.getInstance());
+        txtFecVenc.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -118,13 +142,18 @@ public class RegistrarUnidad extends javax.swing.JFrame
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
                     .addComponent(jLabel2)
-                    .addComponent(jLabel12))
+                    .addComponent(jLabel12)
+                    .addComponent(jLabel13))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtUniCod, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
-                    .addComponent(txtUniDes))
-                .addGap(87, 87, 87))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtProdDes, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE)
+                        .addComponent(txtProdNom)
+                        .addComponent(txtProdCod))
+                    .addComponent(txtFecVenc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 132, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -132,11 +161,60 @@ public class RegistrarUnidad extends javax.swing.JFrame
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txtUniCod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(txtProdCod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtUniDes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtProdNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtProdDes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel12))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel13)
+                    .addComponent(txtFecVenc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel6.setText("Unidad:");
+
+        txtProdUni.setColumns(18);
+        txtProdUni.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel7.setText("Proveedor");
+
+        txtProdProv.setColumns(18);
+        txtProdProv.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtProdProv, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
+                    .addComponent(txtProdUni))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(txtProdUni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(txtProdProv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -147,16 +225,17 @@ public class RegistrarUnidad extends javax.swing.JFrame
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTitulo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblTitulo2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSeparator1)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lblTitulo1, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
-                            .addComponent(lblTitulo2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 341, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(43, Short.MAX_VALUE)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(51, 51, 51))
             .addGroup(layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(65, 65, 65)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -172,32 +251,35 @@ public class RegistrarUnidad extends javax.swing.JFrame
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * Registrar una nueva Unidad en la BD previa validación
+     * Registrar un nuevo Producto en la BD previa validación
      */
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnAceptarActionPerformed
     {//GEN-HEADEREND:event_btnAceptarActionPerformed
        
-        if (txtUniDes.getText().equals("")){
+        if (txtProdNom.getText().equals("")||txtProdDes.getText().equals("")||txtFecVenc.toString().equals("")
+                ||txtProdUni.toString().equals("")||txtProdProv.getText().equals("")){
             JOptionPane.showMessageDialog(null, "No pueden estar campos vacios");
         }
         else {
-            interfaz.aceptar(this.txtUniCod, this.txtUniDes);
+            interfaz.aceptar(this.txtProdCod, this.txtProdNom, this.txtProdDes, this.txtFecVenc, this.txtProdUni, this.txtProdProv);
         }
         
         
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     /**
-     * Salir de la Interfaz de Registro de Unidad
-     * Redirige a la interfaz de Gestión de Unidad nuevamente
+     * Salir de la Interfaz de Registro de Producto
+     * Redirige a la interfaz de Gestión de Producto nuevamente
      */
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnCancelarActionPerformed
     {//GEN-HEADEREND:event_btnCancelarActionPerformed
@@ -205,8 +287,8 @@ public class RegistrarUnidad extends javax.swing.JFrame
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
-     * Salir de la Interfaz de Registro de Unidad
-     * Redirige a la interfaz de Gestión de Unidad nuevamente
+     * Salir de la Interfaz de Registro de Producto
+     * Redirige a la interfaz de Gestión de Producto nuevamente
      */
     private void formWindowClosing(java.awt.event.WindowEvent evt)//GEN-FIRST:event_formWindowClosing
     {//GEN-HEADEREND:event_formWindowClosing
@@ -217,13 +299,22 @@ public class RegistrarUnidad extends javax.swing.JFrame
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblTitulo1;
     private javax.swing.JLabel lblTitulo2;
-    private javax.swing.JTextField txtUniCod;
-    private javax.swing.JTextField txtUniDes;
+    private com.toedter.calendar.JDateChooser txtFecVenc;
+    private javax.swing.JTextField txtProdCod;
+    private javax.swing.JTextField txtProdDes;
+    private javax.swing.JTextField txtProdNom;
+    private javax.swing.JTextField txtProdProv;
+    private javax.swing.JTextField txtProdUni;
     // End of variables declaration//GEN-END:variables
 }

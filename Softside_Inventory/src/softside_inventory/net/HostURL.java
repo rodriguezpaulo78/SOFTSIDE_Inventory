@@ -15,5 +15,8 @@ public class HostURL {
     public final static String INICIO_SESION = HOST + "SesionModel.php";
     public final static String USUARIOS = HOST + "UsuarioModel.php";
     public final static String PROVEEDORES = HOST + "ProveedorModel.php";
+    public final static String PRODUCTOS = HOST + "ProductoModel.php";
     public final static String UNIDADES = HOST + "UnidadModel.php";
+    
+    
 }

@@ -12,10 +12,6 @@ import org.json.simple.JSONObject;
  * @author SOFTSIDE
  */
 public class Unidad {
-    
-    private String codigo;
-    private String descripcion;
-    private String estado;
 
     public String getCodigo() {
         return codigo;
@@ -40,7 +36,13 @@ public class Unidad {
     public void setEstado(String estado) {
         this.estado = estado;
     }
+
+    private String codigo;
+    private String descripcion;
+    private String estado;
     
+    
+
     public String toJSON(int metodo) {
         JSONObject jsonObj = new JSONObject();
         jsonObj.put("metodo", metodo);

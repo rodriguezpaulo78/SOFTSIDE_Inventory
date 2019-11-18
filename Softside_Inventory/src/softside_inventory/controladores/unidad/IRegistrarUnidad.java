@@ -1,23 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package softside_inventory.controladores.unidad;
 
+import softside_inventory.controladores.proveedor.*;
 import javax.swing.JTextField;
 
 /**
- * Interfaz de la insercion de unidad
+ * Interfaz de la insercion de Unidad
  * 
- * Metodos disponibles para el controlador de insercion de unidad
+ * Metodos disponibles para el controlador de insercion de Unidad
  *  
  * @author SOFTSIDE
  */
-public interface IRegistrarUnidad {
-    
-    public void cargar(JTextField txtUniCod);
-    public void aceptar(JTextField txtUniCod, JTextField txtUniDes);
+
+public interface IRegistrarUnidad
+{
     public void cancelar();
-    
+    public void aceptar(JTextField txtUniCod, JTextField txtUniDes);
+    public void cargar(JTextField txtUniCod);
 }

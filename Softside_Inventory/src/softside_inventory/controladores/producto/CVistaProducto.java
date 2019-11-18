@@ -1,6 +1,5 @@
-package softside_inventory.controladores.unidad;
+package softside_inventory.controladores.producto;
 
-import softside_inventory.controladores.proveedor.*;
 import com.mxrck.autocompleter.TextAutoCompleter;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
@@ -13,36 +12,34 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.json.simple.JSONArray;
 import softside_inventory.controladores.CMenu;
-import softside_inventory.modelos.Proveedor;
-import softside_inventory.modelos.Unidad;
+import softside_inventory.modelos.Producto;
 import softside_inventory.net.HostURL;
 import softside_inventory.net.HttpNetTask;
 import softside_inventory.util.Session;
-import softside_inventory.vistas.proveedor.VistaProveedor;
-import softside_inventory.vistas.unidad.VistaUnidad;
+import softside_inventory.vistas.producto.VistaProducto;
 
 /**
- * Controlador de la gestion de Unidad
+ * Controlador de la gestion de Producto
  * 
- * Carga las Unidades existentes con sus datos, además de controlar el
+ * Carga los Productos existentes con sus datos, además de controlar el
  * redireccionamiento hacia las ventanas de insercion o modificacion.
  * La funcion eliminar es realizada aqui.
  *  
  * @author SOFTSIDE
  */
-public class CVistaUnidad implements IVistaUnidad
+public class CVistaProducto implements IVistaProducto
 {
-    private VistaUnidad ventana;
-    private ArrayList<Unidad> unidades;
+    private VistaProducto ventana;
+    private ArrayList<Producto> productos;
     private Session user; 
     
     /**
      * Constructor
      * @param user : sesión de Usuario logeado
      */
-    public CVistaUnidad(Session user)
+    public CVistaProducto(Session user)
     {
-        ventana = new VistaUnidad(this);
+        ventana = new VistaProducto(this);
         this.user = user;
     }
     
@@ -57,42 +54,46 @@ public class CVistaUnidad implements IVistaUnidad
     }
     
     /**
-     * Acceso a la ventana de Registro de Unidad.
+     * Acceso a la ventana de Registro de Producto.
      */
     @Override
     public void registrar()
     {
        
-        new CRegistrarUnidad(user);
+        new CRegistrarProducto(user);
         ventana.dispose();
         
     }
     
      /**
-     * Actualiza la interfaz con la carga de Unidades registradas
+     * Actualiza la interfaz con la carga de Productos registrados
      * @param tblRegistros
      */
     @Override
     public void cargar(JTable tblRegistros)
     {
-        // Solicitar lista de Unidades al servidor
+        // Solicitar lista de Productos al servidor
         JSONObject jsonObj = new JSONObject();
         jsonObj.put("metodo", 4);
         
         String json = jsonObj.toString();
         
         HttpNetTask httpConnect = new HttpNetTask();
-        String response = httpConnect.sendPost(HostURL.UNIDADES, json);
+        String response = httpConnect.sendPost(HostURL.PRODUCTOS, json);
         
-        unidades = getUnidadesJSON(response);
+        productos = getProductosJSON(response);
                 
         DefaultTableModel model = (DefaultTableModel) tblRegistros.getModel();
         model.setRowCount(0);
         
-        for(int i = 0; i < unidades.size(); i++){
-            model.addRow(new Object[]{  unidades.get(i).getCodigo(),
-                                        unidades.get(i).getDescripcion(),
-                                        unidades.get(i).getEstado()});
+        for(int i = 0; i < productos.size(); i++){
+            model.addRow(new Object[]{  productos.get(i).getCodigo(),
+                                        productos.get(i).getNombre(),
+                                        productos.get(i).getDescripcion(),
+                                        productos.get(i).getCodigo_uni(),
+                                        productos.get(i).getFec_venc(),
+                                        productos.get(i).getCodigo_prov(),
+                                        productos.get(i).getEstado()});
             
         }
     }
@@ -100,42 +101,46 @@ public class CVistaUnidad implements IVistaUnidad
     /**
      * Recibe y obtiene la lista de datos de respuesta en JSON
      * @param json
-     * @return ArrayList<Unidad>
+     * @return ArrayList<Producto>
      */
-    private ArrayList<Unidad> getUnidadesJSON(String json){
+    private ArrayList<Producto> getProductosJSON(String json){
         //Crear un Objeto JSON a partir del string JSON
         Object jsonObject =JSONValue.parse(json);
         //Convertir el objeto JSON en un array
         JSONArray array = (JSONArray)jsonObject;
         
-        ArrayList<Unidad> unidades = new ArrayList<Unidad>();
-        Unidad u = null;
+        ArrayList<Producto> productos = new ArrayList<Producto>();
+        Producto u = null;
         //Iterar el array y extraer la información
         for(int i=0;i<array.size();i++){
-            u = new Unidad();
+            u = new Producto();
             JSONObject row =(JSONObject)array.get(i);
-            u.setCodigo(row.get("uni_id").toString());
-            u.setDescripcion(row.get("uni_descripcion").toString());
-            u.setEstado(row.get("uni_est_reg").toString());
+            u.setCodigo(row.get("prod_id").toString());
+            u.setNombre(row.get("prod_nombre").toString());
+            u.setDescripcion(row.get("prod_descripcion").toString());
+            u.setCodigo_uni(row.get("unidad_id").toString());
+            u.setFec_venc(row.get("prod_fec_venc").toString());
+            u.setCodigo_prov(row.get("proveedor_id").toString());
+            u.setEstado(row.get("prod_est_reg").toString());
            
-            unidades.add(u);
+            productos.add(u);
             u = null;
         }
-        return unidades;
+        return productos;
     }
     
     /**
-     * Acceso a la ventana de Modificación de Unidad.
+     * Acceso a la ventana de Modificación de Producto.
      */
     @Override
     public void modificar(JTable tblRegistros) {        
         int i = tblRegistros.getSelectedRow();
         if(i != -1) {
-            Unidad u = unidades.get(i);
-            CModificarUnidad modificar;
+            Producto u = productos.get(i);
+            CModificarProducto modificar;
             
             if(u.getEstado().equals("A")){
-                modificar = new CModificarUnidad(user, u.getCodigo());
+                modificar = new CModificarProducto(user, u.getCodigo());
                 ventana.dispose();
             }
             else
@@ -148,7 +153,7 @@ public class CVistaUnidad implements IVistaUnidad
     }
     
     /**
-     * Realiza la eliminación del registro de Unidad seleccionado en la tabla
+     * Realiza la eliminación del registro de Producto seleccionado en la tabla
      * @param tblRegistros
      */
     @Override
@@ -156,7 +161,7 @@ public class CVistaUnidad implements IVistaUnidad
         int i = tblRegistros.getSelectedRow();
         if(i != -1)
         {
-            Unidad u = unidades.get(i);
+            Producto u = productos.get(i);
             
             if(u.getEstado().equals("A"))
             {
@@ -164,7 +169,7 @@ public class CVistaUnidad implements IVistaUnidad
                 {
                     DefaultTableModel model = (DefaultTableModel) tblRegistros.getModel();
                     
-                    // Enviar codigo del proveedor al servidor
+                    // Enviar codigo del Producto al servidor
                     JSONObject jsonObj = new JSONObject();
                     jsonObj.put("metodo", 6);
                     jsonObj.put("codigo", u.getCodigo());
@@ -172,18 +177,18 @@ public class CVistaUnidad implements IVistaUnidad
                     String json = jsonObj.toString();
                     
                     HttpNetTask httpConnect = new HttpNetTask();
-                    String response = httpConnect.sendPost(HostURL.UNIDADES, json);
-                    getJsonDeleteUnidad(response);
+                    String response = httpConnect.sendPost(HostURL.PRODUCTOS, json);
+                    getJsonDeleteProveedor(response);
                     u.setEstado("I");
                     
-                    model.setValueAt("I", i, 1);
+                    model.setValueAt("I", i, 6);
                 }
             }
             else
-                JOptionPane.showMessageDialog(null, "La Unidad ya está eliminada", "ERROR", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "El Producto ya está eliminado", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         else
-            JOptionPane.showMessageDialog(null, "Seleccione una Unidad a eliminar", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Seleccione un Producto a eliminar", "ERROR", JOptionPane.ERROR_MESSAGE);
         
     }
     
@@ -191,7 +196,7 @@ public class CVistaUnidad implements IVistaUnidad
      * Recibe y obtiene los datos de respuesta en JSON
      * @param json
      */
-    public void getJsonDeleteUnidad(String json){
+    public void getJsonDeleteProveedor(String json){
         //Crear un Objeto JSON a partir del string JSON
         Object jsonObject = JSONValue.parse(json);
         JSONObject row =(JSONObject) jsonObject;
@@ -199,7 +204,7 @@ public class CVistaUnidad implements IVistaUnidad
         String mensaje = row.get("message").toString();
         
         if (mensaje.equals("SUCCESS")) {
-            JOptionPane.showMessageDialog(null, "Unidad eliminada.", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Producto eliminado.", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "Error al eliminar.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
@@ -207,13 +212,13 @@ public class CVistaUnidad implements IVistaUnidad
     
     /**
      * 
-     * Realiza búsquedas de Unidades  y los muestra en la interfaz
+     * Realiza búsquedas de Productos  y los muestra en la interfaz
      * @param buscar
      * @param tblRegistros
      * @param jbcBuscar
     */
     @Override
-    public void buscarUnidad( JTextField buscar, JTable tblRegistros, JComboBox jbcBuscar)
+    public void buscarProducto( JTextField buscar, JTable tblRegistros, JComboBox jbcBuscar)
     {       
         TextAutoCompleter textAutoAcompleter = new TextAutoCompleter( buscar );
         textAutoAcompleter.setMode(0); // infijo
@@ -260,9 +265,9 @@ public class CVistaUnidad implements IVistaUnidad
         String json = jsonObj.toString();
 
         HttpNetTask httpConnect = new HttpNetTask();
-        String response = httpConnect.sendPost(HostURL.UNIDADES, json);
+        String response = httpConnect.sendPost(HostURL.PRODUCTOS, json);
         
-        ArrayList<Unidad> u = getJsonSearchUser(response);
+        ArrayList<Producto> u = getJsonSearchUser(response);
         
         if (u.size() > 0) {
             int col = 0;
@@ -294,25 +299,25 @@ public class CVistaUnidad implements IVistaUnidad
     /**
      * Recibe y obtiene la lista de datos de respuesta en JSON
      * @param json
-     * @return ArrayList<Unidad>
+     * @return ArrayList<Producto>
      */
-    private ArrayList<Unidad> getJsonSearchUser(String json){
+    private ArrayList<Producto> getJsonSearchUser(String json){
         //Crear un Objeto JSON a partir del string JSON
         Object jsonObject =JSONValue.parse(json);
         //Convertir el objeto JSON en un array
         JSONArray array = (JSONArray)jsonObject;
         
-        ArrayList<Unidad> unidades = new ArrayList<Unidad>();
-        Unidad u = null;
+        ArrayList<Producto> productos = new ArrayList<Producto>();
+        Producto u = null;
         //Iterar el array y extraer la información
         for(int i=0;i<array.size();i++){
             JSONObject row =(JSONObject)array.get(i);            
-            u = new Unidad();
-            u.setCodigo(row.get("uni_id").toString());
+            u = new Producto();
+            u.setCodigo(row.get("prod_id").toString());
            
-            unidades.add(u);
+            productos.add(u);
             u = null;
         }
-        return unidades;
+        return productos;
     }
 }
