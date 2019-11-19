@@ -139,5 +139,23 @@ class ProveedorController{
 		mysqli_close($this->db->getDb());
 		return $json;
 	}
+
+	public function listarProveedoresActivos(){
+		$query = "SELECT prov_id, prov_raz_soc FROM ".$this->db_table." WHERE prov_est_reg='A'";
+		$result = mysqli_query($this->db->getDb(),$query);
+
+		$json = array();
+		if(mysqli_num_rows($result) > 0){
+			$i = 0;
+ 			while($row = mysqli_fetch_assoc($result)){
+				$json[$i]=$row;
+				$i++;
+			 }
+		}
+			
+ 		mysqli_close($this->db->getDb());
+		return $json;
+ 		
+	}
 }
 ?>

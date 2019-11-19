@@ -51,7 +51,7 @@
  		echo json_encode($json_modificar);
  	}
 
- 	// Listar usuarios
+ 	// Listar proveedores
  	if ($metodo == 4) {
  		$json_listar = $proveedor->listarProveedores();
  		echo json_encode($json_listar);
@@ -77,6 +77,12 @@
  		$filtro = $getDatos->filtro;
  		$json_buscar = $proveedor->buscarProveedor($dato, $filtro);
  		echo json_encode($json_buscar);
+ 	}
+
+ 	// Listar proveedores activos
+ 	if ($metodo == 8) {
+ 		$json_listar_act = $proveedor->listarProveedoresActivos();
+ 		echo json_encode($json_listar_act);
  	}
 
  ?>
