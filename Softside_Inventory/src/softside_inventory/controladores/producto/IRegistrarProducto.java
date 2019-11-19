@@ -1,6 +1,7 @@
 package softside_inventory.controladores.producto;
 
 import com.toedter.calendar.JDateChooser;
+import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
 /**
@@ -14,6 +15,6 @@ import javax.swing.JTextField;
 public interface IRegistrarProducto
 {
     public void cancelar();
-    public void aceptar(JTextField txtProdCod, JTextField txtProdNom, JTextField txtProdDes, JDateChooser txtFecVenc, JTextField txtProdUni, JTextField txtProdProv);
-    public void cargar(JTextField txtProdCod);
+    public void aceptar(JTextField txtProdCod, JTextField txtProdNom, JTextField txtProdDes, JDateChooser txtFecVenc, JComboBox jcbUnidad, JComboBox jcbProveedor);
+    public void cargar(JTextField txtProdCod, JComboBox jcbUnidad, JComboBox jcbProveedor);
 }

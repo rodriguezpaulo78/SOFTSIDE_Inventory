@@ -23,7 +23,7 @@ public class RegistrarProducto extends javax.swing.JFrame
         setLocationRelativeTo(null);
         
         this.interfaz = interfaz;
-        interfaz.cargar(this.txtProdCod);
+        interfaz.cargar(this.txtProdCod, this.jcbUnidad, this.jcbProveedor);
     }
 
     @SuppressWarnings("unchecked")
@@ -47,9 +47,9 @@ public class RegistrarProducto extends javax.swing.JFrame
         txtFecVenc = new com.toedter.calendar.JDateChooser();
         jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        txtProdUni = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        txtProdProv = new javax.swing.JTextField();
+        jcbUnidad = new javax.swing.JComboBox<>();
+        jcbProveedor = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/softside_inventory/recursos/icono.png")).getImage());
@@ -180,14 +180,10 @@ public class RegistrarProducto extends javax.swing.JFrame
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel6.setText("Unidad:");
 
-        txtProdUni.setColumns(18);
-        txtProdUni.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel7.setText("Proveedor");
+        jLabel7.setText("Proveedor:");
 
-        txtProdProv.setColumns(18);
-        txtProdProv.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jcbProveedor.setToolTipText("");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -198,10 +194,10 @@ public class RegistrarProducto extends javax.swing.JFrame
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6)
                     .addComponent(jLabel7))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtProdProv, javax.swing.GroupLayout.DEFAULT_SIZE, 226, Short.MAX_VALUE)
-                    .addComponent(txtProdUni))
+                    .addComponent(jcbUnidad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jcbProveedor, 0, 226, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -210,12 +206,12 @@ public class RegistrarProducto extends javax.swing.JFrame
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(txtProdUni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jcbUnidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(txtProdProv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jcbProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -267,11 +263,11 @@ public class RegistrarProducto extends javax.swing.JFrame
     {//GEN-HEADEREND:event_btnAceptarActionPerformed
        
         if (txtProdNom.getText().equals("")||txtProdDes.getText().equals("")||txtFecVenc.toString().equals("")
-                ||txtProdUni.toString().equals("")||txtProdProv.getText().equals("")){
+                ||jcbUnidad.getSelectedItem()==null||jcbProveedor.getSelectedItem()==null){
             JOptionPane.showMessageDialog(null, "No pueden estar campos vacios");
         }
         else {
-            interfaz.aceptar(this.txtProdCod, this.txtProdNom, this.txtProdDes, this.txtFecVenc, this.txtProdUni, this.txtProdProv);
+            interfaz.aceptar(this.txtProdCod, this.txtProdNom, this.txtProdDes, this.txtFecVenc, this.jcbUnidad, this.jcbProveedor);
         }
         
         
@@ -308,13 +304,13 @@ public class RegistrarProducto extends javax.swing.JFrame
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JComboBox<String> jcbProveedor;
+    private javax.swing.JComboBox<String> jcbUnidad;
     private javax.swing.JLabel lblTitulo1;
     private javax.swing.JLabel lblTitulo2;
     private com.toedter.calendar.JDateChooser txtFecVenc;
     private javax.swing.JTextField txtProdCod;
     private javax.swing.JTextField txtProdDes;
     private javax.swing.JTextField txtProdNom;
-    private javax.swing.JTextField txtProdProv;
-    private javax.swing.JTextField txtProdUni;
     // End of variables declaration//GEN-END:variables
 }
