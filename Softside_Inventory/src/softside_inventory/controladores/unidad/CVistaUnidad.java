@@ -176,7 +176,7 @@ public class CVistaUnidad implements IVistaUnidad
                     getJsonDeleteUnidad(response);
                     u.setEstado("I");
                     
-                    model.setValueAt("I", i, 1);
+                    model.setValueAt("I", i, 2);
                 }
             }
             else
