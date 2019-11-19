@@ -43,7 +43,7 @@
  		echo json_encode($json_modificar);
  	}
 
- 	// Listar productos
+ 	// Listar unidades
  	if ($metodo == 4) {
  		$json_listar = $unidad->listarUnidades();
  		echo json_encode($json_listar);
@@ -52,7 +52,7 @@
  	// Listar unidad por codigo
  	if ($metodo == 5) {
  		$codigo = $getDatos->codigo;
- 		$json_list = $unidad->getUnidadByCod($codigo);
+ 		$json_list = $unidad->getUnidByCod($codigo);
  		echo json_encode($json_list);
  	}
 
@@ -69,6 +69,12 @@
  		$filtro = $getDatos->filtro;
  		$json_buscar = $unidad->buscarUnidad($dato, $filtro);
  		echo json_encode($json_buscar);
+ 	}
+
+ 	// Listar unidades activas
+ 	if ($metodo == 8) {
+ 		$json_listar_act = $unidad->listarUnidadesActivas();
+ 		echo json_encode($json_listar_act);
  	}
 
  ?>

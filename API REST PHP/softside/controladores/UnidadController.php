@@ -81,7 +81,7 @@ class UnidadController{
 		return $json;
 	}
 
-	public function getUnidadByCod($codigo){
+	public function getUnidByCod($codigo){
 		$query = "SELECT uni_id, uni_descripcion, uni_est_reg FROM ".$this->db_table." WHERE uni_id='".$codigo."'";
 		$result = mysqli_query($this->db->getDb(),$query);
 
@@ -116,11 +116,25 @@ class UnidadController{
 	}
 
 	public function buscarUnidad($dato, $filtro){
-		$query = "";
+		$query = "SELECT uni_id FROM ".$this->db_table." WHERE uni_descripcion='".$dato."'";
 
-		if ($filtro == "Descripcion")
-			$query = "SELECT uni_id FROM ".$this->db_table." WHERE uni_descripcion='".$dato."'";
+		$result = mysqli_query($this->db->getDb(),$query);
 
+		$json = array();
+		if(mysqli_num_rows($result) > 0){
+			$i = 0;
+ 			while($row = mysqli_fetch_assoc($result)){
+				$json[$i]=$row;
+				$i++;
+			 }
+ 		}
+
+ 		mysqli_close($this->db->getDb());
+		return $json;
+	}
+
+	public function listarUnidadesActivas(){
+		$query = "SELECT uni_id, uni_descripcion FROM ".$this->db_table." WHERE uni_est_reg='A'";
 		$result = mysqli_query($this->db->getDb(),$query);
 
 		$json = array();
