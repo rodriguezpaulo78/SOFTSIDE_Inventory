@@ -65,7 +65,11 @@ class ProductoController{
 	}
 
 	public function listarProductos(){
-		$query = "SELECT prod_id, prod_nombre, prod_descripcion, unidad_id, prod_fec_venc, proveedor_id, prod_est_reg FROM ".$this->db_table;
+		$tabla = $this->db_table;
+		$tablaUnid = "unidad";
+		$tablaProv = "proveedor";
+		$query = "SELECT $tabla.prod_id, $tabla.prod_nombre, $tabla.prod_descripcion, $tabla.unidad_id, $tablaUnid.uni_descripcion, $tabla.prod_fec_venc, $tabla.proveedor_id, $tablaProv.prov_raz_soc, $tabla.prod_est_reg FROM ".$tabla." LEFT JOIN $tablaUnid ON $tabla.unidad_id=$tablaUnid.uni_id LEFT JOIN $tablaProv ON $tabla.proveedor_id=$tablaProv.prov_id";
+
 		$result = mysqli_query($this->db->getDb(),$query);
 
 		$json = array();
