@@ -2,6 +2,7 @@ package softside_inventory.controladores.usuario;
 
 import com.toedter.calendar.JDateChooser;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -94,7 +95,14 @@ public class CModificarUsuario implements IModificarUsuario
         txtUsrApe.setText(user.get(0).getApellidos());
         txtUsrCargo.setText(user.get(0).getCargo());
         
-        Date fecha = new Date(user.get(0).getFecha_nac());
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        Date fecha = null;
+        try {
+            fecha = formato.parse(user.get(0).getFecha_nac());
+        } 
+        catch (ParseException ex) {
+            ex.printStackTrace();
+        }
         txtFecNac.setDate(fecha);
         
         if(user.get(0).getTipo().equals("administrador"))
