@@ -31,6 +31,8 @@ public class CVistaProducto implements IVistaProducto
 {
     private VistaProducto ventana;
     private ArrayList<Producto> productos;
+    private ArrayList<String> unidades;
+    private ArrayList<String> proveedores;
     private Session user; 
     
     /**
@@ -39,6 +41,8 @@ public class CVistaProducto implements IVistaProducto
      */
     public CVistaProducto(Session user)
     {
+        unidades = new ArrayList<String>();
+        proveedores = new ArrayList<String>();
         ventana = new VistaProducto(this);
         this.user = user;
     }
@@ -90,9 +94,9 @@ public class CVistaProducto implements IVistaProducto
             model.addRow(new Object[]{  productos.get(i).getCodigo(),
                                         productos.get(i).getNombre(),
                                         productos.get(i).getDescripcion(),
-                                        productos.get(i).getCodigo_uni(),
+                                        unidades.get(i),
                                         productos.get(i).getFec_venc(),
-                                        productos.get(i).getCodigo_prov(),
+                                        proveedores.get(i),
                                         productos.get(i).getEstado()});
             
         }
@@ -110,6 +114,8 @@ public class CVistaProducto implements IVistaProducto
         JSONArray array = (JSONArray)jsonObject;
         
         ArrayList<Producto> productos = new ArrayList<Producto>();
+        unidades.clear();
+        proveedores.clear();
         Producto u = null;
         //Iterar el array y extraer la información
         for(int i=0;i<array.size();i++){
@@ -122,6 +128,8 @@ public class CVistaProducto implements IVistaProducto
             u.setFec_venc(row.get("prod_fec_venc").toString());
             u.setCodigo_prov(row.get("proveedor_id").toString());
             u.setEstado(row.get("prod_est_reg").toString());
+            unidades.add(row.get("uni_descripcion").toString());
+            proveedores.add(row.get("prov_raz_soc").toString());
            
             productos.add(u);
             u = null;
