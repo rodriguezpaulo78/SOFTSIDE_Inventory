@@ -264,6 +264,22 @@ public class CVistaProducto implements IVistaProducto
         String dato = buscar.getText();
         String filtro = jbcBuscar.getSelectedItem().toString();
         
+        if (filtro.equals("Unidad")){
+            for (int i = 0; i < productos.size(); i++){
+                if (unidades.get(i).equals(dato)){
+                    dato = productos.get(i).getCodigo_uni();
+                    break;
+                }
+            }
+        } else if (filtro.equals("Proveedor")){
+            for (int i = 0; i < productos.size(); i++){
+                if (proveedores.get(i).equals(dato)){
+                    dato = productos.get(i).getCodigo_prov();
+                    break;
+                }
+            }
+        }
+        
         // Enviar los datos de búsqueda al servidor
         JSONObject jsonObj = new JSONObject();
         jsonObj.put("metodo", 7);
