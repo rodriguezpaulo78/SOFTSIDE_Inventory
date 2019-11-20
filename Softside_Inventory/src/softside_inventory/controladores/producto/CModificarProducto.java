@@ -2,15 +2,19 @@ package softside_inventory.controladores.producto;
 
 import com.toedter.calendar.JDateChooser;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import softside_inventory.modelos.Producto;
+import softside_inventory.modelos.Proveedor;
+import softside_inventory.modelos.Unidad;
 import softside_inventory.net.HostURL;
 import softside_inventory.net.HttpNetTask;
 import softside_inventory.util.Session;
@@ -30,6 +34,8 @@ public class CModificarProducto implements IModificarProducto
     private Producto u;
     private Session user; 
     private String codigo;
+    private ArrayList<Unidad> unidades;
+    private ArrayList<Proveedor> proveedores;
     
     /**
      * Constructor de clase
@@ -61,12 +67,12 @@ public class CModificarProducto implements IModificarProducto
      * @param txtProdNom
      * @param txtProdDes
      * @param txtFecVenc
-     * @param txtProdUni
-     * @param txtProdProv
+     * @param jcbUnidad
+     * @param jcbProveedor
      */
     @Override
     public void cargar(JTextField txtProdCod, JTextField txtProdNom, JTextField txtProdDes, 
-            JDateChooser txtFecVenc, JTextField txtProdUni, JTextField txtProdProv)
+            JDateChooser txtFecVenc, JComboBox jcbUnidad, JComboBox jcbProveedor)
     {
         // Solicita el Producto al servidor
         JSONObject jsonObj = new JSONObject();
@@ -84,13 +90,18 @@ public class CModificarProducto implements IModificarProducto
         txtProdNom.setText(producto.get(0).getNombre());
         txtProdDes.setText(producto.get(0).getDescripcion());
         
-        Date fecha = new Date(producto.get(0).getFec_venc());
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        Date fecha = null;
+        try {
+            fecha = formato.parse(producto.get(0).getFec_venc());
+        } 
+        catch (ParseException ex) {
+            ex.printStackTrace();
+        }
         txtFecVenc.setDate(fecha);
         
-        txtProdUni.setText(producto.get(0).getCodigo_uni());
-        txtProdProv.setText(producto.get(0).getCodigo_prov());
-               
-        
+        cargarUnidad(jcbUnidad, producto.get(0).getCodigo_uni());
+        cargarProveedor(jcbProveedor, producto.get(0).getCodigo_prov());
     }
     
     /**
@@ -122,6 +133,93 @@ public class CModificarProducto implements IModificarProducto
         return productos;
     }
     
+    public void cargarUnidad(JComboBox jcbUnidad, String uniCod){
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("metodo", 8);
+        
+        String json = jsonObj.toString();
+        
+        HttpNetTask httpConnect = new HttpNetTask();
+        String response = httpConnect.sendPost(HostURL.UNIDADES, json);
+        
+        unidades = getUnidadesJSON(response);
+        for(int i = 0; i < unidades.size(); i++)
+        {
+            jcbUnidad.insertItemAt(unidades.get(i).getDescripcion(), i);
+            
+            if (unidades.get(i).getCodigo().equals(uniCod)){
+                jcbUnidad.setSelectedIndex(i);
+            }
+        }
+    }
+    
+    /**
+     * Recibe y obtiene la lista de datos de respuesta en JSON
+     * @param json
+     * @return ArrayList<Unidad>
+     */
+    private ArrayList<Unidad> getUnidadesJSON(String json){
+        //Crear un Objeto JSON a partir del string JSON
+        Object jsonObject =JSONValue.parse(json);
+        //Convertir el objeto JSON en un array
+        JSONArray array = (JSONArray)jsonObject;
+        
+        ArrayList<Unidad> unidades = new ArrayList<Unidad>();
+        Unidad u = null;
+        //Iterar el array y extraer la información
+        for(int i=0;i<array.size();i++){
+            u = new Unidad();
+            JSONObject row =(JSONObject)array.get(i);
+            u.setCodigo(row.get("uni_id").toString());
+            u.setDescripcion(row.get("uni_descripcion").toString());
+           
+            unidades.add(u);
+            u = null;
+        }
+        return unidades;
+    }
+    
+    public void cargarProveedor(JComboBox jcbProveedor, String provCod){
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("metodo", 8);
+        
+        String json = jsonObj.toString();
+        
+        HttpNetTask httpConnect = new HttpNetTask();
+        String response = httpConnect.sendPost(HostURL.PROVEEDORES, json);
+        
+        proveedores = getProveedoresJSON(response);
+        for(int i = 0; i < proveedores.size(); i++)
+        {
+            jcbProveedor.insertItemAt(proveedores.get(i).getRaz_soc(), i);
+            
+            if (proveedores.get(i).getCodigo().equals(provCod)){
+                jcbProveedor.setSelectedIndex(i);
+            }
+        }
+    }
+    
+    private ArrayList<Proveedor> getProveedoresJSON(String json){
+        //Crear un Objeto JSON a partir del string JSON
+        Object jsonObject =JSONValue.parse(json);
+        //Convertir el objeto JSON en un array
+        JSONArray array = (JSONArray)jsonObject;
+        
+        ArrayList<Proveedor> proveedores = new ArrayList<Proveedor>();
+        Proveedor u = null;
+        //Iterar el array y extraer la información
+        for(int i=0;i<array.size();i++){
+            u = new Proveedor();
+            JSONObject row =(JSONObject)array.get(i);
+            u.setCodigo(row.get("prov_id").toString());
+            u.setRaz_soc(row.get("prov_raz_soc").toString());
+           
+            proveedores.add(u);
+            u = null;
+        }
+        return proveedores;
+    }
+    
      /**
      * Hace la validación de los campos ingresados en la interfaz
      * @param txtProdCod
@@ -133,7 +231,7 @@ public class CModificarProducto implements IModificarProducto
      */
     @Override
     public void aceptar(JTextField txtProdCod, JTextField txtProdNom, JTextField txtProdDes, 
-            JDateChooser txtFecVenc, JTextField txtProdUni, JTextField txtProdProv)
+            JDateChooser txtFecVenc, JComboBox jcbUnidad, JComboBox jcbProveedor)
     {
         
         Producto u = new Producto();
@@ -147,8 +245,8 @@ public class CModificarProducto implements IModificarProducto
         
         u.setFec_venc(fecha2);
         
-        u.setCodigo_uni(txtProdUni.getText());
-        u.setCodigo_prov(txtProdProv.getText());
+        u.setCodigo_uni(unidades.get(jcbUnidad.getSelectedIndex()).getCodigo());
+        u.setCodigo_prov(proveedores.get(jcbProveedor.getSelectedIndex()).getCodigo());
                        
         String json = u.toJSON(3);
         
