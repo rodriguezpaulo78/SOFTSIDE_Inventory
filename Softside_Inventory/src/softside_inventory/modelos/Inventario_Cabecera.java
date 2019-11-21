@@ -15,8 +15,65 @@ package softside_inventory.modelos;
  * @author SOFTSIDE
  */
 public class Inventario_Cabecera {
-    
+
+
     private String proCod;
-    private String almCod = "0001"; //almCod
+    //private String almCod; //almCod
+    private String almNom; //almNom
     private String InvCabEstReg;
+    
+    public Inventario_Cabecera(String proCod, String InvCabEstReg) {
+        this.proCod = proCod;
+        this.InvCabEstReg = InvCabEstReg;
+        this.almNom = "TiendaPrincipal"; 
+    }
+
+    public String getProCod() {
+        return proCod;
+    }
+
+    public void setProCod(String proCod) {
+        this.proCod = proCod;
+    }
+
+    public String getAlmNom() {
+        return almNom;
+    }
+
+    public void setAlmNom(String almNom) {
+        this.almNom = almNom;
+    }
+    
+    public String getInvCabEstReg() {
+        return InvCabEstReg;
+    }
+
+    public void setInvCabEstReg(String InvCabEstReg) {
+        this.InvCabEstReg = InvCabEstReg;
+    }
+    
+    public void insertar(){
+        
+    }
+    
+    public void eliminar(){
+        
+    }
+    
+    public void getLista(){
+        
+    }
+    
+    public void getDetalles(){
+        
+    }
+    
+    public void getDetallesActivos(){
+        
+    }
+    
+    public void getVista(){
+        
+    }
+   
 }
