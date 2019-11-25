@@ -1,23 +1,19 @@
 package softside_inventory.vistas.inventario;
+import softside_inventory.controladores.inventario.IRegistrarCabeceraInventario;
 
-import scik.controlador.kardex.IKardexCabIns;
 
 /**
- * Vista principal de Insertar Kardex Cabecera
- * <p/>
- * <img src="screenshot/UIKardexCabIns.png"/>
- * @author Yuliana Apaza
- * @version 2.0
- * @since 2015-10-05
+ * Vista principal de Insertar Inventario Cabecera
+ * @author SOFTSIDE
  */
 public class RegistrarCabeceraInventario extends javax.swing.JFrame
 {
-    private IKardexCabIns interfaz;
+    private IRegistrarCabeceraInventario interfaz;
     
-    public RegistrarCabeceraInventario(IKardexCabIns interfaz)
+    public RegistrarCabeceraInventario(IRegistrarCabeceraInventario interfaz)
     {
         this.setVisible(true);
-        this.setTitle("Insertar Kardex_Cab");
+        this.setTitle("Insertar Inventario Cabecera");
         initComponents();
         setLocationRelativeTo(null);
         
@@ -44,7 +40,7 @@ public class RegistrarCabeceraInventario extends javax.swing.JFrame
         cbxAlmNom = new javax.swing.JComboBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/scik/recursos/icono.png")).getImage());
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/softside_inventory/recursos/icono.png")).getImage());
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -54,7 +50,7 @@ public class RegistrarCabeceraInventario extends javax.swing.JFrame
 
         lnlTitulo1.setFont(new java.awt.Font("Tahoma", 1, 23)); // NOI18N
         lnlTitulo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lnlTitulo1.setText("MANTENIMIENTO - KARDEX");
+        lnlTitulo1.setText("GESTIÓN DE INVENTARIO");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -97,7 +93,7 @@ public class RegistrarCabeceraInventario extends javax.swing.JFrame
 
         lblTitulo2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblTitulo2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo2.setText("INSERTAR");
+        lblTitulo2.setText("INSERTAR CABECERA");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setText("Codigo de Producto:");
@@ -106,6 +102,8 @@ public class RegistrarCabeceraInventario extends javax.swing.JFrame
         jLabel3.setText("Codigo de Almacen:");
 
         txtAlmCod.setEditable(false);
+        txtAlmCod.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtAlmCod.setText("00001");
 
         txtProCod.setEditable(false);
 
@@ -115,6 +113,7 @@ public class RegistrarCabeceraInventario extends javax.swing.JFrame
             }
         });
 
+        cbxAlmNom.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Tienda Cayma" }));
         cbxAlmNom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxAlmNomActionPerformed(evt);

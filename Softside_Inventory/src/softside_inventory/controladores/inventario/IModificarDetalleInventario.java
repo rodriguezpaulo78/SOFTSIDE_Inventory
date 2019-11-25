@@ -7,20 +7,18 @@ import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
 
 /**
- * Interfaz de la modificacion de registro de detalle de kardex
+ * Interfaz de la modificacion de registro de detalle de Inventario
  * 
- * Metodos disponibles para el controlador de modificacion de registro de detalle de kardex
+ * Metodos disponibles para el controlador de modificacion de registro de detalle de Inventario
  *  
- * @author Yuliana Apaza
- * @version 2.0
- * @since 2015-10-05
+ * @author SOFTSIDE
  */
 
 public interface IModificarDetalleInventario
 {
-    public void verDocumento(JComboBox cbxDocNom, JTextField txtDocCod);
-    public void cancelar();
     public void calcular(JTextField txtCan, JTextField txtValUni, JTextField txtValTot, int i);
-    public void cargar(JTextField txtKarDetCod, JTextField txtProCod, JTextField txtAlmCod, JDateChooser fecha, JTextField txtDocCod, JComboBox cbxDocNom, JTextField txtNumDoc, JComboBox cbxOpe, JTextField txtCan, JTextField txtValUni, JTextField txtValTot, JTextArea txtObs);
-    public void aceptar(JDateChooser fecha, JTextField txtDocCod, JTextField txtNumDoc, JComboBox cbxOpe, JTextField txtCan, JTextField txtValUni, JTextField txtValTot, JTextArea txtObs);
+    public void cancelar();
+    public void verDocumento(JComboBox cbxDocNom, JTextField txtDocCod);
+    public void cargar(JTextField txtDoc, JTextField txtInvDetCod, JTextField txtProCod, JTextField txtAlmCod);
+    public void aceptar(JTextField txtInvDetCod, JTextField txtProCod, JTextField txtAlmCod, JDateChooser fecha, JTextField txtDocCod, JTextField txtNumDoc, JComboBox cbxOpe, JTextField txtCan, JTextField txtValUni, JTextField txtValTot, JTextArea txtObs);
 }

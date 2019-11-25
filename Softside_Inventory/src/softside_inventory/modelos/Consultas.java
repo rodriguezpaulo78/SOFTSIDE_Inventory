@@ -15,6 +15,7 @@ import javax.swing.JOptionPane;
 
 public class Consultas
 {
+    /*
     public static ArrayList<ArrayList<String>> existenciaProducto(String codigoProducto)
     {
         ArrayList<ArrayList<String>> existencias = new ArrayList<ArrayList<String>>();       
@@ -191,4 +192,5 @@ public class Consultas
         }
         return meses;
     }
+    */
 }

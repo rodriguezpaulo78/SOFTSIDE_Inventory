@@ -10,57 +10,47 @@ import javax.swing.JTextField;
 
 import com.toedter.calendar.JDateChooser;
 import softside_inventory.util.Session;
-import softside_inventory.vistas.inventario.ModificarDetalleInventario;
+import softside_inventory.vistas.inventario.RegistrarDetalleInventario;
 
 /**
- * Controlador de la modificacion de registro de detalle de kardex
+ * Controlador de la insercion de registro de detalle de kardex
  * 
- * Carga, recibe y valida datos sobre un registro existente de movimiento de
- * entrada o salida de un producto
+ * Recibe y valida datos sobre un nuevo registro de movimiento de entrada o
+ * salida de un producto
  *  
  * @author Yuliana Apaza
  * @version 2.0
  * @since 2015-10-05
  */
 
-public class CModificarDetalleInventario implements IModificarDetalleInventario
+public class CRegistrarDetalleInventario implements IRegistrarDetalleInventario
 {
-    private ModificarDetalleInventario ventana;
+    private RegistrarDetalleInventario ventana;
     private ArrayList<ArrayList<String>> documentos;
+    private String codigoProducto;
     private String codigoAlmacen;
     private String cantidad;
     private String valTot;
-    //private KardexDet kd;
      private Session user;
     
-    public CModificarDetalleInventario(String codigo, String codigoProducto, String codigoAlmacen, String cantidad, String valTot, Session user)
+    public CRegistrarDetalleInventario(String codigoProducto, String codigoAlmacen, String cantidad, String valTot)
     {
+        this.user = user;
+        this.codigoProducto = codigoProducto;
+        this.codigoAlmacen = codigoAlmacen;
         this.cantidad = cantidad;
         this.valTot = valTot;
+        
         //documentos = Documento.getActivos();
-        //kd = KardexDet.buscar(codigo, codigoProducto, codigoAlmacen);
-        ventana = new ModificarDetalleInventario(this);
-    }
-    
-    @Override
-    public void verDocumento(JComboBox cbxDocNom, JTextField txtDocCod)
-    {
-        txtDocCod.setText(documentos.get(cbxDocNom.getSelectedIndex()).get(0));
-    }
-    
-    @Override
-    public void cancelar()
-    {
-        new CVistaInventario(user);
-        ventana.dispose();
+        //ventana = new UIKardexDetIns(this);
     }
     
     @Override
     public void calcular(JTextField txtCan, JTextField txtValUni, JTextField txtValTot, int s)
     {
         boolean canB    = !(txtCan.getText().length() == 0);
-        boolean vUniB   = !(txtValUni.getText().length() == 0);
-        boolean vTotB   = !(txtValTot.getText().length() == 0);
+        boolean valUniB = !(txtValUni.getText().length() == 0);
+        boolean valTotB = !(txtValTot.getText().length() == 0);
         
         double can  = 0;
         double vUni = 0;
@@ -81,7 +71,7 @@ public class CModificarDetalleInventario implements IModificarDetalleInventario
         }
         catch(NumberFormatException e)
         {
-            vUniB = false;
+            valUniB = false;
         }
         
         try
@@ -90,22 +80,22 @@ public class CModificarDetalleInventario implements IModificarDetalleInventario
         }
         catch(NumberFormatException e)
         {
-            vTotB = false;
+            valTotB = false;
         }
              
-        if(canB && vUniB && s != 3)
+        if(canB && valUniB && s != 3)
         {
             vTot = can * vUni;
             txtValTot.setText(String.valueOf(vTot));
         }
-        else if(canB && vTotB && s != 2)
+        else if(canB && valTotB && s != 2)
         {
             vUni = vTot / can;
             if(!Double.isFinite(vUni))
                 vUni = 0;
             txtValUni.setText(String.valueOf(vUni));
         }
-        else if(vUniB && vTotB && s != 1)
+        else if(valUniB && valTotB && s != 1)
         {
             can = vTot / vUni;
             if(!Double.isFinite(can))
@@ -114,40 +104,32 @@ public class CModificarDetalleInventario implements IModificarDetalleInventario
         }
     }
     
+    @Override
+    public void cancelar()
+    {
+        new CVistaInventario(user);
+        ventana.dispose();
+    }
+    
+    @Override
+    public void verDocumento(JComboBox cbxDocNom, JTextField txtDocCod)
+    {
+        txtDocCod.setText(documentos.get(cbxDocNom.getSelectedIndex()).get(0));
+    }
+    
     public void cargar(JTextField txtDoc, JTextField txtInvDetCod, JTextField txtProCod, JTextField txtAlmCod)
     {
-        /*
-        txtKarDetCod.setText(kd.getKarDetCod());
-        txtProCod.setText(kd.getProCod());
-        txtAlmCod.setText(kd.getAlmCod());
-        
-        Calendar c = Calendar.getInstance();
-        c.set(Integer.parseInt(kd.getKarDetAnio()), Integer.parseInt(kd.getKarDetMes()) - 1, Integer.parseInt(kd.getKarDetDia()));
-        
-        fecha.setCalendar(c);
-        txtDocCod.setText(kd.getDocCod());
-        txtNumDoc.setText(kd.getKarDetDocNum());
-        int ope = 1;
-        if(kd.getKarDetOpe().equals("1"))
-            ope = 0;
-        cbxOpe.setSelectedIndex(ope);
-        txtCan.setText(kd.getKarDetCan());
-        txtValUni.setText(kd.getKarDetValUni());
-        txtValTot.setText(kd.getKarDetValTot());
-
-        txtObs.setText(kd.getKarDetObs());
-
-        for(int i = 0; i < documentos.size(); i++) 
+        for(int i = 0; i < documentos.size(); i++)
         {
-            cbxDocNom.insertItemAt(documentos.get(i).get(1), i);
+            //cbxDocNom.insertItemAt(documentos.get(i).get(1), i);  
         }
-        
-        Documento d = Documento.buscar(kd.getDocCod());
-        cbxDocNom.setSelectedItem(d.getDocNom());
-        */
+        //txtKarDetCod.setText(KardexDet.sgteCodigo());
+        txtProCod.setText(codigoProducto);
+        txtAlmCod.setText(codigoAlmacen);
     }
-   
-    public void aceptar(JTextField txtInvDetCod, JTextField txtProCod, JTextField txtAlmCod, JDateChooser fecha, JTextField txtDocCod, JTextField txtNumDoc, JComboBox cbxOpe, JTextField txtCan, JTextField txtValUni, JTextField txtValTot, JTextArea txtObs)
+    
+    @Override
+    public void aceptar(JTextField txtKarDetCod, JTextField txtProCod, JTextField txtAlmCod, JDateChooser fecha, JTextField txtDocCod, JTextField txtNumDoc, JComboBox cbxOpe, JTextField txtCan, JTextField txtValUni, JTextField txtValTot, JTextArea txtObs)
     {
         /*
         Calendar c = fecha.getCalendar();
@@ -156,7 +138,6 @@ public class CModificarDetalleInventario implements IModificarDetalleInventario
             String salCan = "0";
             String salValTot = "0";
             String salValUni = "0";
-            
             if(cbxOpe.getSelectedIndex() == 0)
             {
                 salCan = String.valueOf(Double.parseDouble(cantidad) + Double.parseDouble(txtCan.getText()));
@@ -175,31 +156,35 @@ public class CModificarDetalleInventario implements IModificarDetalleInventario
                     saldoTotal = 0.0;
                 salValUni = String.valueOf(saldoTotal);
             }
-        
-            kd.setKarDetAnio(String.valueOf(c.get(Calendar.YEAR)));
-            kd.setKarDetMes(String.valueOf(c.get(Calendar.MONTH) + 1));
-            kd.setKarDetDia(String.valueOf(c.get(Calendar.DATE)));
-            kd.setUsrCod(user.getUsrCod());
-            kd.setDocCod(txtDocCod.getText());
-            kd.setKarDetDocNum(txtNumDoc.getText());
-            String ope = "1";
+            String ope = "";
             if(cbxOpe.getSelectedIndex() == 0)
                 ope = "1";
             else
                 ope = "0";
-            kd.setKarDetOpe(ope);
-            kd.setKarDetCan(txtCan.getText());
-            kd.setKarDetValUni(txtValUni.getText());
-            kd.setKarDetValTot(txtValTot.getText());
-            kd.setKarDetSalCan(salCan);
-            kd.setKarDetSalValUni(salValUni);
-            kd.setKarDetSalValTot(salValTot);
-            kd.setKarDetObs(txtObs.getText());
-                                            
-            String err = kd.modificar();
+            KardexDet kd = new KardexDet( txtKarDetCod.getText(),
+                                            txtProCod.getText(),
+                                            txtAlmCod.getText(),
+                                            String.valueOf(c.get(Calendar.YEAR)),
+                                            String.valueOf(c.get(Calendar.MONTH) + 1),
+                                            String.valueOf(c.get(Calendar.DATE)),
+                                            user.getUsrCod(),
+                                            txtDocCod.getText(),
+                                            txtNumDoc.getText(),
+                                            ope,
+                                            txtCan.getText(),
+                                            txtValUni.getText(),
+                                            txtValTot.getText(),
+                                            salCan,
+                                            salValUni,
+                                            salValTot,
+                                            txtObs.getText(),
+                                            "1"
+                                            );
+
+            String err = kd.insertar();
             if(err.equals(""))
             {
-                JOptionPane.showMessageDialog(null, "Se ha modificado el registro", "MODIFICACIÓN", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Se ha agregado el registro nuevo", "INSERCION", JOptionPane.INFORMATION_MESSAGE);
                 new CVistaInventario();
                 ventana.dispose();
             }
@@ -210,6 +195,7 @@ public class CModificarDetalleInventario implements IModificarDetalleInventario
         {
             JOptionPane.showMessageDialog(null, "Cantidad o Valor Total inválido", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-        */
+    */
+        
     }
 }

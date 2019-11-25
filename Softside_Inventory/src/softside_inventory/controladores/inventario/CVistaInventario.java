@@ -7,14 +7,11 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import softside_inventory.controladores.CMenu;
 
-import scik.controlador.CKardexMenu;
-import scik.modelo.Almacen;
-import scik.modelo.KardexCab;
-import scik.modelo.KardexDet;
-import scik.modelo.Producto;
-import scik.modelo.Reporte;
-import scik.vista.kardex.UIKardex;
+import softside_inventory.util.Session;
+import softside_inventory.vistas.inventario.VistaInventario;
+import softside_inventory.vistas.producto.VistaProducto;
 
 /**
  * Controlador principal de la gestion de kardex
@@ -23,27 +20,32 @@ import scik.vista.kardex.UIKardex;
  * redireccionamiento hacia las ventanas de inserción o modificación. La eliminacion
  * de kardex se realiza aqui.
  *  
- * @author Yuliana Apaza
- * @version 2.0
- * @since 2015-10-05
+ * @author SOFTSIDE
  */
 
 public class CVistaInventario implements IVistaInventario
 {
-    private UIKardex ventana;
+    /*
+    private IVistaInventario ventana;
     private ArrayList<KardexCab> kc;
     private ArrayList<ArrayList<KardexDet>> kds;
     private ArrayList<ArrayList<KardexDet>> kds_activos;
+    */
     private String codigoProducto;
     private String codigoAlmacen;
+    private VistaInventario ventana;
+    private Session user;
     
-    public CVistaInventario()
+    public CVistaInventario(Session user)
     {
-        kds = new ArrayList<>();
-        kds_activos = new ArrayList<ArrayList<KardexDet>>();
-        kc = KardexCab.getLista();
-        int kcSize = kc.size();
+        ventana = new VistaInventario(this);
+        this.user = user;
+        //kds = new ArrayList<>();
+        //kds_activos = new ArrayList<ArrayList<KardexDet>>();
+        //kc = KardexCab.getLista();
+        //int kcSize = kc.size();
         
+        /*
         for(int i = 0; i < kcSize; i++)
         {
             kds.add(KardexCab.getDetalles(kc.get(i).getProCod(), kc.get(i).getAlmCod()));
@@ -52,12 +54,13 @@ public class CVistaInventario implements IVistaInventario
         {
             kds_activos.add(KardexCab.getDetallesActivos(kc.get(i).getProCod(), kc.get(i).getAlmCod()));
         }
-        ventana = new UIKardex(this);
+        */
     }
     
     @Override
     public void cargar(JTable tblRegistrosKC)
     {
+        /*
         DefaultTableModel model = (DefaultTableModel) tblRegistrosKC.getModel();
         model.setRowCount(0);
         
@@ -80,11 +83,12 @@ public class CVistaInventario implements IVistaInventario
                                         a.getAlmNom(),
                                         estado});
         }
+        */
     }
     
-    @Override
-    public void actualizar(JTable tblRegistrosKC, JTable tblRegistrosKD, JTextField txtCan, JTextField txtValUni, JTextField txtValTot)
+    public void actualizar(JTable tblRegistrosInv_Cab, JTable tblRegistrosInv_Det)
     {
+        /*
         codigoProducto = kc.get(tblRegistrosKC.getSelectedRow()).getProCod();
         codigoAlmacen = kc.get(tblRegistrosKC.getSelectedRow()).getAlmCod();
         
@@ -133,25 +137,26 @@ public class CVistaInventario implements IVistaInventario
                                         estado
                                         });
         }
+        */
     }
     
     @Override
     public void menu()
     {
-        new CKardexMenu();
+        new CMenu(user);
         ventana.dispose();
     }
     
     @Override
-    public void insertarKC()
+    public void insertarInv_Cab()
     {
-        new CRegistrarCabeceraInventario();
+        new CRegistrarCabeceraInventario(user);
         ventana.dispose();
     }
     
-    @Override
-    public void actualizarKD(JTable tblRegistrosKC, JTable tblRegistrosKD, JTextField txtUsr, JTextField txtDoc, JTextField txtNumDoc, JTextArea txtObs, JTextField txtEst)
+    public void actualizarInv_Det(JTable tblRegistrosInv_Cab, JTable tblRegistrosInv_Det, JTextField txtUsr, JTextField txtDoc, JTextArea txtObs, JTextField txtEst)
     {
+        /*
         int i = tblRegistrosKC.getSelectedRow();
         int j = tblRegistrosKD.getSelectedRow();
         String estado = "";
@@ -175,11 +180,13 @@ public class CVistaInventario implements IVistaInventario
             txtObs.setText("");
             txtEst.setText("");
         }
+        */
     }
     
     @Override
-    public void insertarKD(JTable tblRegistrosKC)
+    public void insertarInv_Det(JTable tblRegistrosKC)
     {
+        /*
         int i = tblRegistrosKC.getSelectedRow();
         if(i != -1)
         {
@@ -201,11 +208,13 @@ public class CVistaInventario implements IVistaInventario
         }
         else
             JOptionPane.showMessageDialog(null, "Seleccione un Kardex Cabecera", "ERROR", JOptionPane.ERROR_MESSAGE);
+        */
     }
     
     @Override
-    public void eliminarKC(JTable tblRegistrosKC, JTable tblRegistrosKD, JTextField txtEst)
+    public void eliminarInv_Cab(JTable tblRegistrosKC, JTable tblRegistrosKD, JTextField txtEst)
     {
+        /*
         int i = tblRegistrosKC.getSelectedRow();
         if(i != -1)
         {
@@ -236,11 +245,13 @@ public class CVistaInventario implements IVistaInventario
         }
         else
              JOptionPane.showMessageDialog(null, "Seleccione un registro a eliminar", "ERROR", JOptionPane.ERROR_MESSAGE);
+        */
     }
     
     @Override
-    public void modificarKD(JTable tblRegistrosKC)
+    public void modificarInv_Det(JTable tblRegistrosKC)
     {
+        /*
         int i = tblRegistrosKC.getSelectedRow();
         if(i != -1)
         {
@@ -276,11 +287,13 @@ public class CVistaInventario implements IVistaInventario
         }
         else
             JOptionPane.showMessageDialog(null, "Seleccione un Kardex Cabecera", "ERROR", JOptionPane.ERROR_MESSAGE);
+        */
     }
     
     @Override
-    public void eliminarKD(JTable tblRegistrosKC)
+    public void eliminarInv_Det(JTable tblRegistrosKC)
     {
+        /*
         int i = tblRegistrosKC.getSelectedRow();
         if(i != -1)
         {
@@ -308,15 +321,17 @@ public class CVistaInventario implements IVistaInventario
         {
             JOptionPane.showMessageDialog(null, "Seleccione un Kardex Cabecera", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
+        */
     }
 
     @Override
     public void generarReporte(JTable tblRegistrosKC)
     {
+        /*
         int i = tblRegistrosKC.getSelectedRow();
         if(i != -1)
         {
-            KardexCab cab = kc.get(i);
+            Inventario cab = kc.get(i);
             if(cab.getKarCabEstReg().equals("1"))
             {
                 ArrayList<String> karcab = KardexCab.getVista(codigoProducto, codigoAlmacen);
@@ -328,5 +343,7 @@ public class CVistaInventario implements IVistaInventario
         }
         else
              JOptionPane.showMessageDialog(null, "Seleccione un registro de Kardex Cabecera", "ERROR", JOptionPane.ERROR_MESSAGE);
+        */
     }
+
 }

@@ -5,26 +5,24 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
- * Interfaz de la gestion de kardex
+ * Interfaz de la gestion de Inventario
  * 
- * Métodos disponibles para el controlador de gestion de kardex
+ * Métodos disponibles para el controlador de gestion de Inventario
  *  
- * @author Yuliana Apaza
- * @version 2.0
- * @since 2015-10-05
+ * @author SOFTSIDE
  */
 
 public interface IVistaInventario
 {
-    public void cargar(JTable tblRegistrosKC);
-    public void actualizar(JTable tblRegistrosKC, JTable tblRegistrosKD, JTextField txtCan, JTextField txtValUni, JTextField txtValTot);
+    public void cargar(JTable tblRegistrosInv_Cab);
+    public void actualizar(JTable tblRegistrosInv_Cab, JTable tblRegistrosInv_Det);
     public void menu();
-    public void insertarKC();
-    public void actualizarKD(JTable tblRegistrosKC, JTable tblRegistrosKD, JTextField txtUsr, JTextField txtDoc, JTextField txtNumDoc, JTextArea txtObs, JTextField txtEst);
-    public void insertarKD(JTable tblRegistrosKC);
-    public void eliminarKC(JTable tblRegistrosKC, JTable tblRegistrosKD, JTextField txtEst);
-    public void modificarKD(JTable tblRegistrosKC);
-    public void eliminarKD(JTable tblRegistrosKC);
+    public void insertarInv_Cab();
+    public void actualizarInv_Det(JTable tblRegistrosInv_Cab, JTable tblRegistrosInv_Det, JTextField txtUsr, JTextField txtDoc, JTextArea txtObs, JTextField txtEst);
+    public void insertarInv_Det(JTable tblRegistrosInv_Cab);
+    public void eliminarInv_Cab(JTable tblRegistrosInv_Cab, JTable tblRegistrosInv_Det, JTextField txtEst);
+    public void modificarInv_Det(JTable tblRegistrosInv_Cab);
+    public void eliminarInv_Det(JTable tblRegistrosInv_Cab);
 
     public void generarReporte(JTable tblRegistrosKC);
 }

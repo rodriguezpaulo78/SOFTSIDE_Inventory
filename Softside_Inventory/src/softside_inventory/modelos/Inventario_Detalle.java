@@ -19,24 +19,22 @@ import javax.swing.JOptionPane;
 
 public class Inventario_Detalle
 {
-    private String karDetCod;
+    private String invDetCod;
     private String proCod;
     private String almCod;
-    private String karDetAnio;
-    private String karDetMes;
-    private String karDetDia;
+    private String invDetAnio;
+    private String invDetMes;
+    private String invDetDia;
     private String usrCod;
     private String docCod;
-    private String karDetDocNum;
-    private String karDetOpe;
-    private String karDetCan;
-    private String karDetValUni;
-    private String karDetValTot;
-    private String karDetSalCan;
-    private String karDetSalValUni;
-    private String karDetSalValTot;
-    private String karDetObs;
-    private String karDetEstReg;
+    private String invDetDocNum;
+    private String invDetOpe;
+    private String invDetCan;
+    private String invDetValUni;
+    private String invDetValTot;
+    private String invDetSalCan;
+    private String invDetObs;
+    private String invDetEstReg;
     
     public Inventario_Detalle()
     {
@@ -45,230 +43,49 @@ public class Inventario_Detalle
 
     public Inventario_Detalle(String karDetCod, String proCod, String almCod, String karDetAnio, String karDetMes, String karDetDia, String usrCod, String docCod, String karDetDocNum, String karDetOpe, String karDetCan, String karDetValUni, String karDetValTot, String karDetSalCan, String karDetSalValUni, String karDetSalValTot, String karDetObs, String karDetEstReg)
     {
-        this.karDetCod = karDetCod;
+        this.invDetCod = karDetCod;
         this.proCod = proCod;
         this.almCod = almCod;
-        this.karDetAnio = karDetAnio;
-        this.karDetMes = karDetMes;
-        this.karDetDia = karDetDia;
+        this.invDetAnio = karDetAnio;
+        this.invDetMes = karDetMes;
+        this.invDetDia = karDetDia;
         this.usrCod = usrCod;
         this.docCod = docCod;
-        this.karDetDocNum = karDetDocNum;
-        this.karDetOpe = karDetOpe;
-        this.karDetCan = karDetCan;
-        this.karDetValUni = karDetValUni;
-        this.karDetValTot = karDetValTot;
-        this.karDetSalCan = karDetSalCan;
-        this.karDetSalValUni = karDetSalValUni;
-        this.karDetSalValTot = karDetSalValTot;
-        this.karDetObs = karDetObs;
-        this.karDetEstReg = karDetEstReg;
+        this.invDetDocNum = karDetDocNum;
+        this.invDetOpe = karDetOpe;
+        this.invDetCan = karDetCan;
+        this.invDetValUni = karDetValUni;
+        this.invDetValTot = karDetValTot;
+        this.invDetSalCan = karDetSalCan;
+        this.invDetObs = karDetObs;
+        this.invDetEstReg = karDetEstReg;
     }
-
-    public String getKarDetCod()
-    {
-        return karDetCod;
-    }
-
-    public void setKarDetCod(String karDetCod)
-    {
-        this.karDetCod = karDetCod;
-    }
-
-    public String getProCod()
-    {
-        return proCod;
-    }
-
-    public void setProCod(String proCod)
-    {
-        this.proCod = proCod;
-    }
-
-    public String getAlmCod()
-    {
-        return almCod;
-    }
-
-    public void setAlmCod(String almCod)
-    {
-        this.almCod = almCod;
-    }
-
-    public String getKarDetAnio()
-    {
-        return karDetAnio;
-    }
-
-    public void setKarDetAnio(String karDetAnio)
-    {
-        this.karDetAnio = karDetAnio;
-    }
-
-    public String getKarDetMes()
-    {
-        return karDetMes;
-    }
-
-    public void setKarDetMes(String karDetMes)
-    {
-        this.karDetMes = karDetMes;
-    }
-
-    public String getKarDetDia()
-    {
-        return karDetDia;
-    }
-
-    public void setKarDetDia(String karDetDia)
-    {
-        this.karDetDia = karDetDia;
-    }
-
-    public String getUsrCod()
-    {
-        return usrCod;
-    }
-
-    public void setUsrCod(String usrCod)
-    {
-        this.usrCod = usrCod;
-    }
-
-    public String getDocCod()
-    {
-        return docCod;
-    }
-
-    public void setDocCod(String docCod)
-    {
-        this.docCod = docCod;
-    }
-
-    public String getKarDetDocNum()
-    {
-        return karDetDocNum;
-    }
-
-    public void setKarDetDocNum(String karDetDocNum)
-    {
-        this.karDetDocNum = karDetDocNum;
-    }
-
-    public String getKarDetOpe()
-    {
-        return karDetOpe;
-    }
-
-    public void setKarDetOpe(String karDetOpe)
-    {
-        this.karDetOpe = karDetOpe;
-    }
-
-    public String getKarDetCan()
-    {
-        return karDetCan;
-    }
-
-    public void setKarDetCan(String karDetCan)
-    {
-        this.karDetCan = karDetCan;
-    }
-
-    public String getKarDetValUni()
-    {
-        return karDetValUni;
-    }
-
-    public void setKarDetValUni(String karDetValUni)
-    {
-        this.karDetValUni = karDetValUni;
-    }
-
-    public String getKarDetValTot()
-    {
-        return karDetValTot;
-    }
-
-    public void setKarDetValTot(String karDetValTot)
-    {
-        this.karDetValTot = karDetValTot;
-    }
-
-    public String getKarDetSalCan()
-    {
-        return karDetSalCan;
-    }
-
-    public void setKarDetSalCan(String karDetSalCan)
-    {
-        this.karDetSalCan = karDetSalCan;
-    }
-
-    public String getKarDetSalValUni()
-    {
-        return karDetSalValUni;
-    }
-
-    public void setKarDetSalValUni(String karDetSalValUni)
-    {
-        this.karDetSalValUni = karDetSalValUni;
-    }
-
-    public String getKarDetSalValTot()
-    {
-        return karDetSalValTot;
-    }
-
-    public void setKarDetSalValTot(String karDetSalValTot)
-    {
-        this.karDetSalValTot = karDetSalValTot;
-    }
-
-    public String getKarDetObs()
-    {
-        return karDetObs;
-    }
-
-    public void setKarDetObs(String karDetObs)
-    {
-        this.karDetObs = karDetObs;
-    }
-
-    public String getKarDetEstReg()
-    {
-        return karDetEstReg;
-    }
-
-    public void setKarDetEstReg(String karDetEstReg)
-    {
-        this.karDetEstReg = karDetEstReg;
-    }
+    
+    //Metodo que inserta en la BD
     
     public String insertar()
     {
+    /*
         String msg = "";
         try
         {
-            con.ejecutar(   "INSERT INTO KARDEX_DET VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+            con.ejecutar("INSERT INTO KARDEX_DET VALUES(DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                             new String[] {
                                 proCod,
                                 almCod,
-                                karDetAnio,
-                                karDetMes,
-                                karDetDia,
+                                invDetAnio,
+                                invDetMes,
+                                invDetDia,
                                 usrCod,
                                 docCod,
-                                karDetDocNum,
-                                karDetOpe,
-                                karDetCan,
-                                karDetValUni,
-                                karDetValTot,
-                                karDetSalCan,
-                                karDetSalValUni,
-                                karDetSalValTot,
-                                karDetObs,
-                                karDetEstReg
+                                invDetDocNum,
+                                invDetOpe,
+                                invDetCan,
+                                invDetValUni,
+                                invDetValTot,
+                                invDetSalCan,
+                                invDetObs,
+                                invDetEstReg
                             },
                             false
                         );
@@ -279,10 +96,16 @@ public class Inventario_Detalle
         }
         
         return msg;
+    */
+        return "";
     }
+    
+
+    //Metodo que modifica en la BD
     
     public String modificar()
     {
+        /*
         String msg = "";
         try
         {
@@ -302,21 +125,21 @@ public class Inventario_Detalle
                                             + "KarDetObs = ? "
                                             + "WHERE (KarDetCod = ? AND ProCod = ? AND AlmCod = ?)",
                         new String[] {
-                                            karDetAnio,
-                                            karDetMes,
-                                            karDetDia,
+                                            invDetAnio,
+                                            invDetMes,
+                                            invDetDia,
                                             usrCod,
                                             docCod,
-                                            karDetDocNum,
-                                            karDetOpe,
-                                            karDetCan,
-                                            karDetValUni,
-                                            karDetValTot,
-                                            karDetSalCan,
+                                            invDetDocNum,
+                                            invDetOpe,
+                                            invDetCan,
+                                            invDetValUni,
+                                            invDetValTot,
+                                            invDetSalCan,
                                             karDetSalValUni,
                                             karDetSalValTot,
-                                            karDetObs,
-                                            karDetCod,
+                                            invDetObs,
+                                            invDetCod,
                                             proCod,
                                             almCod
                         },
@@ -328,10 +151,14 @@ public class Inventario_Detalle
         }
         
         return msg;
+        */
+        return "";
     }
     
+    //Metodo que elimina de la BD
     public String eliminar(String codigo1, String codigo2, String codigo3)
     {
+        /*
         String msg = "";
         try
         {
@@ -343,11 +170,17 @@ public class Inventario_Detalle
             msg = ex.getMessage();
         }
         return msg;
+        */
+        return "";
     }
 
+    //Metodo para buscar en la BD
+    
     public static Inventario_Detalle buscar(String codigo1, String codigo2, String codigo3)
     {
+        
         Inventario_Detalle detalle = null;
+        /*
         try
         {
             ResultSet rs = con.ejecutar("SELECT * FROM KARDEX_DET WHERE (KarDetCod = ? AND ProCod = ? AND AlmCod = ?)",
@@ -377,9 +210,11 @@ public class Inventario_Detalle
         {
             JOptionPane.showMessageDialog(null, "Error de conexión a la base de datos.\nConfigure la conexión correctamente", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
+        */
         return detalle;
     }
     
+    /*
     public static String sgteCodigo()
     {
         String codigo = "000000";
@@ -453,4 +288,5 @@ public class Inventario_Detalle
         }
         return kardet;
     }
+    */
 }

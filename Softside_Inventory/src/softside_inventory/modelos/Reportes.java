@@ -510,9 +510,9 @@ public class Reportes
                 cabPro.add("Nombre");
                 cabPro.add("Unidad");
                 
-                detPro.add(myProducto.getProCod());
-                detPro.add(myProducto.getProNom());
-                detPro.add(myProducto.getUniCod());
+                detPro.add(myProducto.getCodigo());
+                detPro.add(myProducto.getNombre());
+                detPro.add(myProducto.getCodigo_uni());
                 
                 Date fechaActual = new Date();
                 SimpleDateFormat format1 = new SimpleDateFormat("dd 'de' MMMM 'del' yyyy");
@@ -662,9 +662,9 @@ public class Reportes
                 cabPro.add("Nombre");
                 cabPro.add("Unidad");
                 
-                detPro.add(myProducto.getProCod());
-                detPro.add(myProducto.getProNom());
-                detPro.add(myProducto.getUniCod());
+                detPro.add(myProducto.getCodigo());
+                detPro.add(myProducto.getNombre());
+                detPro.add(myProducto.getCodigo_uni());
                 
                 // FECHA DE CREACION DEL REPORTE         
                 Date fechaActual = new Date();

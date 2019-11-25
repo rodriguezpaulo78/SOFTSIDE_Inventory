@@ -5,11 +5,8 @@ import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-
-import scik.modelo.Almacen;
-import scik.modelo.KardexCab;
-import scik.modelo.Producto;
-import scik.vista.kardex.UIKardexCabIns;
+import softside_inventory.util.Session;
+import softside_inventory.vistas.inventario.RegistrarCabeceraInventario;
 
 /**
  * Controlador de la insercion de kardex
@@ -23,21 +20,23 @@ import scik.vista.kardex.UIKardexCabIns;
 
 public class CRegistrarCabeceraInventario implements IRegistrarCabeceraInventario
 {
-    private UIKardexCabIns ventana;
+    private RegistrarCabeceraInventario ventana;
     ArrayList<ArrayList<String>> productos;
     ArrayList<ArrayList<String>> almacenes;
+    private Session user;
     
-    public CRegistrarCabeceraInventario()
+    public CRegistrarCabeceraInventario(Session user)
     {
-        productos = Producto.getActivos();
-        almacenes = Almacen.getActivos();
-        ventana = new UIKardexCabIns(this);
+        this.user = user;
+        //productos = Producto.getActivos();
+        //almacenes = Almacen.getActivos();
+        ventana = new RegistrarCabeceraInventario(this);
     }
     
     @Override
     public void cancelar()
     {
-        new CVistaInventario();
+        new CVistaInventario(user);
         ventana.dispose();
     }
     
@@ -56,6 +55,7 @@ public class CRegistrarCabeceraInventario implements IRegistrarCabeceraInventari
     @Override
     public void aceptar(JTextField txtProCod, JTextField txtAlmCod)
     {
+        /*
         KardexCab kc = new KardexCab(txtProCod.getText(), txtAlmCod.getText(), "0", "0", "0", "1");
         String err = kc.insertar();
         
@@ -67,11 +67,13 @@ public class CRegistrarCabeceraInventario implements IRegistrarCabeceraInventari
         }
         else
             JOptionPane.showMessageDialog(null, err, "ERROR", JOptionPane.ERROR_MESSAGE);
+            */
     }
     
     @Override
     public void cargar(JComboBox cbxProNom, JComboBox cbxAlmNom)
     {
+        /*
         for(int i = 0; i < productos.size(); i++)
         {
             cbxProNom.insertItemAt(productos.get(i).get(1), i);
@@ -80,5 +82,6 @@ public class CRegistrarCabeceraInventario implements IRegistrarCabeceraInventari
         {
             cbxAlmNom.insertItemAt(almacenes.get(i).get(1), i);
         }
+        */
     }
 }

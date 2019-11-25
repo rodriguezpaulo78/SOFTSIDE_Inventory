@@ -1,30 +1,25 @@
 package softside_inventory.vistas.inventario;
 
 import java.util.Calendar;
-
-import scik.controlador.kardex.IKardexDetIns;
+import softside_inventory.controladores.inventario.IRegistrarDetalleInventario;
 
 /**
- * Vista principal de Insertar Kardex Detalle
- * <p/>
- * <img src="screenshot/UIKardexDetIns.png"/>
- * @author Yuliana Apaza
- * @version 2.0
- * @since 2015-10-05
+ * Vista principal de Insertar Inventario Detalle
+ * @author SOFTSIDE
  */
 public class RegistrarDetalleInventario extends javax.swing.JFrame
 {
-    private IKardexDetIns interfaz;
+    private IRegistrarDetalleInventario interfaz;
 
-    public RegistrarDetalleInventario(IKardexDetIns interfaz)
+    public RegistrarDetalleInventario(IRegistrarDetalleInventario interfaz)
     {
         initComponents();
         this.setVisible(true);
-        this.setTitle("Insertar Kardex Detalle");
+        this.setTitle("Insertar Inventario Detalle");
         setLocationRelativeTo(null);
 
         this.interfaz = interfaz;
-        this.interfaz.cargar(this.cbxDocNom, this.txtKarDetCod, this.txtProCod, this.txtAlmCod);
+        this.interfaz.cargar(this.txtDoc, this.txtInvDetCod, this.txtProCod, this.txtAlmCod);
     }
 
     @SuppressWarnings("unchecked")
@@ -35,7 +30,7 @@ public class RegistrarDetalleInventario extends javax.swing.JFrame
         jScrollPane2 = new javax.swing.JScrollPane();
         txtObs = new javax.swing.JTextArea();
         jLayeredPane2 = new javax.swing.JLayeredPane();
-        txtKarDetCod = new javax.swing.JTextField();
+        txtInvDetCod = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -57,8 +52,7 @@ public class RegistrarDetalleInventario extends javax.swing.JFrame
         lblTitulo2 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        cbxDocNom = new javax.swing.JComboBox();
-        txtDocCod = new javax.swing.JTextField();
+        txtDoc = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         txtNumDoc = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
@@ -66,7 +60,7 @@ public class RegistrarDetalleInventario extends javax.swing.JFrame
         btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/scik/recursos/icono.png")).getImage());
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/softside_inventory/recursos/icono.png")).getImage());
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -85,8 +79,8 @@ public class RegistrarDetalleInventario extends javax.swing.JFrame
         jLayeredPane2.setBackground(new java.awt.Color(204, 255, 204));
         jLayeredPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
-        txtKarDetCod.setEditable(false);
-        txtKarDetCod.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtInvDetCod.setEditable(false);
+        txtInvDetCod.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("Codigo de Producto:");
@@ -102,6 +96,8 @@ public class RegistrarDetalleInventario extends javax.swing.JFrame
 
         txtAlmCod.setEditable(false);
         txtAlmCod.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtAlmCod.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtAlmCod.setText("00001");
 
         fecha.setCalendar(Calendar.getInstance());
         fecha.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -109,7 +105,7 @@ public class RegistrarDetalleInventario extends javax.swing.JFrame
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setText("Fecha:");
 
-        jLayeredPane2.setLayer(txtKarDetCod, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        jLayeredPane2.setLayer(txtInvDetCod, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
         jLayeredPane2.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -129,7 +125,7 @@ public class RegistrarDetalleInventario extends javax.swing.JFrame
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtKarDetCod, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                    .addComponent(txtInvDetCod, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
                     .addComponent(txtProCod))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,7 +146,7 @@ public class RegistrarDetalleInventario extends javax.swing.JFrame
                         .addComponent(fecha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel5))
                     .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtKarDetCod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtInvDetCod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel4)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jLayeredPane2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -251,26 +247,19 @@ public class RegistrarDetalleInventario extends javax.swing.JFrame
 
         lblTitulo1.setFont(new java.awt.Font("Tahoma", 1, 23)); // NOI18N
         lblTitulo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo1.setText("MANTENIMIENTO - KARDEX DETALLE");
+        lblTitulo1.setText("GESTIÓN DE INVENTARIO");
 
         lblTitulo2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblTitulo2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitulo2.setText("INSERTAR");
+        lblTitulo2.setText("INSERTAR DETALLE");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Documento"));
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setText("Tipo:");
 
-        cbxDocNom.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        cbxDocNom.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxDocNomActionPerformed(evt);
-            }
-        });
-
-        txtDocCod.setEditable(false);
-        txtDocCod.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtDoc.setEditable(false);
+        txtDoc.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel19.setText("Número:");
@@ -285,9 +274,7 @@ public class RegistrarDetalleInventario extends javax.swing.JFrame
                 .addContainerGap()
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(txtDocCod, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cbxDocNom, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDoc, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel19)
                 .addGap(26, 26, 26)
@@ -300,11 +287,10 @@ public class RegistrarDetalleInventario extends javax.swing.JFrame
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(cbxDocNom, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtDocCod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel19)
                     .addComponent(txtNumDoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(12, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -392,16 +378,12 @@ public class RegistrarDetalleInventario extends javax.swing.JFrame
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        interfaz.aceptar(this.txtKarDetCod, this.txtProCod, this.txtAlmCod, this.fecha, this.txtDocCod, this.txtNumDoc, this.cbxOpe, this.txtCan, this.txtValUni, this.txtValTot, this.txtObs);
+        interfaz.aceptar(this.txtInvDetCod, this.txtProCod, this.txtAlmCod, this.fecha, this.txtDoc, this.txtNumDoc, this.cbxOpe, this.txtCan, this.txtValUni, this.txtValTot, this.txtObs);
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         interfaz.cancelar();
     }//GEN-LAST:event_btnCancelarActionPerformed
-
-    private void cbxDocNomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxDocNomActionPerformed
-        interfaz.verDocumento(cbxDocNom, txtDocCod);
-    }//GEN-LAST:event_cbxDocNomActionPerformed
 
     private void txtCanKeyReleased(java.awt.event.KeyEvent evt)//GEN-FIRST:event_txtCanKeyReleased
     {//GEN-HEADEREND:event_txtCanKeyReleased
@@ -426,7 +408,6 @@ public class RegistrarDetalleInventario extends javax.swing.JFrame
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JComboBox cbxDocNom;
     private javax.swing.JComboBox cbxOpe;
     private com.toedter.calendar.JDateChooser fecha;
     private javax.swing.JLabel jLabel11;
@@ -450,8 +431,8 @@ public class RegistrarDetalleInventario extends javax.swing.JFrame
     private javax.swing.JLabel lblTitulo2;
     private javax.swing.JTextField txtAlmCod;
     private javax.swing.JTextField txtCan;
-    private javax.swing.JTextField txtDocCod;
-    private javax.swing.JTextField txtKarDetCod;
+    private javax.swing.JTextField txtDoc;
+    private javax.swing.JTextField txtInvDetCod;
     private javax.swing.JTextField txtNumDoc;
     private javax.swing.JTextArea txtObs;
     private javax.swing.JTextField txtProCod;
