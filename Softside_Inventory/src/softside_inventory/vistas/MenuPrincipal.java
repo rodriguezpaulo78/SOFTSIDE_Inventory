@@ -371,8 +371,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
      */
     private void btnEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradaActionPerformed
         // TODO add your handling code here:
-        //interfaz.entrada();
-        JOptionPane.showMessageDialog(null, "Mostrar manual");
+        interfaz.entrada();
     }//GEN-LAST:event_btnEntradaActionPerformed
 
     /**
@@ -380,8 +379,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
      */
     private void btnSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalidaActionPerformed
         // TODO add your handling code here:
-        //interfaz.salida();
-        JOptionPane.showMessageDialog(null, "Mostrar manual");
+        interfaz.salida();
     }//GEN-LAST:event_btnSalidaActionPerformed
 
     /**
@@ -389,8 +387,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
      */
     private void btnExistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExistenciaActionPerformed
         // TODO add your handling code here:
-        //interfaz.existenciaProducto();
-        JOptionPane.showMessageDialog(null, "Mostrar manual");
+        interfaz.existenciaProducto();
     }//GEN-LAST:event_btnExistenciaActionPerformed
 
     /**
@@ -410,7 +407,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void itmAcercaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itmAcercaActionPerformed
         // TODO add your handling code here:
         ImageIcon icon = new ImageIcon(getClass().getResource("/softside_inventory/recursos/salir.png"));
-        JOptionPane.showMessageDialog(null, "Sistema de Control de Inventarios\nKARDEX - 2015\nPANALUX S.A.", "Acerca de", JOptionPane.INFORMATION_MESSAGE, icon);
+        JOptionPane.showMessageDialog(null, "Sistema de Control de Inventarios - SOFTSIDE INVENTORY\nCALIDAD DE SOFTWARE\nSOFTSIDE", "Acerca de", JOptionPane.INFORMATION_MESSAGE, icon);
    
     }//GEN-LAST:event_itmAcercaActionPerformed
 

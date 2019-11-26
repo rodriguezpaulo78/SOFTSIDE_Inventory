@@ -9,6 +9,7 @@ import softside_inventory.controladores.usuario.CVistaUsuario;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import softside_inventory.controladores.consulta.*;
 import softside_inventory.controladores.inventario.CVistaInventario;
 import softside_inventory.controladores.producto.CVistaProducto;
 import softside_inventory.controladores.proveedor.CVistaProveedor;
@@ -132,31 +133,31 @@ public class CMenu implements IMenu{
 
     @Override
     /**
-     * Acceso a la ventana de Reporte de Existencia de Productos.
+     * Acceso a la ventana de Consulta de Existencia de Productos.
      */
     public void existenciaProducto()
     {
-        //new CExistencia();
+        new CExistencia(user);
         ventana.dispose();
     }
 
     @Override
     /**
-     * Acceso a la ventana de Reporte de Salida de Productos.
+     * Acceso a la ventana de Consulta de Salida de Productos.
      */
     public void salida()
     {
-        //new CSalida();
+        new CSalida(user);
         ventana.dispose();
     }
 
     @Override
     /**
-     * Acceso a la ventana de Reporte de Entrada de Productos.
+     * Acceso a la ventana de Consulta de Entrada de Productos.
      */
     public void entrada()
     {
-        //new CEntrada();
+        new CEntrada(user);
         ventana.dispose();
     }
 }
