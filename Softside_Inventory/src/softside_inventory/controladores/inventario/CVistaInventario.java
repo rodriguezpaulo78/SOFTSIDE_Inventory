@@ -7,7 +7,14 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import softside_inventory.controladores.CMenu;
+import softside_inventory.modelos.Inventario_Cabecera;
+import softside_inventory.modelos.Producto;
+import softside_inventory.net.HostURL;
+import softside_inventory.net.HttpNetTask;
 
 import softside_inventory.util.Session;
 import softside_inventory.vistas.inventario.VistaInventario;
@@ -31,6 +38,7 @@ public class CVistaInventario implements IVistaInventario
     private ArrayList<ArrayList<KardexDet>> kds;
     private ArrayList<ArrayList<KardexDet>> kds_activos;
     */
+    private ArrayList<Inventario_Cabecera> invCabs;
     private String codigoProducto;
     private String codigoAlmacen;
     private VistaInventario ventana;
@@ -60,30 +68,93 @@ public class CVistaInventario implements IVistaInventario
     @Override
     public void cargar(JTable tblRegistrosKC)
     {
-        /*
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("metodo", 2);
+        
+        String json = jsonObj.toString();
+        
+        HttpNetTask httpConnect = new HttpNetTask();
+        String response = httpConnect.sendPost(HostURL.INVENTARIO_CABECERA, json);
+        
+        invCabs = getInvCabsJSON(response);
+        
         DefaultTableModel model = (DefaultTableModel) tblRegistrosKC.getModel();
         model.setRowCount(0);
         
         Producto p = null;
-        Almacen a = null;
-        
-	int kcSize = kc.size();
-        for(int i = 0; i < kcSize; i++)
+       
+        for(int i = 0; i < invCabs.size(); i++)
         {
-            p = Producto.buscar(kc.get(i).getProCod());
-            a = Almacen.buscar(kc.get(i).getAlmCod());
-            String estado = "";
-            if(kc.get(i).getKarCabEstReg().equals("1"))
-                estado = "A";
-            else
-                estado = "*";
-            model.addRow(new Object[]{  kc.get(i).getProCod(),
-                                        p.getProNom(),
-                                        kc.get(i).getAlmCod(),
-                                        a.getAlmNom(),
-                                        estado});
+            p = getProducto(invCabs.get(i).getProCod());
+            
+            model.addRow(new Object[]{  invCabs.get(i).getProCod(),
+                                        p.getNombre(),
+                                        invCabs.get(i).getAlmNom(),
+                                        invCabs.get(i).getInvCabEstReg()});
         }
-        */
+    }
+    
+    /**
+     * Recibe y obtiene la lista de datos de respuesta en JSON
+     * @param json
+     * @return ArrayList<Inventario_Cabecera>
+     */
+    private ArrayList<Inventario_Cabecera> getInvCabsJSON(String json){
+        //Crear un Objeto JSON a partir del string JSON
+        Object jsonObject =JSONValue.parse(json);
+        //Convertir el objeto JSON en un array
+        JSONArray array = (JSONArray)jsonObject;
+        
+        ArrayList<Inventario_Cabecera> inventarios = new ArrayList<Inventario_Cabecera>();
+        Inventario_Cabecera inv = null;
+        //Iterar el array y extraer la información
+        for(int i=0;i<array.size();i++){
+            inv = new Inventario_Cabecera();
+            JSONObject row =(JSONObject)array.get(i);
+            inv.setInvCabCod(row.get("inv_cab_id").toString());
+            inv.setProCod(row.get("producto_id").toString());
+            inv.setAlmNom(row.get("inv_cab_almacen").toString());
+            inv.setInvCabEstReg(row.get("inv_cab_est_reg").toString());
+           
+            inventarios.add(inv);
+            inv = null;
+        }
+        return inventarios;
+    }
+    
+    public Producto getProducto(String cod){
+        // Solicita el Producto al servidor
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("metodo", 5);
+        jsonObj.put("codigo", cod);
+        
+        String json = jsonObj.toString();
+        
+        HttpNetTask httpConnect = new HttpNetTask();
+        String response = httpConnect.sendPost(HostURL.PRODUCTOS, json);
+        
+        // Procesar respuesta del servidor
+        Object jsonObject =JSONValue.parse(response);
+        JSONArray array = (JSONArray)jsonObject;
+        
+        ArrayList<Producto> productos = new ArrayList<Producto>();
+        Producto u = null;
+        
+        for(int i=0;i<array.size();i++){
+            u = new Producto();
+            JSONObject row =(JSONObject)array.get(i);
+            u.setCodigo(row.get("prod_id").toString());
+            u.setNombre(row.get("prod_nombre").toString());
+            u.setDescripcion(row.get("prod_descripcion").toString());
+            u.setCodigo_uni(row.get("unidad_id").toString());
+            u.setFec_venc(row.get("prod_fec_venc").toString());
+            u.setCodigo_prov(row.get("proveedor_id").toString());
+            u.setEstado(row.get("prod_est_reg").toString());
+                     
+            productos.add(u);
+            u = null;
+        }
+        return productos.get(0);
     }
     
     public void actualizar(JTable tblRegistrosInv_Cab, JTable tblRegistrosInv_Det)
@@ -214,18 +285,28 @@ public class CVistaInventario implements IVistaInventario
     @Override
     public void eliminarInv_Cab(JTable tblRegistrosKC, JTable tblRegistrosKD, JTextField txtEst)
     {
-        /*
         int i = tblRegistrosKC.getSelectedRow();
         if(i != -1)
         {
-            KardexCab cab = kc.get(i);
-            if(!cab.getKarCabEstReg().equals("3") && 
+            Inventario_Cabecera cab = invCabs.get(i);
+            if(cab.getInvCabEstReg().equals("A") && 
                 JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
             {
-                cab.eliminar();
+                // Enviar codigo del inventario cabecera al servidor
+                JSONObject jsonObj = new JSONObject();
+                jsonObj.put("metodo", 3);
+                jsonObj.put("codigo", cab.getInvCabCod());
+
+                String json = jsonObj.toString();
+
+                HttpNetTask httpConnect = new HttpNetTask();
+                String response = httpConnect.sendPost(HostURL.INVENTARIO_CABECERA, json);
+                getJsonDeleteInvCab(response);
+                cab.setInvCabEstReg("I");
+
                 DefaultTableModel model = (DefaultTableModel) tblRegistrosKC.getModel();
-                model.setValueAt("*", i, 4);
-                if(tblRegistrosKD.getSelectedRow() != -1)
+                model.setValueAt("I", i, 3);
+                /*if(tblRegistrosKD.getSelectedRow() != -1)
                     txtEst.setText("Eliminado");
                 int kdsSize = kds.get(i).size();
                 int kdsActivosSize = kds_activos.get(i).size();
@@ -238,14 +319,32 @@ public class CVistaInventario implements IVistaInventario
                 for(int j = 0; j < kdsActivosSize; j++)
                 {
                     kds_activos.get(i).get(j).setKarDetEstReg("3");
-                }
+                }*/
             }
             else
                 JOptionPane.showMessageDialog(null, "El registro ya está eliminado", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         else
              JOptionPane.showMessageDialog(null, "Seleccione un registro a eliminar", "ERROR", JOptionPane.ERROR_MESSAGE);
-        */
+        
+    }
+    
+    /**
+     * Recibe y obtiene los datos de respuesta en JSON
+     * @param json
+     */
+    public void getJsonDeleteInvCab(String json){
+        //Crear un Objeto JSON a partir del string JSON
+        Object jsonObject = JSONValue.parse(json);
+        JSONObject row =(JSONObject) jsonObject;
+        
+        String mensaje = row.get("message").toString();
+        
+        if (mensaje.equals("SUCCESS")) {
+            JOptionPane.showMessageDialog(null, "Registro eliminado.", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al eliminar.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     @Override
