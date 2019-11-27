@@ -16,13 +16,11 @@ import softside_inventory.vistas.inventario.RegistrarCabeceraInventario;
 import softside_inventory.modelos.Producto;
 
 /**
- * Controlador de la insercion de kardex
+ * Controlador de la insercion de Inventario Cabecera
  * 
- * Recibe datos sobre un nuevo registro de kardex.
+ * Recibe y valida datos sobre un nuevo registro de cabecera de inventario
  *  
- * @author Yuliana Apaza
- * @version 2.0
- * @since 2015-10-05
+ * @author SOFTSIDE
  */
 
 public class CRegistrarCabeceraInventario implements IRegistrarCabeceraInventario
@@ -54,13 +52,13 @@ public class CRegistrarCabeceraInventario implements IRegistrarCabeceraInventari
     @Override
     public void verAlmacen(JTextField txtAlmCod, JComboBox cbxAlmNom)
     {
+        //Solo existe un alamcen por defecto
         //txtAlmCod.setText(almacenes.get(cbxAlmNom.getSelectedIndex()).get(0));
     }
     
     @Override
     public void aceptar(JTextField txtProCod, JTextField txtAlmCod)
     {
-        // inv_cab_id, producto_id, inv_cab_almacen, inv_cab_est_reg
         Inventario_Cabecera invCab = new Inventario_Cabecera();
         invCab.setProCod(txtProCod.getText());
         invCab.setAlmNom("Tienda Cayma");
@@ -118,7 +116,7 @@ public class CRegistrarCabeceraInventario implements IRegistrarCabeceraInventari
     /**
      * Recibe y obtiene la lista de datos de respuesta en JSON
      * @param json
-     * @return ArrayList<Unidad>
+     * @return ArrayList<Producto>
      */
     private ArrayList<Producto> getProductosJSON(String json){
         //Crear un Objeto JSON a partir del string JSON
