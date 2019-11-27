@@ -25,38 +25,20 @@
  		$json_registrar = $inv_cab->agregarInvCab($datos);
  		echo json_encode($json_registrar);
  	}
-/*
- 	// Modificar unidad
- 	if ($metodo == 3) {
- 		$codigo = $getDatos->codigo;
- 		$descripcion = $getDatos->descripcion;
 
- 		$datos=[$codigo, $descripcion];
-
- 		$json_modificar = $unidad->modificarUnidad($datos);
- 		echo json_encode($json_modificar);
- 	}
-
- 	// Listar unidades
- 	if ($metodo == 4) {
- 		$json_listar = $unidad->listarUnidades();
+ 	// Listar inventarios cabeceras
+ 	if ($metodo == 2) {
+ 		$json_listar = $inv_cab->listarInvCabs();
  		echo json_encode($json_listar);
  	}
 
- 	// Listar unidad por codigo
- 	if ($metodo == 5) {
+ 	// Eliminar inventario cabecera
+ 	if ($metodo == 3) {
  		$codigo = $getDatos->codigo;
- 		$json_list = $unidad->getUnidByCod($codigo);
- 		echo json_encode($json_list);
- 	}
-
- 	// Eliminar unidad
- 	if ($metodo == 6) {
- 		$codigo = $getDatos->codigo;
- 		$json_eliminar = $unidad->eliminarUnidad($codigo);
+ 		$json_eliminar = $inv_cab->eliminarInvCab($codigo);
  		echo json_encode($json_eliminar);
  	}
-
+/*
  	// Buscar unidad
  	if ($metodo == 7) {
  		$dato = $getDatos->dato;

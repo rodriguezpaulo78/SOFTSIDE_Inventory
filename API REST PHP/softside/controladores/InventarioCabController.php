@@ -26,26 +26,9 @@ class InventarioCabController{
 		
 		return $json;
 	}
-/*
-	public function modificarUnidad($datos){	
-		$json = array();
 
-		$query = "UPDATE ".$this->db_table." SET uni_descripcion='$datos[1]' WHERE uni_id='$datos[0]'";
-
-		$updated = mysqli_query($this->db->getDb(), $query);
-
-		if($updated == 1){
-			$json['message'] = "SUCCESS";
-		}else{
-			$json['message'] = "FAILED";
-		}
-		mysqli_close($this->db->getDb());
-		
-		return $json;
-	}
-
-	public function listarUnidades(){
-		$query = "SELECT uni_id, uni_descripcion, uni_est_reg FROM ".$this->db_table;
+	public function listarInvCabs(){
+		$query = "SELECT inv_cab_id, producto_id, inv_cab_almacen, inv_cab_est_reg FROM ".$this->db_table;
 		$result = mysqli_query($this->db->getDb(),$query);
 
 		$json = array();
@@ -61,27 +44,10 @@ class InventarioCabController{
 		return $json;
 	}
 
-	public function getUnidByCod($codigo){
-		$query = "SELECT uni_id, uni_descripcion, uni_est_reg FROM ".$this->db_table." WHERE uni_id='".$codigo."'";
-		$result = mysqli_query($this->db->getDb(),$query);
-
-		$json = array();
-		if(mysqli_num_rows($result) > 0){
-			$i = 0;
- 			while($row = mysqli_fetch_assoc($result)){
-				$json[$i]=$row;
-				$i++;
-			 }
- 		}
-
- 		mysqli_close($this->db->getDb());
-		return $json;
-	}
-
-	public function eliminarUnidad($codigo){	
+	public function eliminarInvCab($codigo){	
 		$json = array();
 
-		$query = "UPDATE ".$this->db_table." SET uni_est_reg='I' WHERE uni_id='".$codigo."'";
+		$query = "UPDATE ".$this->db_table." SET inv_cab_est_reg='I' WHERE inv_cab_id='".$codigo."'";
 
 		$deleted = mysqli_query($this->db->getDb(), $query);
 
@@ -94,7 +60,7 @@ class InventarioCabController{
 		
 		return $json;
 	}
-
+/*
 	public function buscarUnidad($dato, $filtro){
 		$query = "SELECT uni_id FROM ".$this->db_table." WHERE uni_descripcion='".$dato."'";
 
