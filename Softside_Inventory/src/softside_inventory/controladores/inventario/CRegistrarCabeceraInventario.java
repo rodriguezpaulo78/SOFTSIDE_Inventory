@@ -8,6 +8,7 @@ import javax.swing.JTextField;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
+import softside_inventory.modelos.Inventario_Cabecera;
 import softside_inventory.net.HostURL;
 import softside_inventory.net.HttpNetTask;
 import softside_inventory.util.Session;
@@ -34,7 +35,6 @@ public class CRegistrarCabeceraInventario implements IRegistrarCabeceraInventari
     public CRegistrarCabeceraInventario(Session user)
     {
         this.user = user;
-        //almacenes = Almacen.getActivos();
         ventana = new RegistrarCabeceraInventario(this);
     }
     
@@ -54,41 +54,49 @@ public class CRegistrarCabeceraInventario implements IRegistrarCabeceraInventari
     @Override
     public void verAlmacen(JTextField txtAlmCod, JComboBox cbxAlmNom)
     {
-        txtAlmCod.setText(almacenes.get(cbxAlmNom.getSelectedIndex()).get(0));
+        //txtAlmCod.setText(almacenes.get(cbxAlmNom.getSelectedIndex()).get(0));
     }
     
     @Override
     public void aceptar(JTextField txtProCod, JTextField txtAlmCod)
     {
-        /*
-        KardexCab kc = new KardexCab(txtProCod.getText(), txtAlmCod.getText(), "0", "0", "0", "1");
-        String err = kc.insertar();
+        // inv_cab_id, producto_id, inv_cab_almacen, inv_cab_est_reg
+        Inventario_Cabecera invCab = new Inventario_Cabecera();
+        invCab.setProCod(txtProCod.getText());
+        invCab.setAlmNom("Tienda Cayma");
+                       
+        String json = invCab.toJSON(1);
         
-        if(err.equals(""))
-        {
-            JOptionPane.showMessageDialog(null, "Se ha agregado el registro nuevo", "INSERCION", JOptionPane.INFORMATION_MESSAGE);
-            new CVistaInventario();
+        HttpNetTask httpConnect = new HttpNetTask();
+        String response = httpConnect.sendPost(HostURL.INVENTARIO_CABECERA, json);
+        
+        getJsonRespProd(response);
+    }
+    
+    /**
+     * Recibe y obtiene los datos de respuesta en JSON
+     * @param json
+     */
+    public void getJsonRespProd(String json){
+        //Crear un Objeto JSON a partir del string JSON
+        Object jsonObject = JSONValue.parse(json);
+        JSONObject row =(JSONObject) jsonObject;
+        
+        String mensaje = row.get("message").toString();
+        
+        if (mensaje.equals("SUCCESS")) {
+            JOptionPane.showMessageDialog(null, "Se ha agregado el registro nuevo", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            new CVistaInventario(user);
             ventana.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al registrar.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-        else
-            JOptionPane.showMessageDialog(null, err, "ERROR", JOptionPane.ERROR_MESSAGE);
-            */
     }
     
     @Override
     public void cargar(JComboBox cbxProNom, JComboBox cbxAlmNom)
     {
         cargarProductosActivos(cbxProNom);
-        /*
-        for(int i = 0; i < productos.size(); i++)
-        {
-            cbxProNom.insertItemAt(productos.get(i).get(1), i);
-        }
-        for(int i = 0; i < almacenes.size(); i++)
-        {
-            cbxAlmNom.insertItemAt(almacenes.get(i).get(1), i);
-        }
-        */
     }
     
     public void cargarProductosActivos(JComboBox cbxProNom){

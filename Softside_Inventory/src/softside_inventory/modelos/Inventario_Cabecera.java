@@ -5,6 +5,8 @@
  */
 package softside_inventory.modelos;
 
+import org.json.simple.JSONObject;
+
 /**
  * Representacion de la entidad Cabecera de Inventario  de la base de datos
  * 
@@ -16,16 +18,24 @@ package softside_inventory.modelos;
  */
 public class Inventario_Cabecera {
 
-
+    private String invCabCod;
     private String proCod;
     //private String almCod; //almCod
     private String almNom; //almNom
     private String InvCabEstReg;
     
-    public Inventario_Cabecera(String proCod, String InvCabEstReg) {
+    /*public Inventario_Cabecera(String proCod, String InvCabEstReg) {
         this.proCod = proCod;
         this.InvCabEstReg = InvCabEstReg;
         this.almNom = "TiendaPrincipal"; 
+    }*/
+
+    public String getInvCabCod() {
+        return invCabCod;
+    }
+
+    public void setInvCabCod(String invCabCod) {
+        this.invCabCod = invCabCod;
     }
 
     public String getProCod() {
@@ -52,8 +62,19 @@ public class Inventario_Cabecera {
         this.InvCabEstReg = InvCabEstReg;
     }
     
-    public void insertar(){
+    public String toJSON(int metodo) {
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("metodo", metodo);
+        jsonObj.put("productoCod", getProCod());
+        jsonObj.put("almacen", getAlmNom());
         
+        String json = jsonObj.toString();
+        
+        return json;
+    }
+    
+    public void insertar(){
+       
     }
     
     public void eliminar(){

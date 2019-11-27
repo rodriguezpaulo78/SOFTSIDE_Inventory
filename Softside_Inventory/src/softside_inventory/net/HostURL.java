@@ -17,5 +17,6 @@ public class HostURL {
     public final static String PROVEEDORES = HOST + "ProveedorModel.php";
     public final static String PRODUCTOS = HOST + "ProductoModel.php";
     public final static String UNIDADES = HOST + "UnidadModel.php";
+    public final static String INVENTARIO_CABECERA = HOST + "InventarioCabModel.php";
   
 }
