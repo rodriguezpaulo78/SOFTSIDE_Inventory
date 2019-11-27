@@ -143,5 +143,22 @@ class ProductoController{
  		mysqli_close($this->db->getDb());
 		return $json;
 	}
+
+	public function listarProductosActivos(){
+		$query = "SELECT prod_id, prod_nombre FROM ".$this->db_table." WHERE prod_est_reg='A'";
+		$result = mysqli_query($this->db->getDb(),$query);
+
+		$json = array();
+		if(mysqli_num_rows($result) > 0){
+			$i = 0;
+ 			while($row = mysqli_fetch_assoc($result)){
+				$json[$i]=$row;
+				$i++;
+			 }
+ 		}
+
+ 		mysqli_close($this->db->getDb());
+		return $json;
+	}
 }
 ?>

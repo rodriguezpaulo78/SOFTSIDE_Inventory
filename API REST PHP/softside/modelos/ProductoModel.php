@@ -79,4 +79,10 @@
  		echo json_encode($json_buscar);
  	}
 
+ 	// Listar productos activos
+ 	if ($metodo == 8) {
+ 		$json_listar_act = $producto->listarProductosActivos();
+ 		echo json_encode($json_listar_act);
+ 	}
+
  ?>
