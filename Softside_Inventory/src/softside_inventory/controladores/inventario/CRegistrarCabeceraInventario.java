@@ -5,8 +5,14 @@ import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import softside_inventory.net.HostURL;
+import softside_inventory.net.HttpNetTask;
 import softside_inventory.util.Session;
 import softside_inventory.vistas.inventario.RegistrarCabeceraInventario;
+import softside_inventory.modelos.Producto;
 
 /**
  * Controlador de la insercion de kardex
@@ -21,14 +27,13 @@ import softside_inventory.vistas.inventario.RegistrarCabeceraInventario;
 public class CRegistrarCabeceraInventario implements IRegistrarCabeceraInventario
 {
     private RegistrarCabeceraInventario ventana;
-    ArrayList<ArrayList<String>> productos;
+    ArrayList<Producto> productos;
     ArrayList<ArrayList<String>> almacenes;
     private Session user;
     
     public CRegistrarCabeceraInventario(Session user)
     {
         this.user = user;
-        //productos = Producto.getActivos();
         //almacenes = Almacen.getActivos();
         ventana = new RegistrarCabeceraInventario(this);
     }
@@ -43,7 +48,7 @@ public class CRegistrarCabeceraInventario implements IRegistrarCabeceraInventari
     @Override
     public void verProducto(JTextField txtProCod, JComboBox cbxProNom)
     {
-        txtProCod.setText(productos.get(cbxProNom.getSelectedIndex()).get(0));
+        txtProCod.setText(productos.get(cbxProNom.getSelectedIndex()).getCodigo());
     }
     
     @Override
@@ -73,6 +78,7 @@ public class CRegistrarCabeceraInventario implements IRegistrarCabeceraInventari
     @Override
     public void cargar(JComboBox cbxProNom, JComboBox cbxAlmNom)
     {
+        cargarProductosActivos(cbxProNom);
         /*
         for(int i = 0; i < productos.size(); i++)
         {
@@ -83,5 +89,47 @@ public class CRegistrarCabeceraInventario implements IRegistrarCabeceraInventari
             cbxAlmNom.insertItemAt(almacenes.get(i).get(1), i);
         }
         */
+    }
+    
+    public void cargarProductosActivos(JComboBox cbxProNom){
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("metodo", 8);
+        
+        String json = jsonObj.toString();
+        
+        HttpNetTask httpConnect = new HttpNetTask();
+        String response = httpConnect.sendPost(HostURL.PRODUCTOS, json);
+        
+        productos = getProductosJSON(response);
+        for(int i = 0; i < productos.size(); i++)
+        {
+            cbxProNom.insertItemAt(productos.get(i).getNombre(), i);
+        }
+    }
+    
+    /**
+     * Recibe y obtiene la lista de datos de respuesta en JSON
+     * @param json
+     * @return ArrayList<Unidad>
+     */
+    private ArrayList<Producto> getProductosJSON(String json){
+        //Crear un Objeto JSON a partir del string JSON
+        Object jsonObject =JSONValue.parse(json);
+        //Convertir el objeto JSON en un array
+        JSONArray array = (JSONArray)jsonObject;
+        
+        ArrayList<Producto> productos = new ArrayList<Producto>();
+        Producto p = null;
+        //Iterar el array y extraer la información
+        for(int i=0;i<array.size();i++){
+            p = new Producto();
+            JSONObject row =(JSONObject)array.get(i);
+            p.setCodigo(row.get("prod_id").toString());
+            p.setNombre(row.get("prod_nombre").toString());
+           
+            productos.add(p);
+            p = null;
+        }
+        return productos;
     }
 }

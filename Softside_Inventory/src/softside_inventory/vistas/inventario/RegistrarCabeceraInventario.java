@@ -106,6 +106,7 @@ public class RegistrarCabeceraInventario extends javax.swing.JFrame
         txtAlmCod.setText("00001");
 
         txtProCod.setEditable(false);
+        txtProCod.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         cbxProNom.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
