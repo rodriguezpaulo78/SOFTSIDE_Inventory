@@ -38,19 +38,5 @@
  		$json_eliminar = $inv_cab->eliminarInvCab($codigo);
  		echo json_encode($json_eliminar);
  	}
-/*
- 	// Buscar unidad
- 	if ($metodo == 7) {
- 		$dato = $getDatos->dato;
- 		$filtro = $getDatos->filtro;
- 		$json_buscar = $unidad->buscarUnidad($dato, $filtro);
- 		echo json_encode($json_buscar);
- 	}
 
- 	// Listar unidades activas
- 	if ($metodo == 8) {
- 		$json_listar_act = $unidad->listarUnidadesActivas();
- 		echo json_encode($json_listar_act);
- 	}
-*/
  ?>
