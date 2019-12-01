@@ -190,8 +190,7 @@ public class CVistaInventario implements IVistaInventario
                                         invDets.get(i).getInvDetPrecioUnit(),
                                         invDets.get(i).getInvDetPrecioTotal(),
                                         invDets.get(i).getInvDetFecha(),
-                                        invDets.get(i).getInvDetSaldoCantidad(),
-                                        invDets.get(i).getInvDetEstado()
+                                        invDets.get(i).getInvDetSaldoCantidad()
                                         });
         }
         
