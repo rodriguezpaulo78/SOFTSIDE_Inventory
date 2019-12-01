@@ -59,7 +59,7 @@
  		echo json_encode($json_list);
  	}
 
- 	// Listar inventario detalle activos
+ 	// Listar inventario detalle activos por codigo de cabecera
  	if ($metodo == 5) {
  		$codigo = $getDatos->codigo;
  		$json_listar_act = $inv_det->getInvDetActivosByInvCabCod($codigo);
