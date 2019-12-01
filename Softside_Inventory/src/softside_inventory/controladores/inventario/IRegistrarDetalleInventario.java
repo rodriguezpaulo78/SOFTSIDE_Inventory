@@ -18,7 +18,6 @@ public interface IRegistrarDetalleInventario
 {
     public void calcular(JTextField txtCan, JTextField txtValUni, JTextField txtValTot, int i);
     public void cancelar();
-    public void verDocumento(JComboBox cbxDocNom, JTextField txtDocCod);
     public void cargar(JTextField txtDoc, JTextField txtInvDetCod, JTextField txtProCod, JTextField txtAlmCod);
     public void aceptar(JTextField txtInvDetCod, JTextField txtProCod, JTextField txtAlmCod, JDateChooser fecha, JTextField txtDocCod, JTextField txtNumDoc, JComboBox cbxOpe, JTextField txtCan, JTextField txtValUni, JTextField txtValTot, JTextArea txtObs);
 }

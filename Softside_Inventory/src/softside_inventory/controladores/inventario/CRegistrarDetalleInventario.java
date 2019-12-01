@@ -9,18 +9,24 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import com.toedter.calendar.JDateChooser;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import softside_inventory.modelos.Inventario_Detalle;
+import softside_inventory.net.HostURL;
+import softside_inventory.net.HttpNetTask;
 import softside_inventory.util.Session;
 import softside_inventory.vistas.inventario.RegistrarDetalleInventario;
 
 /**
- * Controlador de la insercion de registro de detalle de kardex
+ * Controlador de la insercion de registro de detalle de inventario
  * 
  * Recibe y valida datos sobre un nuevo registro de movimiento de entrada o
  * salida de un producto
  *  
- * @author Yuliana Apaza
- * @version 2.0
- * @since 2015-10-05
+ * @author SOFTSIDE
  */
 
 public class CRegistrarDetalleInventario implements IRegistrarDetalleInventario
@@ -28,21 +34,20 @@ public class CRegistrarDetalleInventario implements IRegistrarDetalleInventario
     private RegistrarDetalleInventario ventana;
     private ArrayList<ArrayList<String>> documentos;
     private String codigoProducto;
-    private String codigoAlmacen;
+    private String codigoCabecera;
     private String cantidad;
     private String valTot;
-     private Session user;
+    private Session user;
     
-    public CRegistrarDetalleInventario(String codigoProducto, String codigoAlmacen, String cantidad, String valTot)
+    public CRegistrarDetalleInventario(String codigoProducto, String codigoCabecera, String cantidad, String valTot, Session user)
     {
         this.user = user;
         this.codigoProducto = codigoProducto;
-        this.codigoAlmacen = codigoAlmacen;
+        this.codigoCabecera = codigoCabecera;
         this.cantidad = cantidad;
         this.valTot = valTot;
         
-        //documentos = Documento.getActivos();
-        //ventana = new UIKardexDetIns(this);
+        ventana = new RegistrarDetalleInventario(this);
     }
     
     @Override
@@ -111,28 +116,39 @@ public class CRegistrarDetalleInventario implements IRegistrarDetalleInventario
         ventana.dispose();
     }
     
-    @Override
-    public void verDocumento(JComboBox cbxDocNom, JTextField txtDocCod)
-    {
-        txtDocCod.setText(documentos.get(cbxDocNom.getSelectedIndex()).get(0));
-    }
-    
     public void cargar(JTextField txtDoc, JTextField txtInvDetCod, JTextField txtProCod, JTextField txtAlmCod)
     {
-        for(int i = 0; i < documentos.size(); i++)
-        {
-            //cbxDocNom.insertItemAt(documentos.get(i).get(1), i);  
-        }
-        //txtKarDetCod.setText(KardexDet.sgteCodigo());
+        // obtener codigo de detalle
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("metodo", 1);
+        
+        String json = jsonObj.toString();
+        
+        HttpNetTask httpConnect = new HttpNetTask();
+        String response = httpConnect.sendPost(HostURL.INVENTARIO_DETALLE, json);
+        
+        String cod = getJsonCod(response);
+        txtInvDetCod.setText(cod);
         txtProCod.setText(codigoProducto);
-        txtAlmCod.setText(codigoAlmacen);
+    }
+    
+    /**
+     * Recibe y obtiene los datos de respuesta en JSON
+     * @param json
+     * @return String
+     */
+    public String getJsonCod(String json){
+        //Crear un Objeto JSON a partir del string JSON
+        Object jsonObject = JSONValue.parse(json);
+        JSONObject row =(JSONObject) jsonObject;
+        
+        String cod = row.get("codigo").toString();
+        return cod;
     }
     
     @Override
     public void aceptar(JTextField txtKarDetCod, JTextField txtProCod, JTextField txtAlmCod, JDateChooser fecha, JTextField txtDocCod, JTextField txtNumDoc, JComboBox cbxOpe, JTextField txtCan, JTextField txtValUni, JTextField txtValTot, JTextArea txtObs)
     {
-        /*
-        Calendar c = fecha.getCalendar();
         try
         {
             String salCan = "0";
@@ -156,46 +172,59 @@ public class CRegistrarDetalleInventario implements IRegistrarDetalleInventario
                     saldoTotal = 0.0;
                 salValUni = String.valueOf(saldoTotal);
             }
+            
             String ope = "";
             if(cbxOpe.getSelectedIndex() == 0)
-                ope = "1";
+                ope = "entrada";
             else
-                ope = "0";
-            KardexDet kd = new KardexDet( txtKarDetCod.getText(),
-                                            txtProCod.getText(),
-                                            txtAlmCod.getText(),
-                                            String.valueOf(c.get(Calendar.YEAR)),
-                                            String.valueOf(c.get(Calendar.MONTH) + 1),
-                                            String.valueOf(c.get(Calendar.DATE)),
-                                            user.getUsrCod(),
-                                            txtDocCod.getText(),
-                                            txtNumDoc.getText(),
-                                            ope,
-                                            txtCan.getText(),
-                                            txtValUni.getText(),
-                                            txtValTot.getText(),
-                                            salCan,
-                                            salValUni,
-                                            salValTot,
-                                            txtObs.getText(),
-                                            "1"
-                                            );
+                ope = "salida";
+            
+            Inventario_Detalle detalle = new Inventario_Detalle();
+            detalle.setInvDetCodigo(txtKarDetCod.getText());
+            detalle.setInvCabCodigo(codigoCabecera);
+            detalle.setInvDetMovimiento(ope);
+            detalle.setInvDetCantidad(txtCan.getText());
+            detalle.setInvDetPrecioUnit(txtValUni.getText());
+            detalle.setInvDetPrecioTotal(txtValTot.getText());
+            
+            Date date = fecha.getDate();
+            DateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+            String fecha2 = f.format(date);
+            detalle.setInvDetFecha(fecha2);
+            
+            detalle.setInvDetSaldoCantidad(salCan);
+            detalle.setInvDetObservacion(txtObs.getText());
 
-            String err = kd.insertar();
-            if(err.equals(""))
-            {
-                JOptionPane.showMessageDialog(null, "Se ha agregado el registro nuevo", "INSERCION", JOptionPane.INFORMATION_MESSAGE);
-                new CVistaInventario();
-                ventana.dispose();
-            }
-            else
-                JOptionPane.showMessageDialog(null, err, "ERROR", JOptionPane.ERROR_MESSAGE);
+            String json = detalle.toJSON(2, salValUni, salValTot);
+
+            HttpNetTask httpConnect = new HttpNetTask();
+            String response = httpConnect.sendPost(HostURL.INVENTARIO_DETALLE, json);
+
+            getJsonRespDet(response);
         }
         catch(NumberFormatException e)
         {
             JOptionPane.showMessageDialog(null, "Cantidad o Valor Total inválido", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-    */
+    }
+    
+    /**
+     * Recibe y obtiene los datos de respuesta en JSON
+     * @param json
+     */
+    public void getJsonRespDet(String json){
+        //Crear un Objeto JSON a partir del string JSON
+        Object jsonObject = JSONValue.parse(json);
+        JSONObject row =(JSONObject) jsonObject;
         
+        String mensaje = row.get("message").toString();
+        
+        if (mensaje.equals("SUCCESS")) {
+            JOptionPane.showMessageDialog(null, "Se ha agregado el registro nuevo", "Mensaje", JOptionPane.INFORMATION_MESSAGE);
+            new CVistaInventario(user);
+            ventana.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al registrar.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

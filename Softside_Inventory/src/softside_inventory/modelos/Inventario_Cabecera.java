@@ -20,15 +20,11 @@ public class Inventario_Cabecera {
 
     private String invCabCod;
     private String proCod;
-    //private String almCod; //almCod
     private String almNom; //almNom
     private String InvCabEstReg;
-    
-    /*public Inventario_Cabecera(String proCod, String InvCabEstReg) {
-        this.proCod = proCod;
-        this.InvCabEstReg = InvCabEstReg;
-        this.almNom = "TiendaPrincipal"; 
-    }*/
+    private String cantidad;
+    private String valorUnit;
+    private String valorTotal;
 
     public String getInvCabCod() {
         return invCabCod;
@@ -61,6 +57,30 @@ public class Inventario_Cabecera {
     public void setInvCabEstReg(String InvCabEstReg) {
         this.InvCabEstReg = InvCabEstReg;
     }
+
+    public String getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(String cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public String getValorUnit() {
+        return valorUnit;
+    }
+
+    public void setValorUnit(String valorUnit) {
+        this.valorUnit = valorUnit;
+    }
+
+    public String getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(String valorTotal) {
+        this.valorTotal = valorTotal;
+    }
     
     public String toJSON(int metodo) {
         JSONObject jsonObj = new JSONObject();
@@ -72,29 +92,4 @@ public class Inventario_Cabecera {
         
         return json;
     }
-    
-    public void insertar(){
-       
-    }
-    
-    public void eliminar(){
-        
-    }
-    
-    public void getLista(){
-        
-    }
-    
-    public void getDetalles(){
-        
-    }
-    
-    public void getDetallesActivos(){
-        
-    }
-    
-    public void getVista(){
-        
-    }
-   
 }

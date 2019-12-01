@@ -81,6 +81,7 @@ public class RegistrarDetalleInventario extends javax.swing.JFrame
 
         txtInvDetCod.setEditable(false);
         txtInvDetCod.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtInvDetCod.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("Codigo de Producto:");
@@ -93,6 +94,7 @@ public class RegistrarDetalleInventario extends javax.swing.JFrame
 
         txtProCod.setEditable(false);
         txtProCod.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtProCod.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         txtAlmCod.setEditable(false);
         txtAlmCod.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -260,6 +262,8 @@ public class RegistrarDetalleInventario extends javax.swing.JFrame
 
         txtDoc.setEditable(false);
         txtDoc.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtDoc.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtDoc.setText("DNI");
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel19.setText("Número:");

@@ -12,6 +12,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import softside_inventory.controladores.CMenu;
 import softside_inventory.modelos.Inventario_Cabecera;
+import softside_inventory.modelos.Inventario_Detalle;
 import softside_inventory.modelos.Producto;
 import softside_inventory.net.HostURL;
 import softside_inventory.net.HttpNetTask;
@@ -39,6 +40,7 @@ public class CVistaInventario implements IVistaInventario
     private ArrayList<ArrayList<KardexDet>> kds_activos;
     */
     private ArrayList<Inventario_Cabecera> invCabs;
+    ArrayList<Inventario_Detalle> detalles;
     private String codigoProducto;
     private String codigoAlmacen;
     private VistaInventario ventana;
@@ -114,6 +116,9 @@ public class CVistaInventario implements IVistaInventario
             inv.setInvCabCod(row.get("inv_cab_id").toString());
             inv.setProCod(row.get("producto_id").toString());
             inv.setAlmNom(row.get("inv_cab_almacen").toString());
+            inv.setCantidad(row.get("inv_cab_cant").toString());
+            inv.setValorUnit(row.get("inv_cab_val_unit").toString());
+            inv.setValorTotal(row.get("inv_cab_val_total").toString());
             inv.setInvCabEstReg(row.get("inv_cab_est_reg").toString());
            
             inventarios.add(inv);
@@ -157,6 +162,7 @@ public class CVistaInventario implements IVistaInventario
         return productos.get(0);
     }
     
+    @Override
     public void actualizar(JTable tblRegistrosInv_Cab, JTable tblRegistrosInv_Det)
     {
         /*
@@ -257,29 +263,75 @@ public class CVistaInventario implements IVistaInventario
     @Override
     public void insertarInv_Det(JTable tblRegistrosKC)
     {
-        /*
+        // inventario_det_id, inventario_cab_id, inv_det_movimiento, inv_det_cantidad, inv_det_precio_unit,
+        // inv_det_precio_total, inv_det_fec, inv_det_saldo_cant, inv_det_obs, inv_det_est_reg
         int i = tblRegistrosKC.getSelectedRow();
         if(i != -1)
         {
-            KardexCab cab = kc.get(i);
-            if(cab.getKarCabEstReg().equals("1"))
+            Inventario_Cabecera cab = invCabs.get(i);
+            if(cab.getInvCabEstReg().equals("A"))
             {
                 String vTot = "";
                 
-                ArrayList<KardexDet> aux = kds_activos.get(i);
+                JSONObject jsonObj = new JSONObject();
+                jsonObj.put("metodo", 5);
+                jsonObj.put("codigo", cab.getInvCabCod());
+
+                String json = jsonObj.toString();
+
+                HttpNetTask httpConnect = new HttpNetTask();
+                String response = httpConnect.sendPost(HostURL.INVENTARIO_DETALLE, json);
+                
+                ArrayList<Inventario_Detalle> aux = getInvDetActivosJSON(response);
+                
                 if(aux.isEmpty())
                     vTot = "0";
                 else
-                    vTot = aux.get(aux.size() - 1).getKarDetSalValTot();
-                new CIngresarDetalleInventario(codigoProducto, codigoAlmacen, cab.getKarCabCan(), vTot);
+                    vTot = cab.getValorTotal();
+                
+                new CRegistrarDetalleInventario(cab.getProCod(), cab.getInvCabCod(), cab.getCantidad(), vTot, user);
                 ventana.dispose();
             }
             else
                 JOptionPane.showMessageDialog(null, "Solo se permite insertar en registros activos", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         else
-            JOptionPane.showMessageDialog(null, "Seleccione un Kardex Cabecera", "ERROR", JOptionPane.ERROR_MESSAGE);
-        */
+            JOptionPane.showMessageDialog(null, "Seleccione un Inventario Cabecera", "ERROR", JOptionPane.ERROR_MESSAGE);
+        
+    }
+    
+    /**
+     * Recibe y obtiene la lista de datos de respuesta en JSON
+     * @param json
+     * @return ArrayList<Inventario_Cabecera>
+     */
+    private ArrayList<Inventario_Detalle> getInvDetActivosJSON(String json){
+        //Crear un Objeto JSON a partir del string JSON
+        Object jsonObject =JSONValue.parse(json);
+        //Convertir el objeto JSON en un array
+        JSONArray array = (JSONArray)jsonObject;
+        
+        ArrayList<Inventario_Detalle> detalles = new ArrayList<Inventario_Detalle>();
+        Inventario_Detalle det = null;
+        //Iterar el array y extraer la información
+        for(int i=0;i<array.size();i++){
+            det = new Inventario_Detalle();
+            JSONObject row =(JSONObject)array.get(i);
+            det.setInvDetCodigo(row.get("inv_det_id").toString());
+            det.setInvCabCodigo(row.get("inventario_cab_id").toString());
+            det.setInvDetMovimiento(row.get("inv_det_movimiento").toString());
+            det.setInvDetCantidad(row.get("inv_det_cantidad").toString());
+            det.setInvDetPrecioUnit(row.get("inv_det_precio_unit").toString());
+            det.setInvDetPrecioTotal(row.get("inv_det_precio_total").toString());
+            det.setInvDetFecha(row.get("inv_det_fec").toString());
+            det.setInvDetSaldoCantidad(row.get("inv_det_saldo_cant").toString());
+            det.setInvDetObservacion(row.get("inv_det_obs").toString());
+            det.setInvDetEstado(row.get("inv_det_est_reg").toString());
+           
+            detalles.add(det);
+            det = null;
+        }
+        return detalles;
     }
     
     @Override
