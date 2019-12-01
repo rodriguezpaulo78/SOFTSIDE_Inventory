@@ -334,20 +334,30 @@ public class CVistaInventario implements IVistaInventario
 
                 DefaultTableModel model = (DefaultTableModel) tblRegistrosKC.getModel();
                 model.setValueAt("I", i, 3);
-                /*if(tblRegistrosKD.getSelectedRow() != -1)
+                
+                if(tblRegistrosKD.getSelectedRow() != -1)
                     txtEst.setText("Eliminado");
-                int kdsSize = kds.get(i).size();
-                int kdsActivosSize = kds_activos.get(i).size();
+                
+                // Enviar codigo de cabecera al servidor
+                JSONObject jsonObj2 = new JSONObject();
+                jsonObj2.put("metodo", 6);
+                jsonObj2.put("codigo", cab.getInvCabCod());
 
-                for(int j = 0; j < kdsSize; j++)
-                {
-                    kds.get(i).get(j).eliminar(kds.get(i).get(j).getKarDetCod(), codigoProducto, codigoAlmacen);
+                String json2 = jsonObj2.toString();
+
+                HttpNetTask httpConnect2 = new HttpNetTask();
+                String response2 = httpConnect2.sendPost(HostURL.INVENTARIO_DETALLE, json2);
+                if (getJsonDeleteInvDet(response2)){
+                    new CVistaInventario(user);
+                    ventana.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al eliminar.", "ERROR", JOptionPane.ERROR_MESSAGE);
                 }
 
-                for(int j = 0; j < kdsActivosSize; j++)
+                for(int j = 0; j < invDets.size(); j++)
                 {
-                    kds_activos.get(i).get(j).setKarDetEstReg("3");
-                }*/
+                    invDets.get(i).setInvDetEstado("I");                    
+                }
             }
             else
                 JOptionPane.showMessageDialog(null, "El registro ya está eliminado", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -373,6 +383,27 @@ public class CVistaInventario implements IVistaInventario
         } else {
             JOptionPane.showMessageDialog(null, "Error al eliminar.", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
+    }
+    
+    /**
+     * Recibe y obtiene los datos de respuesta en JSON
+     * @param json
+     */
+    public boolean getJsonDeleteInvDet(String json){
+        //Crear un Objeto JSON a partir del string JSON
+        Object jsonObject = JSONValue.parse(json);
+        JSONObject row =(JSONObject) jsonObject;
+        
+        String mensaje = row.get("message").toString();
+        boolean exito = false;
+        
+        if (mensaje.equals("SUCCESS")) {
+            exito = true;
+        } else {
+            exito = false;
+        }
+        
+        return exito;
     }
     
     @Override
