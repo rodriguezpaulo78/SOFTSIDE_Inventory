@@ -121,11 +121,10 @@ class InventarioDetController{
 		return $json;
 	}
 
-/*
-	public function eliminarUnidad($codigo){	
+	public function eliminarInvDetByInvCabCod($codigo){	
 		$json = array();
 
-		$query = "UPDATE ".$this->db_table." SET uni_est_reg='I' WHERE uni_id='".$codigo."'";
+		$query = "UPDATE ".$this->db_table." SET inv_det_est_reg='I' WHERE inventario_cab_id='".$codigo."'";
 
 		$deleted = mysqli_query($this->db->getDb(), $query);
 
@@ -138,7 +137,7 @@ class InventarioDetController{
 		
 		return $json;
 	}
-
+/*
 	public function buscarUnidad($dato, $filtro){
 		$query = "SELECT uni_id FROM ".$this->db_table." WHERE uni_descripcion='".$dato."'";
 

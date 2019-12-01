@@ -66,14 +66,13 @@
  		echo json_encode($json_listar_act);
  	}
 
-/*
- 	// Eliminar unidad
+ 	// Eliminar inventario detalle por codigo de cabecera
  	if ($metodo == 6) {
  		$codigo = $getDatos->codigo;
- 		$json_eliminar = $unidad->eliminarUnidad($codigo);
+ 		$json_eliminar = $inv_det->eliminarInvDetByInvCabCod($codigo);
  		echo json_encode($json_eliminar);
  	}
-
+/*
  	// Buscar unidad
  	if ($metodo == 7) {
  		$dato = $getDatos->dato;
