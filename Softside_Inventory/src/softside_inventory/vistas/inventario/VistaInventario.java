@@ -237,14 +237,14 @@ public class VistaInventario extends javax.swing.JFrame
 
             },
             new String [] {
-                "Codigo", "Movimiento", "Cantidad", "Val. Unitario", "Val. Total", "Fecha", "Saldo Cantidad"
+                "Codigo", "Movimiento", "Cantidad", "Val. Unitario", "Val. Total", "Fecha", "Saldo Cantidad", "Estado"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

@@ -42,7 +42,7 @@ public class CVistaInventario implements IVistaInventario
     private ArrayList<Inventario_Cabecera> invCabs;
     ArrayList<Inventario_Detalle> detalles;
     private String codigoProducto;
-    private String codigoAlmacen;
+    private String codigoCabecera;
     private VistaInventario ventana;
     private Session user;
     
@@ -164,57 +164,37 @@ public class CVistaInventario implements IVistaInventario
     
     @Override
     public void actualizar(JTable tblRegistrosInv_Cab, JTable tblRegistrosInv_Det)
-    {
-        /*
-        codigoProducto = kc.get(tblRegistrosKC.getSelectedRow()).getProCod();
-        codigoAlmacen = kc.get(tblRegistrosKC.getSelectedRow()).getAlmCod();
-        
-        int i = tblRegistrosKC.getSelectedRow();
+    {        
+        int i = tblRegistrosInv_Cab.getSelectedRow();
+        codigoCabecera = invCabs.get(i).getInvCabCod();
                        
-        DefaultTableModel model = (DefaultTableModel) tblRegistrosKD.getModel();
+        DefaultTableModel model = (DefaultTableModel) tblRegistrosInv_Det.getModel();
         model.setRowCount(0);
-        ArrayList<KardexDet> det = kds.get(i);
         
-        txtCan.setText(kc.get(i).getKarCabCan());
-        txtValUni.setText(kc.get(i).getKarCabValUni());
-        txtValTot.setText(kc.get(i).getKarCabValTot());
-        
-	int detSize = det.size();
-        String tipo = "";
-        String estado = "";
-        
-        for(i = 0; i < detSize; i++)
-        {
-            if(det.get(i).getKarDetOpe().equals("1"))
-                tipo = "Entrada";
-            else
-                tipo = "Salida";
-            
-            if(det.get(i).getKarDetEstReg().equals("1"))
-                estado = "A";
-            else
-                estado = "*";
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("metodo", 4);
+        jsonObj.put("codigo", codigoCabecera);
 
-            model.addRow(new Object[]{  det.get(i).getKarDetCod(),
-                                        new StringBuffer(   det.get(i).getKarDetDia().length() + 
-                                                            det.get(i).getKarDetMes().length() +
-                                                            det.get(i).getKarDetAnio() + 2
-                                                            ).append(det.get(i).getKarDetDia())
-                                                            .append('/')
-                                                            .append(det.get(i).getKarDetMes())
-                                                            .append('/')
-                                                            .append(det.get(i).getKarDetAnio()),
-                                        tipo,
-                                        det.get(i).getKarDetCan(),
-                                        det.get(i).getKarDetValUni(),
-                                        det.get(i).getKarDetValTot(),
-                                        det.get(i).getKarDetSalCan(),
-                                        det.get(i).getKarDetSalValUni(),
-                                        det.get(i).getKarDetSalValTot(),
-                                        estado
+        String json = jsonObj.toString();
+
+        HttpNetTask httpConnect = new HttpNetTask();
+        String response = httpConnect.sendPost(HostURL.INVENTARIO_DETALLE, json);
+
+        ArrayList<Inventario_Detalle> aux = getInvDetJSON(response);
+        
+        for(i = 0; i < aux.size(); i++)
+        {
+            model.addRow(new Object[]{  aux.get(i).getInvDetCodigo(),
+                                        aux.get(i).getInvDetMovimiento(),
+                                        aux.get(i).getInvDetCantidad(),
+                                        aux.get(i).getInvDetPrecioUnit(),
+                                        aux.get(i).getInvDetPrecioTotal(),
+                                        aux.get(i).getInvDetFecha(),
+                                        aux.get(i).getInvDetSaldoCantidad(),
+                                        aux.get(i).getInvDetEstado()
                                         });
         }
-        */
+        
     }
     
     @Override
@@ -282,7 +262,7 @@ public class CVistaInventario implements IVistaInventario
                 HttpNetTask httpConnect = new HttpNetTask();
                 String response = httpConnect.sendPost(HostURL.INVENTARIO_DETALLE, json);
                 
-                ArrayList<Inventario_Detalle> aux = getInvDetActivosJSON(response);
+                ArrayList<Inventario_Detalle> aux = getInvDetJSON(response);
                 
                 if(aux.isEmpty())
                     vTot = "0";
@@ -305,7 +285,7 @@ public class CVistaInventario implements IVistaInventario
      * @param json
      * @return ArrayList<Inventario_Cabecera>
      */
-    private ArrayList<Inventario_Detalle> getInvDetActivosJSON(String json){
+    private ArrayList<Inventario_Detalle> getInvDetJSON(String json){
         //Crear un Objeto JSON a partir del string JSON
         Object jsonObject =JSONValue.parse(json);
         //Convertir el objeto JSON en un array
