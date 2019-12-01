@@ -40,7 +40,7 @@ public class CVistaInventario implements IVistaInventario
     private ArrayList<ArrayList<KardexDet>> kds_activos;
     */
     private ArrayList<Inventario_Cabecera> invCabs;
-    ArrayList<Inventario_Detalle> detalles;
+    private ArrayList<Inventario_Detalle> invDets;
     private String codigoProducto;
     private String codigoCabecera;
     private VistaInventario ventana;
@@ -180,18 +180,18 @@ public class CVistaInventario implements IVistaInventario
         HttpNetTask httpConnect = new HttpNetTask();
         String response = httpConnect.sendPost(HostURL.INVENTARIO_DETALLE, json);
 
-        ArrayList<Inventario_Detalle> aux = getInvDetJSON(response);
+        invDets = getInvDetJSON(response);
         
-        for(i = 0; i < aux.size(); i++)
+        for(i = 0; i < invDets.size(); i++)
         {
-            model.addRow(new Object[]{  aux.get(i).getInvDetCodigo(),
-                                        aux.get(i).getInvDetMovimiento(),
-                                        aux.get(i).getInvDetCantidad(),
-                                        aux.get(i).getInvDetPrecioUnit(),
-                                        aux.get(i).getInvDetPrecioTotal(),
-                                        aux.get(i).getInvDetFecha(),
-                                        aux.get(i).getInvDetSaldoCantidad(),
-                                        aux.get(i).getInvDetEstado()
+            model.addRow(new Object[]{  invDets.get(i).getInvDetCodigo(),
+                                        invDets.get(i).getInvDetMovimiento(),
+                                        invDets.get(i).getInvDetCantidad(),
+                                        invDets.get(i).getInvDetPrecioUnit(),
+                                        invDets.get(i).getInvDetPrecioTotal(),
+                                        invDets.get(i).getInvDetFecha(),
+                                        invDets.get(i).getInvDetSaldoCantidad(),
+                                        invDets.get(i).getInvDetEstado()
                                         });
         }
         
@@ -212,18 +212,16 @@ public class CVistaInventario implements IVistaInventario
     }
     
     public void actualizarInv_Det(JTable tblRegistrosInv_Cab, JTable tblRegistrosInv_Det, JTextField txtUsr, JTextField txtDoc, JTextArea txtObs, JTextField txtEst)
-    {
-        /*
-        int i = tblRegistrosKC.getSelectedRow();
-        int j = tblRegistrosKD.getSelectedRow();
+    {        
+        int i = tblRegistrosInv_Cab.getSelectedRow();
+        int j = tblRegistrosInv_Det.getSelectedRow();
         String estado = "";
         if(i != -1 && j != -1)
         {
-            txtUsr.setText(kds.get(i).get(j).getUsrCod());
-            txtDoc.setText(kds.get(i).get(j).getDocCod());
-            txtNumDoc.setText(kds.get(i).get(j).getKarDetDocNum());
-            txtObs.setText(kds.get(i).get(j).getKarDetObs());
-            if(kds.get(i).get(j).getKarDetEstReg().equals("1"))
+            txtUsr.setText(user.getName());
+            txtDoc.setText(user.getDni());
+            txtObs.setText(invDets.get(j).getInvDetObservacion());
+            if(invDets.get(j).getInvDetEstado().equals("A"))
                 estado = "Activo";
             else
                 estado = "Eliminado";
@@ -233,11 +231,10 @@ public class CVistaInventario implements IVistaInventario
         {
             txtUsr.setText("");
             txtDoc.setText("");
-            txtNumDoc.setText("");
             txtObs.setText("");
             txtEst.setText("");
         }
-        */
+        
     }
     
     @Override
