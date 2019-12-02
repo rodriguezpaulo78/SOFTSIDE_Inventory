@@ -162,6 +162,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
 
         btnInventario.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        btnInventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/softside_inventory/recursos/inventario.png"))); // NOI18N
         btnInventario.setText("INVENTARIO");
         btnInventario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -362,8 +363,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
      */
     private void btnInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInventarioActionPerformed
         // TODO add your handling code here:
-        //interfaz.inventario();
-        JOptionPane.showMessageDialog(null, "Mostrar manual");
+        interfaz.inventario();
     }//GEN-LAST:event_btnInventarioActionPerformed
 
     /**
