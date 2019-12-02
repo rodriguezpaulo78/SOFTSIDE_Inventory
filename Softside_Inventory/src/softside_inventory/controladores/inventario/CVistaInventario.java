@@ -50,21 +50,6 @@ public class CVistaInventario implements IVistaInventario
     {
         ventana = new VistaInventario(this);
         this.user = user;
-        //kds = new ArrayList<>();
-        //kds_activos = new ArrayList<ArrayList<KardexDet>>();
-        //kc = KardexCab.getLista();
-        //int kcSize = kc.size();
-        
-        /*
-        for(int i = 0; i < kcSize; i++)
-        {
-            kds.add(KardexCab.getDetalles(kc.get(i).getProCod(), kc.get(i).getAlmCod()));
-        }
-        for(int i = 0; i < kcSize; i++)
-        {
-            kds_activos.add(KardexCab.getDetallesActivos(kc.get(i).getProCod(), kc.get(i).getAlmCod()));
-        }
-        */
     }
     
     @Override
@@ -447,6 +432,7 @@ public class CVistaInventario implements IVistaInventario
                             } else {
                                 saldoTotal = Double.valueOf(cab.getValorTotal()) + Double.valueOf(det.getInvDetPrecioTotal());
                             }
+                            
                             vTot = String.valueOf(saldoTotal);
                         }
                         
@@ -469,20 +455,77 @@ public class CVistaInventario implements IVistaInventario
     @Override
     public void eliminarInv_Det(JTable tblRegistrosKC)
     {
-        /*
         int i = tblRegistrosKC.getSelectedRow();
         if(i != -1)
         {
+            Inventario_Cabecera cab = invCabs.get(i);
+            JSONObject jsonObj = new JSONObject();
+            jsonObj.put("metodo", 5);
+            jsonObj.put("codigo", cab.getInvCabCod());
+
+            String json = jsonObj.toString();
+
+            HttpNetTask httpConnect = new HttpNetTask();
+            String response = httpConnect.sendPost(HostURL.INVENTARIO_DETALLE, json);
+
+            ArrayList<Inventario_Detalle> activos = getInvDetJSON(response);
+            
             try
             {
-                KardexDet d = kds_activos.get(i).get(kds_activos.get(i).size() - 1);
-                if(!d.getKarDetEstReg().equals("3"))
+                Inventario_Detalle det = activos.get(activos.size() - 1);
+                
+                if(det.getInvDetEstado().equals("A"))
                 {
                     if(JOptionPane.showConfirmDialog(null, "¿Está seguro que desea eliminar el registro?", "Eliminar", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)
                     {
-                        d.eliminar(d.getKarDetCod(), d.getProCod(), d.getAlmCod());
-                        new CVistaInventario();
-                        ventana.dispose();
+                        boolean nuevo = (activos.size() == 1);
+                        String cantidad = "";
+                        String vTot = "";
+                        String salValUni = "";
+                        
+                        if(nuevo)
+                        {
+                            cantidad = "0";
+                            vTot = "0";
+                        }
+                        else
+                        {
+                            cantidad = activos.get(activos.size() - 2).getInvDetSaldoCantidad();
+                            double saldoTotal = 0.0;
+                            if (det.getInvDetMovimiento().equals("entrada")){
+                                saldoTotal = Double.valueOf(cab.getValorTotal()) - Double.valueOf(det.getInvDetPrecioTotal());
+                            } else {
+                                saldoTotal = Double.valueOf(cab.getValorTotal()) + Double.valueOf(det.getInvDetPrecioTotal());
+                            }
+                            vTot = String.valueOf(saldoTotal);
+                            
+                            double saldoUnit = saldoTotal / Double.valueOf(cantidad);
+                            if (!Double.isFinite(saldoUnit)) {
+                                saldoUnit = 0.0;
+                            }
+                            salValUni = String.valueOf(saldoUnit);
+                        }
+                        
+                        // Enviar codigo de detalle y de cabecera al servidor
+                        JSONObject jsonObj2 = new JSONObject();
+                        jsonObj2.put("metodo", 8);
+                        jsonObj2.put("codigoDet", det.getInvDetCodigo());
+                        jsonObj2.put("codigoCab", cab.getInvCabCod());
+                        jsonObj2.put("saldoCantidad", cantidad);
+                        jsonObj2.put("saldoUnit", salValUni);
+                        jsonObj2.put("saldoTotal", vTot);
+
+                        String json2 = jsonObj2.toString();
+
+                        HttpNetTask httpConnect2 = new HttpNetTask();
+                        String response2 = httpConnect2.sendPost(HostURL.INVENTARIO_DETALLE, json2);
+                        
+                        if (getJsonDeleteInvDet(response2)) {
+                            new CVistaInventario(user);
+                            ventana.dispose();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Error al eliminar.", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        }
                     }
                 }
                 else
@@ -495,9 +538,9 @@ public class CVistaInventario implements IVistaInventario
         }
         else
         {
-            JOptionPane.showMessageDialog(null, "Seleccione un Kardex Cabecera", "ERROR", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Seleccione un Inventario Cabecera", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-        */
+        
     }
 
     @Override
