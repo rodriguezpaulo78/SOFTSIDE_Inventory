@@ -141,5 +141,26 @@ class InventarioDetController{
 		return $json;
 	}
 
+	public function eliminarInvDet($codigoDet, $codigoCab, $saldoCantidad, $saldoUnit, $saldoTotal){	
+		$json = array();
+
+		$query = "UPDATE ".$this->db_table." SET inv_det_est_reg='I' WHERE inv_det_id='".$codigoDet."' AND inventario_cab_id='".$codigoCab."'";
+
+		$deleted = mysqli_query($this->db->getDb(), $query);
+
+		$query2 = "UPDATE inventario_cabecera SET inv_cab_cant='".$saldoCantidad."', inv_cab_val_unit='".$saldoUnit."', inv_cab_val_total='".$saldoTotal."' WHERE inv_cab_id='".$codigoCab."'";
+
+		$updated = mysqli_query($this->db->getDb(), $query2);
+
+		if($deleted == 1 AND $updated == 1){
+			$json['message'] = "SUCCESS";
+		}else{
+			$json['message'] = "FAILED";
+		}
+		mysqli_close($this->db->getDb());
+		
+		return $json;
+	}
+
 }
 ?>

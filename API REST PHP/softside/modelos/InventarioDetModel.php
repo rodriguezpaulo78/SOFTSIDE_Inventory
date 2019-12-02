@@ -90,4 +90,15 @@
  		echo json_encode($json_buscar);
  	}
 
+ 	// Eliminar inventario detalle
+ 	if ($metodo == 8) {
+ 		$codigoCab = $getDatos->codigoCab;
+ 		$codigoDet = $getDatos->codigoDet;
+ 		$saldoCantidad = $getDatos->saldoCantidad;
+ 		$saldoUnit = $getDatos->saldoUnit;
+ 		$saldoTotal = $getDatos->saldoTotal;
+ 		$json_eliminar = $inv_det->eliminarInvDet($codigoDet, $codigoCab, $saldoCantidad, $saldoUnit, $saldoTotal);
+ 		echo json_encode($json_eliminar);
+ 	}
+
  ?>
