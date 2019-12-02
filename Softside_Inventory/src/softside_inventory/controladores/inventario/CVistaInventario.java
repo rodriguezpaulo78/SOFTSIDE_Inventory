@@ -409,16 +409,27 @@ public class CVistaInventario implements IVistaInventario
     @Override
     public void modificarInv_Det(JTable tblRegistrosKC)
     {
-        /*
         int i = tblRegistrosKC.getSelectedRow();
         if(i != -1)
         {
+            Inventario_Cabecera cab = invCabs.get(i);
+            JSONObject jsonObj = new JSONObject();
+            jsonObj.put("metodo", 5);
+            jsonObj.put("codigo", cab.getInvCabCod());
+
+            String json = jsonObj.toString();
+
+            HttpNetTask httpConnect = new HttpNetTask();
+            String response = httpConnect.sendPost(HostURL.INVENTARIO_DETALLE, json);
+
+            ArrayList<Inventario_Detalle> activos = getInvDetJSON(response);
+                
             try
             {
-                KardexDet d = kds_activos.get(i).get(kds_activos.get(i).size() - 1);
-                if(d.getKarDetEstReg().equals("1"))
+                Inventario_Detalle det = activos.get(activos.size() - 1);
+                if(det.getInvDetEstado().equals("A"))
                 {
-                        boolean nuevo = (kds_activos.get(i).size() == 1);
+                        boolean nuevo = (activos.size() == 1);
                         String cantidad = "";
                         String vTot = "";
                         
@@ -429,10 +440,17 @@ public class CVistaInventario implements IVistaInventario
                         }
                         else
                         {
-                            cantidad = kds_activos.get(i).get(kds_activos.get(i).size() - 2).getKarDetSalCan();
-                            vTot = kds_activos.get(i).get(kds_activos.get(i).size() - 2).getKarDetSalValTot();
+                            cantidad = activos.get(activos.size() - 2).getInvDetSaldoCantidad();
+                            double saldoTotal = 0.0;
+                            if (det.getInvDetMovimiento().equals("entrada")){
+                                saldoTotal = Double.valueOf(cab.getValorTotal()) - Double.valueOf(det.getInvDetPrecioTotal());
+                            } else {
+                                saldoTotal = Double.valueOf(cab.getValorTotal()) + Double.valueOf(det.getInvDetPrecioTotal());
+                            }
+                            vTot = String.valueOf(saldoTotal);
                         }
-                        new CModificarDetalleInventario(d.getKarDetCod(), d.getProCod(), d.getAlmCod(), cantidad, vTot);
+                        
+                        new CModificarDetalleInventario(det.getInvDetCodigo(), cab.getProCod(), det.getInvCabCodigo(), cantidad, vTot, user);
                         ventana.dispose();
                 }
                 else
@@ -444,8 +462,8 @@ public class CVistaInventario implements IVistaInventario
             }
         }
         else
-            JOptionPane.showMessageDialog(null, "Seleccione un Kardex Cabecera", "ERROR", JOptionPane.ERROR_MESSAGE);
-        */
+            JOptionPane.showMessageDialog(null, "Seleccione un Inventario Cabecera", "ERROR", JOptionPane.ERROR_MESSAGE);
+        
     }
     
     @Override

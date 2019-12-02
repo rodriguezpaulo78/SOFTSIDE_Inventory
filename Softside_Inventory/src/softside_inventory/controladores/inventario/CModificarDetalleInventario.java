@@ -9,6 +9,16 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import com.toedter.calendar.JDateChooser;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import softside_inventory.modelos.Inventario_Detalle;
+import softside_inventory.net.HostURL;
+import softside_inventory.net.HttpNetTask;
 import softside_inventory.util.Session;
 import softside_inventory.vistas.inventario.ModificarDetalleInventario;
 
@@ -18,34 +28,30 @@ import softside_inventory.vistas.inventario.ModificarDetalleInventario;
  * Carga, recibe y valida datos sobre un registro existente de movimiento de
  * entrada o salida de un producto
  *  
- * @author Yuliana Apaza
- * @version 2.0
- * @since 2015-10-05
+ * @author SOFTSIDE
  */
 
 public class CModificarDetalleInventario implements IModificarDetalleInventario
 {
     private ModificarDetalleInventario ventana;
-    private ArrayList<ArrayList<String>> documentos;
     private String codigoAlmacen;
     private String cantidad;
     private String valTot;
+    private String codigoDetalle;
+    private String codigoProducto;
+    private String codigoCabecera;
     //private KardexDet kd;
-     private Session user;
+    private Session user;
     
-    public CModificarDetalleInventario(String codigo, String codigoProducto, String codigoAlmacen, String cantidad, String valTot, Session user)
+    public CModificarDetalleInventario(String codigoDetalle, String codigoProducto, String codigoCabecera, String cantidad, String valTot, Session user)
     {
+        this.codigoDetalle = codigoDetalle;
+        this.codigoProducto = codigoProducto;
+        this.codigoCabecera = codigoCabecera;
         this.cantidad = cantidad;
         this.valTot = valTot;
-        //documentos = Documento.getActivos();
-        //kd = KardexDet.buscar(codigo, codigoProducto, codigoAlmacen);
+        this.user = user;
         ventana = new ModificarDetalleInventario(this);
-    }
-    
-    @Override
-    public void verDocumento(JComboBox cbxDocNom, JTextField txtDocCod)
-    {
-        txtDocCod.setText(documentos.get(cbxDocNom.getSelectedIndex()).get(0));
     }
     
     @Override
@@ -114,49 +120,88 @@ public class CModificarDetalleInventario implements IModificarDetalleInventario
         }
     }
     
-    public void cargar(JTextField txtDoc, JTextField txtInvDetCod, JTextField txtProCod, JTextField txtAlmCod)
+    public void cargar(JTextField txtNumDoc, JTextField txtInvDetCod, JTextField txtProCod, JDateChooser fecha, JComboBox cbxOpe, JTextField txtCan, JTextField txtValUni, JTextField txtValTot, JTextArea txtObs)
     {
-        /*
-        txtKarDetCod.setText(kd.getKarDetCod());
-        txtProCod.setText(kd.getProCod());
-        txtAlmCod.setText(kd.getAlmCod());
+        // Solicita el usuario al servidor
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("metodo", 7);
+        jsonObj.put("codigoDet", codigoDetalle);
+        jsonObj.put("codigoCab", codigoCabecera);
         
-        Calendar c = Calendar.getInstance();
-        c.set(Integer.parseInt(kd.getKarDetAnio()), Integer.parseInt(kd.getKarDetMes()) - 1, Integer.parseInt(kd.getKarDetDia()));
+        String json = jsonObj.toString();
         
-        fecha.setCalendar(c);
-        txtDocCod.setText(kd.getDocCod());
-        txtNumDoc.setText(kd.getKarDetDocNum());
-        int ope = 1;
-        if(kd.getKarDetOpe().equals("1"))
-            ope = 0;
-        cbxOpe.setSelectedIndex(ope);
-        txtCan.setText(kd.getKarDetCan());
-        txtValUni.setText(kd.getKarDetValUni());
-        txtValTot.setText(kd.getKarDetValTot());
-
-        txtObs.setText(kd.getKarDetObs());
-
-        for(int i = 0; i < documentos.size(); i++) 
-        {
-            cbxDocNom.insertItemAt(documentos.get(i).get(1), i);
+        HttpNetTask httpConnect = new HttpNetTask();
+        String response = httpConnect.sendPost(HostURL.INVENTARIO_DETALLE, json);
+        
+        ArrayList<Inventario_Detalle> detalles = getInvDetJSON(response);
+        Inventario_Detalle det = detalles.get(0);
+        
+        txtInvDetCod.setText(codigoDetalle);
+        txtProCod.setText(codigoProducto);
+        
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        Date fec = null;
+        try {
+            fec = formato.parse(det.getInvDetFecha());
+        } 
+        catch (ParseException ex) {
+            ex.printStackTrace();
         }
+        fecha.setDate(fec);
         
-        Documento d = Documento.buscar(kd.getDocCod());
-        cbxDocNom.setSelectedItem(d.getDocNom());
-        */
+        int ope = 0;
+        if(det.getInvDetMovimiento().equals("salida"))
+            ope = 1;
+        cbxOpe.setSelectedIndex(ope);
+        txtCan.setText(det.getInvDetCantidad());
+        txtValUni.setText(det.getInvDetPrecioUnit());
+        txtValTot.setText(det.getInvDetPrecioTotal());
+        txtObs.setText(det.getInvDetObservacion());   
+        txtNumDoc.setText(user.getDni());
+    }
+    
+    /**
+     * Recibe y obtiene la lista de datos de respuesta en JSON
+     * @param json
+     * @return ArrayList<Usuario>
+     */
+    private ArrayList<Inventario_Detalle> getInvDetJSON(String json){
+        //Crear un Objeto JSON a partir del string JSON
+        Object jsonObject =JSONValue.parse(json);
+        //Convertir el objeto JSON en un array
+        JSONArray array = (JSONArray)jsonObject;
+        
+        ArrayList<Inventario_Detalle> detalles = new ArrayList<Inventario_Detalle>();
+        Inventario_Detalle det = null;
+        //Iterar el array y extraer la información
+        for(int i=0;i<array.size();i++){
+            det = new Inventario_Detalle();
+            JSONObject row =(JSONObject)array.get(i);
+            det.setInvDetCodigo(row.get("inv_det_id").toString());
+            det.setInvCabCodigo(row.get("inventario_cab_id").toString());
+            det.setInvDetMovimiento(row.get("inv_det_movimiento").toString());
+            det.setInvDetCantidad(row.get("inv_det_cantidad").toString());
+            det.setInvDetPrecioUnit(row.get("inv_det_precio_unit").toString());
+            det.setInvDetPrecioTotal(row.get("inv_det_precio_total").toString());
+            det.setInvDetFecha(row.get("inv_det_fec").toString());
+            det.setInvDetSaldoCantidad(row.get("inv_det_saldo_cant").toString());
+            det.setInvDetObservacion(row.get("inv_det_obs").toString());
+            det.setInvDetEstado(row.get("inv_det_est_reg").toString());
+           
+            detalles.add(det);
+            det = null;
+        }
+        return detalles;
     }
    
+    @Override
     public void aceptar(JTextField txtInvDetCod, JTextField txtProCod, JTextField txtAlmCod, JDateChooser fecha, JTextField txtDocCod, JTextField txtNumDoc, JComboBox cbxOpe, JTextField txtCan, JTextField txtValUni, JTextField txtValTot, JTextArea txtObs)
     {
-        /*
-        Calendar c = fecha.getCalendar();
         try
         {
             String salCan = "0";
             String salValTot = "0";
             String salValUni = "0";
-            
             if(cbxOpe.getSelectedIndex() == 0)
             {
                 salCan = String.valueOf(Double.parseDouble(cantidad) + Double.parseDouble(txtCan.getText()));
@@ -175,41 +220,60 @@ public class CModificarDetalleInventario implements IModificarDetalleInventario
                     saldoTotal = 0.0;
                 salValUni = String.valueOf(saldoTotal);
             }
-        
-            kd.setKarDetAnio(String.valueOf(c.get(Calendar.YEAR)));
-            kd.setKarDetMes(String.valueOf(c.get(Calendar.MONTH) + 1));
-            kd.setKarDetDia(String.valueOf(c.get(Calendar.DATE)));
-            kd.setUsrCod(user.getUsrCod());
-            kd.setDocCod(txtDocCod.getText());
-            kd.setKarDetDocNum(txtNumDoc.getText());
-            String ope = "1";
+            
+            String ope = "";
             if(cbxOpe.getSelectedIndex() == 0)
-                ope = "1";
+                ope = "entrada";
             else
-                ope = "0";
-            kd.setKarDetOpe(ope);
-            kd.setKarDetCan(txtCan.getText());
-            kd.setKarDetValUni(txtValUni.getText());
-            kd.setKarDetValTot(txtValTot.getText());
-            kd.setKarDetSalCan(salCan);
-            kd.setKarDetSalValUni(salValUni);
-            kd.setKarDetSalValTot(salValTot);
-            kd.setKarDetObs(txtObs.getText());
-                                            
-            String err = kd.modificar();
-            if(err.equals(""))
-            {
-                JOptionPane.showMessageDialog(null, "Se ha modificado el registro", "MODIFICACIÓN", JOptionPane.INFORMATION_MESSAGE);
-                new CVistaInventario();
-                ventana.dispose();
-            }
-            else
-                JOptionPane.showMessageDialog(null, err, "ERROR", JOptionPane.ERROR_MESSAGE);
+                ope = "salida";
+            
+            Inventario_Detalle detalle = new Inventario_Detalle();
+            detalle.setInvDetCodigo(txtInvDetCod.getText());
+            detalle.setInvCabCodigo(codigoCabecera);
+            detalle.setInvDetMovimiento(ope);
+            detalle.setInvDetCantidad(txtCan.getText());
+            detalle.setInvDetPrecioUnit(txtValUni.getText());
+            detalle.setInvDetPrecioTotal(txtValTot.getText());
+            
+            Date date = fecha.getDate();
+            DateFormat f = new SimpleDateFormat("dd/MM/yyyy");
+            String fecha2 = f.format(date);
+            detalle.setInvDetFecha(fecha2);
+            
+            detalle.setInvDetSaldoCantidad(salCan);
+            detalle.setInvDetObservacion(txtObs.getText());
+        
+            String json = detalle.toJSON(3, salValUni, salValTot);
+
+            HttpNetTask httpConnect = new HttpNetTask();
+            String response = httpConnect.sendPost(HostURL.INVENTARIO_DETALLE, json);
+
+            getJsonRespDet(response);
         }
         catch(NumberFormatException e)
         {
             JOptionPane.showMessageDialog(null, "Cantidad o Valor Total inválido", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
-        */
+        
+    }
+    
+    /**
+     * Recibe y obtiene los datos de respuesta en JSON
+     * @param json
+     */
+    public void getJsonRespDet(String json){
+        //Crear un Objeto JSON a partir del string JSON
+        Object jsonObject = JSONValue.parse(json);
+        JSONObject row =(JSONObject) jsonObject;
+        
+        String mensaje = row.get("message").toString();
+        
+        if (mensaje.equals("SUCCESS")) {
+            JOptionPane.showMessageDialog(null, "Se ha modificado el registro", "MODIFICACIÓN", JOptionPane.INFORMATION_MESSAGE);
+            new CVistaInventario(user);
+            ventana.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al modificar.", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

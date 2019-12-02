@@ -19,7 +19,7 @@ public class ModificarDetalleInventario extends javax.swing.JFrame
         setLocationRelativeTo(null);
 
         this.interfaz = interfaz;
-        this.interfaz.cargar(this.txtDoc, this.txtInvDetCod, this.txtProCod, this.txtAlmCod);
+        this.interfaz.cargar(this.txtNumDoc, this.txtInvDetCod, this.txtProCod, this.fecha, this.cbxOpe, this.txtCan, this.txtValUni, this.txtValTot, this.txtObs);
     }
 
     @SuppressWarnings("unchecked")
@@ -260,6 +260,8 @@ public class ModificarDetalleInventario extends javax.swing.JFrame
 
         txtDoc.setEditable(false);
         txtDoc.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        txtDoc.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtDoc.setText("DNI");
 
         jLabel19.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel19.setText("Número:");
