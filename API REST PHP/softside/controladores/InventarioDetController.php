@@ -50,15 +50,19 @@ class InventarioDetController{
 		
 		return $json;
 	}
-/*
-	public function modificarUnidad($datos){	
+
+	public function modificarInvDetalle($datos){	
 		$json = array();
 
-		$query = "UPDATE ".$this->db_table." SET uni_descripcion='$datos[1]' WHERE uni_id='$datos[0]'";
+		$query = "UPDATE ".$this->db_table." SET inv_det_movimiento='$datos[2]', inv_det_cantidad='$datos[3]', inv_det_precio_unit='$datos[4]', inv_det_precio_total='$datos[5]', inv_det_fec='$datos[6]', inv_det_saldo_cant='$datos[7]', inv_det_obs='$datos[8]' WHERE inv_det_id='$datos[0]' AND inventario_cab_id='$datos[1]'";
 
 		$updated = mysqli_query($this->db->getDb(), $query);
 
-		if($updated == 1){
+		$query2 = "UPDATE inventario_cabecera SET inv_cab_cant='$datos[7]', inv_cab_val_unit='$datos[9]', inv_cab_val_total='$datos[10]' WHERE inv_cab_id='$datos[1]'";
+
+		$updated2 = mysqli_query($this->db->getDb(), $query2);
+
+		if($updated == 1 AND $updated2 == 1){
 			$json['message'] = "SUCCESS";
 		}else{
 			$json['message'] = "FAILED";
@@ -68,26 +72,7 @@ class InventarioDetController{
 		return $json;
 	}
 
-	public function listarUnidades(){
-		$query = "SELECT uni_id, uni_descripcion, uni_est_reg FROM ".$this->db_table;
-		$result = mysqli_query($this->db->getDb(),$query);
-
-		$json = array();
-		if(mysqli_num_rows($result) > 0){
-			$i = 0;
- 			while($row = mysqli_fetch_assoc($result)){
-				$json[$i]=$row;
-				$i++;
-			 }
- 		}
-
- 		mysqli_close($this->db->getDb());
-		return $json;
-	}
-*/
 	public function getInvDetByInvCabCod($codigo){
-		// inv_det_id, inventario_cab_id, inv_det_movimiento, inv_det_cantidad, inv_det_precio_unit,
-        // inv_det_precio_total, inv_det_fec, inv_det_saldo_cant, inv_det_obs, inv_det_est_reg
 		$query = "SELECT inv_det_id, inventario_cab_id, inv_det_movimiento, inv_det_cantidad, inv_det_precio_unit, inv_det_precio_total, inv_det_fec, inv_det_saldo_cant, inv_det_obs, inv_det_est_reg FROM ".$this->db_table." WHERE inventario_cab_id='".$codigo."'";
 		$result = mysqli_query($this->db->getDb(),$query);
 
@@ -137,9 +122,9 @@ class InventarioDetController{
 		
 		return $json;
 	}
-/*
-	public function buscarUnidad($dato, $filtro){
-		$query = "SELECT uni_id FROM ".$this->db_table." WHERE uni_descripcion='".$dato."'";
+
+	public function buscarInvDet($codigoDet, $codigoCab){
+		$query = "SELECT inv_det_id, inventario_cab_id, inv_det_movimiento, inv_det_cantidad, inv_det_precio_unit, inv_det_precio_total, inv_det_fec, inv_det_saldo_cant, inv_det_obs, inv_det_est_reg FROM ".$this->db_table." WHERE inv_det_id='".$codigoDet."' AND inventario_cab_id='".$codigoCab."'";
 
 		$result = mysqli_query($this->db->getDb(),$query);
 
@@ -156,6 +141,5 @@ class InventarioDetController{
 		return $json;
 	}
 
-	*/
 }
 ?>

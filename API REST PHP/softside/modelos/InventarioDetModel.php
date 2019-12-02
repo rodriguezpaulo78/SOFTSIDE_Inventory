@@ -40,18 +40,27 @@
  		$json_registrar = $inv_det->agregarInvDetalle($datos);
  		echo json_encode($json_registrar);
  	}
-/*
- 	// Modificar unidad
+
+ 	// Modificar inventario detalle
  	if ($metodo == 3) {
- 		$codigo = $getDatos->codigo;
- 		$descripcion = $getDatos->descripcion;
+ 		$det_codigo = $getDatos->det_codigo;
+ 		$cab_codigo = $getDatos->cab_codigo;
+ 		$det_movimiento = $getDatos->det_movimiento;
+ 		$det_cantidad = $getDatos->det_cantidad;
+ 		$det_precio_unit = $getDatos->det_precio_unit;
+ 		$det_precio_total = $getDatos->det_precio_total;
+ 		$det_fecha = $getDatos->det_fecha;
+ 		$det_saldo_cant = $getDatos->det_saldo_cant;
+ 		$det_obs = $getDatos->det_obs;
+ 		$cab_val_unit = $getDatos->cab_val_unit;
+ 		$cab_val_total = $getDatos->cab_val_total;
 
- 		$datos=[$codigo, $descripcion];
+ 		$datos=[$det_codigo, $cab_codigo, $det_movimiento, $det_cantidad, $det_precio_unit, $det_precio_total, $det_fecha, $det_saldo_cant, $det_obs, $cab_val_unit, $cab_val_total];
 
- 		$json_modificar = $unidad->modificarUnidad($datos);
+ 		$json_modificar = $inv_det->modificarInvDetalle($datos);
  		echo json_encode($json_modificar);
  	}
-*/
+
  	// Listar inventario detalle por codigo de cabecera
  	if ($metodo == 4) {
  		$codigo = $getDatos->codigo;
@@ -72,14 +81,13 @@
  		$json_eliminar = $inv_det->eliminarInvDetByInvCabCod($codigo);
  		echo json_encode($json_eliminar);
  	}
-/*
- 	// Buscar unidad
+
+ 	// Buscar inventario detalle
  	if ($metodo == 7) {
- 		$dato = $getDatos->dato;
- 		$filtro = $getDatos->filtro;
- 		$json_buscar = $unidad->buscarUnidad($dato, $filtro);
+ 		$codigoDet = $getDatos->codigoDet;
+ 		$codigoCab = $getDatos->codigoCab;
+ 		$json_buscar = $inv_det->buscarInvDet($codigoDet, $codigoCab);
  		echo json_encode($json_buscar);
  	}
-*/
 
  ?>
