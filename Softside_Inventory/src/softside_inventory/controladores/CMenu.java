@@ -9,6 +9,9 @@ import softside_inventory.controladores.usuario.CVistaUsuario;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import softside_inventory.controladores.consulta.CEntrada;
+import softside_inventory.controladores.consulta.CExistencia;
+import softside_inventory.controladores.consulta.CSalida;
 import softside_inventory.controladores.inventario.CVistaInventario;
 import softside_inventory.controladores.producto.CVistaProducto;
 import softside_inventory.controladores.proveedor.CVistaProveedor;
@@ -136,7 +139,7 @@ public class CMenu implements IMenu{
      */
     public void existenciaProducto()
     {
-        //new CExistencia();
+        new CExistencia(user);
         ventana.dispose();
     }
 
@@ -146,7 +149,7 @@ public class CMenu implements IMenu{
      */
     public void salida()
     {
-        //new CSalida();
+        new CSalida(user);
         ventana.dispose();
     }
 
@@ -156,7 +159,7 @@ public class CMenu implements IMenu{
      */
     public void entrada()
     {
-        //new CEntrada();
+        new CEntrada(user);
         ventana.dispose();
     }
 }

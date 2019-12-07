@@ -23,6 +23,8 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.BaseColor;
 
+import org.json.simple.JSONArray;
+
 /**
  * Generador de reportes
  * 
@@ -33,6 +35,8 @@ import com.itextpdf.text.BaseColor;
 
 public class Reportes
 {
+    /*
+    //REPORTE PARA GESTION DE PRODUCTOS
     public static void generarReporte(String titulo, String titulo2, ArrayList<ArrayList<String>> datos, ArrayList<String> cab)
     {
         JFileChooser save=new JFileChooser();
@@ -151,8 +155,10 @@ public class Reportes
             }
         }
     }
+    */
     
-    public static void generarReporteKardex(ArrayList<String> karCab, ArrayList<ArrayList<String>> karDet)
+    //REPORTE PARA MOVIMIENTO INVENTARIO
+    public static void generarReporteKardex(Inventario_Cabecera karCab, ArrayList<Inventario_Detalle> karDet)
     {
         JFileChooser save=new JFileChooser();
         
@@ -182,7 +188,7 @@ public class Reportes
                 // INICIO REPORTE
                 
                 // Titulo
-                Paragraph parrafo = new Paragraph("KARDEX DE ENTRADA Y SALIDA DE ALMACÉN \n\n", FontFactory.getFont(FontFactory.COURIER_BOLD, 14, BaseColor.BLACK));
+                Paragraph parrafo = new Paragraph("INVENTARIO DE ENTRADA Y SALIDA DE TIENDA CAYMA \n\n", FontFactory.getFont(FontFactory.COURIER_BOLD, 14, BaseColor.BLACK));
                 parrafo.setAlignment(Element.ALIGN_CENTER);
                 doc.add(parrafo);
                 
@@ -205,7 +211,7 @@ public class Reportes
                 
                     // Contenido
                 
-                celda = new PdfPCell(new Paragraph("Codigo de Producto: " + karCab.get(0), FontFactory.getFont(FontFactory.COURIER, 10, BaseColor.BLACK)));
+                celda = new PdfPCell(new Paragraph("Codigo de Producto: " + karCab.getProCod(), FontFactory.getFont(FontFactory.COURIER, 10, BaseColor.BLACK)));
                 celda.setFixedHeight(20);
                 celda.setHorizontalAlignment(Element.ALIGN_LEFT);
                 celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -214,7 +220,7 @@ public class Reportes
                 celda.setBorderWidth(1);
                 tabla.addCell(celda);
                 
-                celda = new PdfPCell(new Paragraph("Nombre de Producto: " + karCab.get(1), FontFactory.getFont(FontFactory.COURIER, 10, BaseColor.BLACK)));
+                celda = new PdfPCell(new Paragraph("Nombre de Producto: " + "Producto", FontFactory.getFont(FontFactory.COURIER, 10, BaseColor.BLACK)));
                 celda.setFixedHeight(20);
                 celda.setHorizontalAlignment(Element.ALIGN_LEFT);
                 celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -223,7 +229,7 @@ public class Reportes
                 celda.setBorderWidth(1);
                 tabla.addCell(celda);
                 
-                celda = new PdfPCell(new Paragraph("Unidad: " + karCab.get(2), FontFactory.getFont(FontFactory.COURIER, 10, BaseColor.BLACK)));
+                celda = new PdfPCell(new Paragraph("Unidad: " + "Unidad", FontFactory.getFont(FontFactory.COURIER, 10, BaseColor.BLACK)));
                 celda.setFixedHeight(20);
                 celda.setHorizontalAlignment(Element.ALIGN_LEFT);
                 celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -232,7 +238,7 @@ public class Reportes
                 celda.setBorderWidth(1);
                 tabla.addCell(celda);
                 
-                celda = new PdfPCell(new Paragraph("Codigo de Almacen:  " + karCab.get(3), FontFactory.getFont(FontFactory.COURIER, 10, BaseColor.BLACK)));
+                celda = new PdfPCell(new Paragraph("Codigo de Almacen:  " + "00001", FontFactory.getFont(FontFactory.COURIER, 10, BaseColor.BLACK)));
                 celda.setFixedHeight(20);
                 celda.setHorizontalAlignment(Element.ALIGN_LEFT);
                 celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -241,7 +247,7 @@ public class Reportes
                 celda.setBorderWidth(1);
                 tabla.addCell(celda);
                 
-                celda = new PdfPCell(new Paragraph("Nombre de Almacen:  " + karCab.get(4), FontFactory.getFont(FontFactory.COURIER, 10, BaseColor.BLACK)));
+                celda = new PdfPCell(new Paragraph("Nombre de Almacen:  " + karCab.getAlmNom(), FontFactory.getFont(FontFactory.COURIER, 10, BaseColor.BLACK)));
                 celda.setFixedHeight(20);
                 celda.setHorizontalAlignment(Element.ALIGN_LEFT);
                 celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -280,7 +286,7 @@ public class Reportes
                 celda.setBorderWidth(1);
                 tabla.addCell(celda);
                 
-                celda = new PdfPCell(new Paragraph(karCab.get(5), FontFactory.getFont(FontFactory.COURIER, 10, BaseColor.BLACK)));
+                celda = new PdfPCell(new Paragraph(karCab.getCantidad(), FontFactory.getFont(FontFactory.COURIER, 10, BaseColor.BLACK)));
                 celda.setFixedHeight(20);
                 celda.setHorizontalAlignment(Element.ALIGN_CENTER);
                 celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -298,7 +304,7 @@ public class Reportes
                 celda.setBorderWidth(1);
                 tabla.addCell(celda);
                 
-                celda = new PdfPCell(new Paragraph(karCab.get(6), FontFactory.getFont(FontFactory.COURIER, 10, BaseColor.BLACK)));
+                celda = new PdfPCell(new Paragraph(karCab.getValorUnit(), FontFactory.getFont(FontFactory.COURIER, 10, BaseColor.BLACK)));
                 celda.setFixedHeight(20);
                 celda.setHorizontalAlignment(Element.ALIGN_CENTER);
                 celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -456,9 +462,10 @@ public class Reportes
                 
                 for(int i = 0; i < karDet.size(); i++)
                 {
-                    for(int j = 0; j < karDet.get(i).size(); j++)
-                    {
-                        celda = new PdfPCell(new Paragraph(karDet.get(i).get(j), FontFactory.getFont(FontFactory.COURIER, 8, BaseColor.BLACK)));
+                    //for(int j = 0; j < karDet.get(i).size(); j++)
+                    //{
+                        //celda = new PdfPCell(new Paragraph(karDet.get(i).get(j), FontFactory.getFont(FontFactory.COURIER, 8, BaseColor.BLACK)));    
+                        celda = new PdfPCell(new Paragraph(karDet.get(i).getInvDetMovimiento(), FontFactory.getFont(FontFactory.COURIER, 8, BaseColor.BLACK)));
                         celda.setFixedHeight(20);
                         celda.setHorizontalAlignment(Element.ALIGN_LEFT);
                         celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -474,10 +481,11 @@ public class Reportes
                             celda.setBorderColor(new BaseColor(230, 230, 230));
                         }
                         tabla.addCell(celda);
-                    }
-                }
+                    //}
                 doc.add(tabla);
-                doc.close();                
+                doc.close();  
+                }
+                              
             }
             catch (DocumentException ex)
             {
@@ -487,6 +495,8 @@ public class Reportes
             }
         }
     }
+    
+    
     
     public static boolean generarReporte1(Producto myProducto, ArrayList<ArrayList<String>> resultados)
     {

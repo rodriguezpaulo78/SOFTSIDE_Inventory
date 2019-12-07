@@ -14,6 +14,7 @@ import softside_inventory.controladores.CMenu;
 import softside_inventory.modelos.Inventario_Cabecera;
 import softside_inventory.modelos.Inventario_Detalle;
 import softside_inventory.modelos.Producto;
+import softside_inventory.modelos.Reportes;
 import softside_inventory.net.HostURL;
 import softside_inventory.net.HttpNetTask;
 
@@ -45,7 +46,7 @@ public class CVistaInventario implements IVistaInventario
     private String codigoCabecera;
     private VistaInventario ventana;
     private Session user;
-    
+      
     public CVistaInventario(Session user)
     {
         ventana = new VistaInventario(this);
@@ -109,6 +110,7 @@ public class CVistaInventario implements IVistaInventario
             inventarios.add(inv);
             inv = null;
         }
+        
         return inventarios;
     }
     
@@ -292,6 +294,7 @@ public class CVistaInventario implements IVistaInventario
             detalles.add(det);
             det = null;
         }
+        
         return detalles;
     }
     
@@ -543,26 +546,28 @@ public class CVistaInventario implements IVistaInventario
         
     }
 
+    /*
+    Genera reporte movimiento inventario
+    */
     @Override
     public void generarReporte(JTable tblRegistrosKC)
     {
-        /*
+        
         int i = tblRegistrosKC.getSelectedRow();
         if(i != -1)
         {
-            Inventario cab = kc.get(i);
-            if(cab.getKarCabEstReg().equals("1"))
+            Inventario_Cabecera cab = invCabs.get(i);
+            if(cab.getInvCabEstReg().equals("A"))
             {
-                ArrayList<String> karcab = KardexCab.getVista(codigoProducto, codigoAlmacen);
-                ArrayList<ArrayList<String>> kardet = KardexDet.getVista(codigoProducto, codigoAlmacen);
-                Reporte.generarReporteKardex(karcab, kardet);
+                //Manda la fila de la cabecera activa y detalles a reportar
+                Reportes.generarReporteKardex(cab, invDets);
             }
             else
                 JOptionPane.showMessageDialog(null, "El registro no está activo", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
         else
              JOptionPane.showMessageDialog(null, "Seleccione un registro de Kardex Cabecera", "ERROR", JOptionPane.ERROR_MESSAGE);
-        */
+        
     }
 
 }
