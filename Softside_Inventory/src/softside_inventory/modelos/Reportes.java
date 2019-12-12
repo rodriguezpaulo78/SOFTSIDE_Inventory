@@ -24,6 +24,10 @@ import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.text.BaseColor;
 
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import softside_inventory.net.HostURL;
+import softside_inventory.net.HttpNetTask;
 
 /**
  * Generador de reportes
@@ -220,7 +224,19 @@ public class Reportes
                 celda.setBorderWidth(1);
                 tabla.addCell(celda);
                 
-                celda = new PdfPCell(new Paragraph("Nombre de Producto: " + "Producto", FontFactory.getFont(FontFactory.COURIER, 10, BaseColor.BLACK)));
+                // SOLICITAR PRODUCTO
+                JSONObject jsonObj = new JSONObject();
+                jsonObj.put("metodo", 5);
+                jsonObj.put("codigo", karCab.getProCod());
+
+                String json = jsonObj.toString();
+
+                HttpNetTask httpConnect = new HttpNetTask();
+                String response = httpConnect.sendPost(HostURL.PRODUCTOS, json);
+
+                ArrayList<Producto> producto = getProductoJSON(response);
+                
+                celda = new PdfPCell(new Paragraph("Nombre de Producto: " + producto.get(0).getNombre(), FontFactory.getFont(FontFactory.COURIER, 10, BaseColor.BLACK)));
                 celda.setFixedHeight(20);
                 celda.setHorizontalAlignment(Element.ALIGN_LEFT);
                 celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -229,7 +245,19 @@ public class Reportes
                 celda.setBorderWidth(1);
                 tabla.addCell(celda);
                 
-                celda = new PdfPCell(new Paragraph("Unidad: " + "Unidad", FontFactory.getFont(FontFactory.COURIER, 10, BaseColor.BLACK)));
+                // SOLICITAR UNIDAD
+                JSONObject jsonObj2 = new JSONObject();
+                jsonObj2.put("metodo", 5);
+                jsonObj2.put("codigo", producto.get(0).getCodigo_uni());
+
+                String json2 = jsonObj2.toString();
+
+                HttpNetTask httpConnect2 = new HttpNetTask();
+                String response2 = httpConnect2.sendPost(HostURL.UNIDADES, json2);
+
+                ArrayList<Unidad> unidad = getUnidadJSON(response2);
+                
+                celda = new PdfPCell(new Paragraph("Unidad: " + unidad.get(0).getDescripcion(), FontFactory.getFont(FontFactory.COURIER, 10, BaseColor.BLACK)));
                 celda.setFixedHeight(20);
                 celda.setHorizontalAlignment(Element.ALIGN_LEFT);
                 celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -318,7 +346,7 @@ public class Reportes
                 
                 // Kardex_Detalle
                 
-                tabla = new PdfPTable(12);
+                tabla = new PdfPTable(8);
                 tabla.setTotalWidth(PageSize.A4.getHeight() - 80);
                 tabla.setLockedWidth(true);
                 
@@ -335,26 +363,6 @@ public class Reportes
                 tabla.addCell(celda);
                 
                 celda = new PdfPCell(new Paragraph("Fecha", FontFactory.getFont(FontFactory.COURIER, 10, BaseColor.BLACK)));
-                celda.setRowspan(2);
-                celda.setFixedHeight(20);
-                celda.setHorizontalAlignment(Element.ALIGN_CENTER);
-                celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
-                celda.setBackgroundColor(new BaseColor(210, 210, 210));
-                celda.setBorderColor(BaseColor.BLACK);
-                celda.setBorderWidth(1);
-                tabla.addCell(celda);
-                
-                celda = new PdfPCell(new Paragraph("Documento", FontFactory.getFont(FontFactory.COURIER, 10, BaseColor.BLACK)));
-                celda.setRowspan(2);
-                celda.setFixedHeight(20);
-                celda.setHorizontalAlignment(Element.ALIGN_CENTER);
-                celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
-                celda.setBackgroundColor(new BaseColor(210, 210, 210));
-                celda.setBorderColor(BaseColor.BLACK);
-                celda.setBorderWidth(1);
-                tabla.addCell(celda);
-                
-                celda = new PdfPCell(new Paragraph("Nº Doc.", FontFactory.getFont(FontFactory.COURIER, 10, BaseColor.BLACK)));
                 celda.setRowspan(2);
                 celda.setFixedHeight(20);
                 celda.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -385,7 +393,7 @@ public class Reportes
                 tabla.addCell(celda);
                 
                 celda = new PdfPCell(new Paragraph("Saldo", FontFactory.getFont(FontFactory.COURIER, 10, BaseColor.BLACK)));
-                celda.setColspan(3);
+                celda.setColspan(1);
                 celda.setFixedHeight(20);
                 celda.setHorizontalAlignment(Element.ALIGN_CENTER);
                 celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -439,52 +447,69 @@ public class Reportes
                 celda.setBorderColor(BaseColor.BLACK);
                 celda.setBorderWidth(1);
                 tabla.addCell(celda);
-                
-                celda = new PdfPCell(new Paragraph("Val. Uni.", FontFactory.getFont(FontFactory.COURIER, 10, BaseColor.BLACK)));
-                celda.setFixedHeight(20);
-                celda.setHorizontalAlignment(Element.ALIGN_CENTER);
-                celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
-                celda.setBackgroundColor(new BaseColor(210, 210, 210));
-                celda.setBorderColor(BaseColor.BLACK);
-                celda.setBorderWidth(1);
-                tabla.addCell(celda);
-                
-                celda = new PdfPCell(new Paragraph("Total", FontFactory.getFont(FontFactory.COURIER, 10, BaseColor.BLACK)));
-                celda.setFixedHeight(20);
-                celda.setHorizontalAlignment(Element.ALIGN_CENTER);
-                celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
-                celda.setBackgroundColor(new BaseColor(210, 210, 210));
-                celda.setBorderColor(BaseColor.BLACK);
-                celda.setBorderWidth(1);
-                tabla.addCell(celda);
 
                     // Detalles
                 
-                for(int i = 0; i < karDet.size(); i++)
-                {
-                    //for(int j = 0; j < karDet.get(i).size(); j++)
-                    //{
-                        //celda = new PdfPCell(new Paragraph(karDet.get(i).get(j), FontFactory.getFont(FontFactory.COURIER, 8, BaseColor.BLACK)));    
-                        celda = new PdfPCell(new Paragraph(karDet.get(i).getInvDetMovimiento(), FontFactory.getFont(FontFactory.COURIER, 8, BaseColor.BLACK)));
-                        celda.setFixedHeight(20);
-                        celda.setHorizontalAlignment(Element.ALIGN_LEFT);
-                        celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                for (int i = 0; i < karDet.size(); i++) {
+                    celda = new PdfPCell(new Paragraph(karDet.get(i).getInvDetCodigo(), FontFactory.getFont(FontFactory.COURIER, 8, BaseColor.BLACK)));
+                    celda.setFixedHeight(20);
+                    celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+                    celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                    pintarCeldas(i, celda);
+                    tabla.addCell(celda);
 
-                        if(i%2 == 0)
-                        {
-                            celda.setBackgroundColor(BaseColor.WHITE);
-                            celda.setBorderColor(BaseColor.WHITE);
-                        }
-                        else
-                        {
-                            celda.setBackgroundColor(new BaseColor(230, 230, 230));
-                            celda.setBorderColor(new BaseColor(230, 230, 230));
-                        }
-                        tabla.addCell(celda);
-                    //}
-                doc.add(tabla);
-                doc.close();  
+                    celda = new PdfPCell(new Paragraph(karDet.get(i).getInvDetFecha(), FontFactory.getFont(FontFactory.COURIER, 8, BaseColor.BLACK)));
+                    celda.setFixedHeight(20);
+                    celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+                    celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                    pintarCeldas(i, celda);
+                    tabla.addCell(celda);
+
+                    celda = new PdfPCell(new Paragraph(karDet.get(i).getInvDetMovimiento(), FontFactory.getFont(FontFactory.COURIER, 8, BaseColor.BLACK)));
+                    celda.setFixedHeight(20);
+                    celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+                    celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                    pintarCeldas(i, celda);
+                    tabla.addCell(celda);
+
+                    celda = new PdfPCell(new Paragraph(karDet.get(i).getInvDetCantidad(), FontFactory.getFont(FontFactory.COURIER, 8, BaseColor.BLACK)));
+                    celda.setFixedHeight(20);
+                    celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+                    celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                    pintarCeldas(i, celda);
+                    tabla.addCell(celda);
+
+                    celda = new PdfPCell(new Paragraph(karDet.get(i).getInvDetPrecioUnit(), FontFactory.getFont(FontFactory.COURIER, 8, BaseColor.BLACK)));
+                    celda.setFixedHeight(20);
+                    celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+                    celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                    pintarCeldas(i, celda);
+                    tabla.addCell(celda);
+
+                    celda = new PdfPCell(new Paragraph(karDet.get(i).getInvDetPrecioTotal(), FontFactory.getFont(FontFactory.COURIER, 8, BaseColor.BLACK)));
+                    celda.setFixedHeight(20);
+                    celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+                    celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                    pintarCeldas(i, celda);
+                    tabla.addCell(celda);
+
+                    celda = new PdfPCell(new Paragraph(karDet.get(i).getInvDetSaldoCantidad(), FontFactory.getFont(FontFactory.COURIER, 8, BaseColor.BLACK)));
+                    celda.setFixedHeight(20);
+                    celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+                    celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                    pintarCeldas(i, celda);
+                    tabla.addCell(celda);
+
+                    celda = new PdfPCell(new Paragraph(karDet.get(i).getInvDetObservacion(), FontFactory.getFont(FontFactory.COURIER, 8, BaseColor.BLACK)));
+                    celda.setFixedHeight(20);
+                    celda.setHorizontalAlignment(Element.ALIGN_LEFT);
+                    celda.setVerticalAlignment(Element.ALIGN_MIDDLE);
+                    pintarCeldas(i, celda);
+                    tabla.addCell(celda);
                 }
+               
+                doc.add(tabla);
+                doc.close();
                               
             }
             catch (DocumentException ex)
@@ -496,7 +521,69 @@ public class Reportes
         }
     }
     
+    /**
+     * Recibe y obtiene la lista de datos de respuesta en JSON
+     * @param json
+     * @return ArrayList<Producto>
+     */
+    private static ArrayList<Producto> getProductoJSON(String json){
+        Object jsonObject =JSONValue.parse(json);
+        JSONArray array = (JSONArray)jsonObject;
+        
+        ArrayList<Producto> productos = new ArrayList<Producto>();
+        Producto u = null;
+        
+        for(int i=0;i<array.size();i++){
+            u = new Producto();
+            JSONObject row =(JSONObject)array.get(i);
+            u.setCodigo(row.get("prod_id").toString());
+            u.setNombre(row.get("prod_nombre").toString());
+            u.setDescripcion(row.get("prod_descripcion").toString());
+            u.setCodigo_uni(row.get("unidad_id").toString());
+            u.setFec_venc(row.get("prod_fec_venc").toString());
+            u.setCodigo_prov(row.get("proveedor_id").toString());
+            u.setEstado(row.get("prod_est_reg").toString());
+                     
+            productos.add(u);
+            u = null;
+        }
+        return productos;
+    }
     
+    /**
+     * Recibe y obtiene la lista de datos de respuesta en JSON
+     * @param json
+     * @return ArrayList<Unidad>
+     */
+    private static ArrayList<Unidad> getUnidadJSON(String json){
+        Object jsonObject =JSONValue.parse(json);
+        JSONArray array = (JSONArray)jsonObject;
+        
+        ArrayList<Unidad> unidades = new ArrayList<Unidad>();
+        Unidad u = null;
+        
+        for(int i=0;i<array.size();i++){
+            u = new Unidad();
+            JSONObject row =(JSONObject)array.get(i);
+            u.setCodigo(row.get("uni_id").toString());
+            u.setDescripcion(row.get("uni_descripcion").toString());
+            u.setEstado(row.get("uni_est_reg").toString());
+                     
+            unidades.add(u);
+            u = null;
+        }
+        return unidades;
+    }
+    
+    private static void pintarCeldas(int i, PdfPCell celda){
+        if (i % 2 == 0) {
+            celda.setBackgroundColor(BaseColor.WHITE);
+            celda.setBorderColor(BaseColor.WHITE);
+        } else {
+            celda.setBackgroundColor(new BaseColor(230, 230, 230));
+            celda.setBorderColor(new BaseColor(230, 230, 230));
+        }
+    }
     
     public static boolean generarReporte1(Producto myProducto, ArrayList<ArrayList<String>> resultados)
     {

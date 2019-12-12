@@ -557,10 +557,22 @@ public class CVistaInventario implements IVistaInventario
         if(i != -1)
         {
             Inventario_Cabecera cab = invCabs.get(i);
+            
+            JSONObject jsonObj = new JSONObject();
+            jsonObj.put("metodo", 5);
+            jsonObj.put("codigo", cab.getInvCabCod());
+
+            String json = jsonObj.toString();
+
+            HttpNetTask httpConnect = new HttpNetTask();
+            String response = httpConnect.sendPost(HostURL.INVENTARIO_DETALLE, json);
+
+            ArrayList<Inventario_Detalle> activos = getInvDetJSON(response);
+            
             if(cab.getInvCabEstReg().equals("A"))
             {
                 //Manda la fila de la cabecera activa y detalles a reportar
-                Reportes.generarReporteKardex(cab, invDets);
+                Reportes.generarReporteKardex(cab, activos);
             }
             else
                 JOptionPane.showMessageDialog(null, "El registro no está activo", "ERROR", JOptionPane.ERROR_MESSAGE);
