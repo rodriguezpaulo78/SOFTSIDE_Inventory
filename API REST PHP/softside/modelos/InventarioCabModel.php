@@ -39,4 +39,18 @@
  		echo json_encode($json_eliminar);
  	}
 
+ 	// Obtener existencias
+ 	if ($metodo == 4) {
+ 		$productoCod = $getDatos->productoCod;
+ 		$json_existencias = $inv_cab->getExistenciasProductos($productoCod);
+ 		echo json_encode($json_existencias);
+ 	}
+
+ 	// Obtener existencia total
+ 	if ($metodo == 5) {
+ 		$productoCod = $getDatos->productoCod;
+ 		$json_existencia_total = $inv_cab->getExistenciaTotal($productoCod);
+ 		echo json_encode($json_existencia_total);
+ 	}
+
  ?>

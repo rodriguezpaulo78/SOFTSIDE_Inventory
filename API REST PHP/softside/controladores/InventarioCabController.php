@@ -47,7 +47,7 @@ class InventarioCabController{
 	public function eliminarInvCab($codigo){	
 		$json = array();
 
-		$query = "UPDATE ".$this->db_table." SET inv_cab_est_reg='I' WHERE inv_cab_id='".$codigo."'";
+		$query = "UPDATE ".$this->db_table." SET inv_cab_est_reg='I', inv_cab_cant=0.00, inv_cab_val_unit=0.00, inv_cab_val_total=0.00 WHERE inv_cab_id='".$codigo."'";
 
 		$deleted = mysqli_query($this->db->getDb(), $query);
 
@@ -58,6 +58,37 @@ class InventarioCabController{
 		}
 		mysqli_close($this->db->getDb());
 		
+		return $json;
+	}
+
+	public function getExistenciasProductos($productoCod){
+		$query = "SELECT producto_id, inv_cab_almacen, inv_cab_cant FROM ".$this->db_table." WHERE producto_id='".$productoCod."'";
+		$result = mysqli_query($this->db->getDb(),$query);
+
+		$json = array();
+		if(mysqli_num_rows($result) > 0){
+			$i = 0;
+ 			while($row = mysqli_fetch_assoc($result)){
+				$json[$i]=$row;
+				$i++;
+			 }
+ 		}
+
+ 		mysqli_close($this->db->getDb());
+		return $json;
+	}
+
+	public function getExistenciaTotal($productoCod){
+		$query = "SELECT SUM(inv_cab_cant) FROM ".$this->db_table." WHERE producto_id='".$productoCod."'";
+		$result = mysqli_query($this->db->getDb(),$query);
+
+		$json = "";
+		if(mysqli_num_rows($result) > 0){
+			$row = mysqli_fetch_assoc($result);
+			$json = $row;
+ 		}
+
+ 		mysqli_close($this->db->getDb());
 		return $json;
 	}
 
