@@ -2,8 +2,15 @@ package softside_inventory.modelos;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
+import softside_inventory.modelos.Inventario_Cabecera;
+import softside_inventory.net.HostURL;
+import softside_inventory.net.HttpNetTask;
 
 /**
  * Clase de consultas
@@ -15,29 +22,37 @@ import javax.swing.JOptionPane;
 
 public class Consultas
 {
-    /*
-    public static ArrayList<ArrayList<String>> existenciaProducto(String codigoProducto)
+    public static ArrayList<Inventario_Cabecera> existenciaProducto(String codigoProducto)
     {
-        ArrayList<ArrayList<String>> existencias = new ArrayList<ArrayList<String>>();       
-        try
-        {        
-            ResultSet resultado = con.ejecutar("SELECT * FROM VI_ProAlmCan WHERE ProCod = ?", new String[] {codigoProducto}, true);
-            while(resultado.next())
-            {
-                ArrayList<String> data = new ArrayList<>();
-                String codigo = resultado.getString("AlmCod");
-                String nombre = resultado.getString("AlmNom");
-                String cantidad = resultado.getString("KarCan");
-                data.add(codigo);
-                data.add(nombre);
-                data.add(cantidad);
-                existencias.add(data);
-            }
+        ArrayList<Inventario_Cabecera> existencias = new ArrayList<Inventario_Cabecera>();   
+        
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("metodo", 4);
+        jsonObj.put("productoCod", codigoProducto);
+        
+        String json = jsonObj.toString();
+        
+        HttpNetTask httpConnect = new HttpNetTask();
+        String response = httpConnect.sendPost(HostURL.INVENTARIO_CABECERA, json);
+        
+        // PROCESAR RESPUEST
+        Object jsonObject =JSONValue.parse(response);
+        //Convertir el objeto JSON en un array
+        JSONArray array = (JSONArray)jsonObject;
+        
+        Inventario_Cabecera inv = null;
+        //Iterar el array y extraer la información
+        for(int i=0;i<array.size();i++){
+            inv = new Inventario_Cabecera();
+            JSONObject row =(JSONObject)array.get(i);
+            inv.setProCod(row.get("producto_id").toString());
+            inv.setAlmNom(row.get("inv_cab_almacen").toString());
+            inv.setCantidad(row.get("inv_cab_cant").toString());
+           
+            existencias.add(inv);
+            inv = null;
         }
-        catch (SQLException ex)
-        {
-            JOptionPane.showMessageDialog(null, "Error de conexión a la base de datos.\nConfigure la conexión correctamente", "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
+        
         return existencias;
     }
     
@@ -45,21 +60,25 @@ public class Consultas
     {
         String total = "0.00";
         
-        try
-        {        
-            ResultSet resultado = con.ejecutar("SELECT SUM(KarCan) FROM VI_ProAlmCan WHERE ProCod = ?", new String[] {codigoProducto}, true);
-            resultado.next();
-            total = resultado.getString("SUM(KarCan)");
-        }
-        catch (SQLException ex)
-        {
-            JOptionPane.showMessageDialog(null, "Error de conexión a la base de datos.\nConfigure la conexión correctamente", "ERROR", JOptionPane.ERROR_MESSAGE);
-        }
+        JSONObject jsonObj = new JSONObject();
+        jsonObj.put("metodo", 5);
+        jsonObj.put("productoCod", codigoProducto);
+        
+        String json = jsonObj.toString();
+        
+        HttpNetTask httpConnect = new HttpNetTask();
+        String response = httpConnect.sendPost(HostURL.INVENTARIO_CABECERA, json);
+        
+        // PROCESAR RESPUESTA
+        Object jsonObject = JSONValue.parse(response);
+        JSONObject row =(JSONObject) jsonObject;
+        
+        total = row.get("SUM(inv_cab_cant)").toString();
         
         return total;
     }
     
-    public static ArrayList<ArrayList<String>> entradas(String codigoProducto, String anio, String mes)
+    /*public static ArrayList<ArrayList<String>> entradas(String codigoProducto, String anio, String mes)
     {
         ArrayList<ArrayList<String>> entradas = new ArrayList<>();       
 
